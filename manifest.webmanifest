@@ -1,0 +1,19 @@
+{
+  "name": "∞℃ 无界升温",
+  "short_name": "无界升温",
+  "description": "温度无上限的情侣私密互动游戏，仅以安全词为刹车。",
+  "start_url": "index.html",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0a14",
+  "theme_color": "#0e0a14",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
