@@ -228,6 +228,35 @@ html, body {
   .setup-card { padding: 14px; gap: 10px; }
 }
 
+/* ---------- 站内卡片库（可编辑 / 留意见） ---------- */
+.lib-head { position: sticky; top: 0; z-index: 6; background: var(--bg); padding: 4px 0 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--panel-border); margin-bottom: 4px; }
+.lib-title { font-size: 19px; font-weight: 800; text-align: center; }
+.lib-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.lib-tools .btn { flex: 1; min-width: 78px; padding: 9px 8px; font-size: 13px; }
+.lib-tabs { display: flex; gap: 8px; }
+.lib-tab { flex: 1; text-align: center; padding: 10px; border-radius: 12px; border: 1px solid var(--panel-border); background: var(--panel); cursor: pointer; font-weight: 700; font-size: 14px; transition: all .2s; user-select: none; }
+.lib-tab.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #1a0e14; border-color: transparent; }
+.lib-section { display: flex; flex-direction: column; gap: 10px; }
+.lib-section-title { font-size: 15px; font-weight: 700; margin: 8px 0 0; display: flex; align-items: center; gap: 8px; }
+.lib-section-title.light  { color: var(--accent); }
+.lib-section-title.medium { color: var(--accent-2); }
+.lib-section-title.high   { color: var(--accent-3); }
+.lib-scale-tag { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.08); color: var(--text-dim); font-weight: 600; }
+.lib-card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 14px; padding: 13px; display: flex; flex-direction: column; gap: 9px; }
+.lib-card.lib-deleted { opacity: .45; }
+.lib-card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.lib-id { font-size: 12px; color: var(--text-dim); font-weight: 700; }
+.lib-type { font-size: 12px; color: var(--accent-3); font-weight: 700; }
+.lib-content { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.06); border: 1px solid var(--panel-border); border-radius: 10px; padding: 10px 12px; color: var(--text); font-size: 16px; line-height: 1.5; resize: vertical; min-height: 58px; -webkit-user-select: auto; user-select: auto; font-family: inherit; }
+.lib-content:focus, .lib-note:focus, .lib-temp-row input:focus, .lib-type-input:focus { border-color: var(--accent); outline: none; }
+.lib-temp-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
+.lib-temp-row input { width: 66px; box-sizing: border-box; background: rgba(255,255,255,.06); border: 1px solid var(--panel-border); border-radius: 8px; padding: 7px 8px; color: var(--text); font-size: 15px; -webkit-appearance: none; appearance: none; }
+.lib-note { width: 100%; box-sizing: border-box; background: rgba(176,107,255,.06); border: 1px solid rgba(176,107,255,.22); border-radius: 10px; padding: 9px 11px; color: var(--text); font-size: 14px; line-height: 1.5; resize: vertical; min-height: 44px; -webkit-user-select: auto; user-select: auto; font-family: inherit; }
+.lib-card-actions { display: flex; gap: 8px; }
+.lib-card-actions .btn { flex: 1; padding: 9px; font-size: 13px; }
+.lib-add { margin: 0 0 4px; }
+.lib-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.6; }
+
 </style>
 </head>
 <body>
@@ -283,6 +312,7 @@ html, body {
           <label class="check-pill"><input type="checkbox" id="chkHigh" /> 高度</label>
         </div>
       </div>
+      <button id="btnLib" class="btn btn-ghost btn-block">📚 编辑卡片库（改内容 · 留意见）</button>
       <button id="btnStart" class="btn btn-primary btn-block">开始游戏</button>
     </div>
     <div id="resumeBar" class="resume-bar hidden">
@@ -350,6 +380,25 @@ html, body {
         <button id="btnHome" class="btn btn-ghost">回到设置</button>
       </div>
     </div>
+  </section>
+
+  <!-- ============ 卡片库（站内可编辑） ============ -->
+  <section id="screen-library" class="screen hidden">
+    <div class="lib-head">
+      <div class="lib-title">📚 卡片库 · 编辑与意见</div>
+      <div class="lib-tools">
+        <button id="btnLibExport" class="btn btn-ghost">⬇ 导出</button>
+        <button id="btnLibImport" class="btn btn-ghost">⬆ 导入</button>
+        <button id="btnLibReset" class="btn btn-danger">↺ 重置默认</button>
+        <button id="btnLibBack" class="btn btn-primary">← 返回</button>
+      </div>
+      <div class="lib-tabs">
+        <div class="lib-tab active" data-scene="both">💞 通用卡</div>
+        <div class="lib-tab" data-scene="remote">📱 异地专属</div>
+      </div>
+    </div>
+    <div id="libWrap"></div>
+    <p class="lib-hint">改动只存在本机浏览器，不会破坏原游戏。<br/>「恢复默认」还原单卡，「重置默认」清空全部编辑，「我的意见」可写下你的修改建议。</p>
   </section>
 
   <!-- ============ 投骰子定先后弹窗 ============ -->
@@ -527,11 +576,203 @@ function recordSkip(cardId) {
   saveSkipStats(m);
 }
 function cardById(id) {
-  for (var i = 0; i < CARDS.length; i++) if (CARDS[i].id === id) return CARDS[i];
+  return resolveCard(id);
+}
+
+/* ================= 卡片库（站内可编辑，非破坏性） ================= */
+/* 所有用户修改 / 删除 / 新增 / 意见，都单独存一份，绝不改动默认 CARDS */
+var LIB_KEY = "wuJieShengWen_lib";
+var lib = { edits: {}, customs: [] };
+var libScene = "both";   /* 当前查看的场景：both（通用）/ remote（异地） */
+
+function loadLib() {
+  try {
+    var raw = localStorage.getItem(LIB_KEY);
+    var o = raw ? JSON.parse(raw) : null;
+    lib = { edits: (o && o.edits) || {}, customs: (o && o.customs) || [] };
+  } catch (e) { lib = { edits: {}, customs: [] }; }
+}
+function saveLib() {
+  try { localStorage.setItem(LIB_KEY, JSON.stringify(lib)); } catch (e) {}
+}
+function getLibEdit(id) { return lib.edits[id] || null; }
+
+/* 合并单张卡：默认库 → 站内编辑/删除；再查游戏内自定义卡与站内新增卡 */
+function resolveCard(id) {
+  for (var i = 0; i < CARDS.length; i++) {
+    if (CARDS[i].id !== id) continue;
+    var e = lib.edits[id];
+    if (e && e.deleted) return null;
+    var c = Object.assign({}, CARDS[i]);
+    if (e) {
+      if (e.content != null) c.content = e.content;
+      if (e.temp) c.temp = e.temp.slice ? e.temp.slice() : e.temp;
+    }
+    return c;
+  }
   if (state && state.customCards) {
     for (var j = 0; j < state.customCards.length; j++) if (state.customCards[j].id === id) return state.customCards[j];
   }
+  for (var k = 0; k < lib.customs.length; k++) if (lib.customs[k].id === id) return lib.customs[k];
   return null;
+}
+
+/* 渲染卡片库：按 场景 × 尺度 分组 */
+function renderLibrary() {
+  var wrap = $("libWrap");
+  if (!wrap) return;
+  var scene = libScene;
+  var scales = ["light", "medium", "high"];
+  var html = "";
+  scales.forEach(function (sc) {
+    var scaleLabel = (SCALE_META[sc] || {}).label || sc;
+    var cards = [];
+    CARDS.forEach(function (c) { if (c.scene === scene && c.scale === sc) cards.push(c); });
+    lib.customs.forEach(function (c) { if (c.scene === scene && c.scale === sc) cards.push(c); });
+    if (!cards.length) return;
+    html += '<div class="lib-section">';
+    html += '<div class="lib-section-title lib-' + sc + '">' + scaleLabel +
+            '<span class="lib-scale-tag">' + cards.length + ' 张</span></div>';
+    cards.forEach(function (c) { html += libCardHTML(c); });
+    html += '<div class="lib-add"><button class="btn btn-ghost" data-act="add" data-add="' + scene + '|' + sc + '">＋ 新增' + scaleLabel + '卡</button></div>';
+    html += '</div>';
+  });
+  wrap.innerHTML = html;
+}
+
+function libCardHTML(c) {
+  var e = getLibEdit(c.id);
+  var content = (e && e.content != null) ? e.content : c.content;
+  var note = (e && e.note != null) ? e.note : "";
+  var temp = (e && e.temp) ? e.temp : c.temp;
+  var isCustom = !!c.custom;
+  var deleted = !!(e && e.deleted);
+  var typeHtml = isCustom
+    ? '<input class="lib-type-input" data-id="' + c.id + '" data-field="type" value="' + esc(c.type) + '" style="background:rgba(255,255,255,.06);border:1px solid var(--panel-border);border-radius:8px;padding:5px 8px;color:var(--accent-3);font-size:12px;font-weight:700;width:96px;" />'
+    : '<span class="lib-type">' + ((TYPE_META[c.type] && TYPE_META[c.type].icon) ? TYPE_META[c.type].icon + " " : "") + esc(c.type) + '</span>';
+  var actions = isCustom
+    ? '<button class="btn btn-danger" data-act="delCustom" data-id="' + c.id + '">删除此卡</button>'
+    : '<button class="btn btn-ghost" data-act="restore" data-id="' + c.id + '">恢复默认</button>' +
+      '<button class="btn btn-danger" data-act="del" data-id="' + c.id + '">删除此卡</button>';
+  return '' +
+    '<div class="lib-card' + (deleted ? ' lib-deleted' : '') + '" data-id="' + c.id + '">' +
+      '<div class="lib-card-top">' +
+        '<span class="lib-id">#' + c.id + '</span>' + typeHtml +
+      '</div>' +
+      '<textarea class="lib-content" data-id="' + c.id + '" data-field="content" placeholder="卡片内容…">' + esc(content) + '</textarea>' +
+      '<div class="lib-temp-row"><span>温度区间</span>' +
+        '<input type="number" data-id="' + c.id + '" data-field="tempMin" value="' + temp[0] + '" />' +
+        '<span>~</span>' +
+        '<input type="number" data-id="' + c.id + '" data-field="tempMax" value="' + temp[1] + '" />' +
+        '<span>℃</span></div>' +
+      '<textarea class="lib-note" data-id="' + c.id + '" data-field="note" placeholder="我的意见 / 修改建议…">' + esc(note) + '</textarea>' +
+      '<div class="lib-card-actions">' + actions + '</div>' +
+    '</div>';
+}
+
+function onLibInput(ev) {
+  var t = ev.target;
+  if (!t.dataset || !t.dataset.id || !t.dataset.field) return;
+  var id = t.dataset.id, field = t.dataset.field;
+  if (field === "type") {
+    var cc = null;
+    for (var i = 0; i < lib.customs.length; i++) if (lib.customs[i].id === id) cc = lib.customs[i];
+    if (cc) { cc.type = t.value; saveLib(); }
+    return;
+  }
+  var e = lib.edits[id] || (lib.edits[id] = {});
+  if (field === "content") e.content = t.value;
+  else if (field === "note") e.note = t.value;
+  else if (field === "tempMin") { e.temp = e.temp ? e.temp.slice() : [0, 0]; e.temp[0] = parseInt(t.value || "0", 10) || 0; }
+  else if (field === "tempMax") { e.temp = e.temp ? e.temp.slice() : [0, 0]; e.temp[1] = parseInt(t.value || "0", 10) || 0; }
+  saveLib();
+}
+
+function onLibClick(ev) {
+  var b = ev.target.closest ? ev.target.closest("button") : null;
+  if (!b || !b.dataset || !b.dataset.act) return;
+  var act = b.dataset.act;
+  if (act === "restore") {
+    var id = b.dataset.id;
+    var e = lib.edits[id];
+    if (e) {
+      delete e.content; delete e.temp; delete e.deleted;
+      if (Object.keys(e).length === 0) delete lib.edits[id];
+      saveLib(); renderLibrary(); toast("已恢复默认（意见保留）");
+    }
+  } else if (act === "del") {
+    var id2 = b.dataset.id;
+    var e = lib.edits[id2] || (lib.edits[id2] = {});
+    e.deleted = true; saveLib(); renderLibrary(); toast("已删除（可恢复）");
+  } else if (act === "delCustom") {
+    var id3 = b.dataset.id;
+    lib.customs = lib.customs.filter(function (x) { return x.id !== id3; });
+    saveLib(); renderLibrary(); toast("已删除");
+  } else if (act === "add") {
+    var parts = (b.dataset.add || "both|light").split("|");
+    addCard(parts[0], parts[1]);
+  }
+}
+
+function addCard(scene, scale) {
+  var id = "U" + Date.now().toString(36);
+  var card = { id: id, type: "自定义", scale: scale, scene: scene, content: "（点击编辑这张新卡的内容）", temp: [20, 50], custom: true };
+  lib.customs.push(card);
+  saveLib();
+  renderLibrary();
+  toast("已新增，可编辑");
+}
+
+function setLibScene(scene) {
+  libScene = scene;
+  var tabs = document.querySelectorAll(".lib-tab");
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle("active", tabs[i].getAttribute("data-scene") === scene);
+  renderLibrary();
+}
+
+function openLibrary() {
+  loadLib();
+  renderLibrary();
+  showScreen("library");
+}
+function closeLibrary() {
+  showScreen("setup");
+  refreshResume();
+}
+
+function exportLib() {
+  var data = JSON.stringify(lib, null, 2);
+  try {
+    var blob = new Blob([data], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "wuJieShengWen_cards.json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    toast("已导出 JSON");
+  } catch (e) { toast("导出失败"); }
+}
+function importLib() {
+  var inp = document.createElement("input");
+  inp.type = "file"; inp.accept = "application/json";
+  inp.onchange = function () {
+    var f = inp.files && inp.files[0]; if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        var o = JSON.parse(r.result);
+        lib = { edits: (o && o.edits) || {}, customs: (o && o.customs) || [] };
+        saveLib(); renderLibrary(); toast("已导入");
+      } catch (e2) { toast("导入失败：文件格式错误"); }
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+function resetLib() {
+  if (!window.confirm("确定把站内卡片库恢复为出厂默认？（你的编辑、删除、新增都会清空）")) return;
+  lib = { edits: {}, customs: [] };
+  saveLib(); renderLibrary(); toast("已重置为默认");
 }
 
 function newGame(cfg) {
@@ -759,22 +1000,34 @@ function buildDeck() {
   if (!state) { deck = []; return; }
   var pref = state.scalePref || ["light","medium","high"];
   var scene = state.sceneMode || "together";
-  var base = CARDS.filter(function(c) {
-    /* 尺度过滤 */
+  function pass(c) {
     if (pref.indexOf(c.scale) === -1) return false;
-    /* 场景过滤：当面模式只出通用卡，异地模式出通用+远程卡 */
     if (scene === "together" && c.scene === "remote") return false;
     return true;
-  });
-  if (state.customCards && state.customCards.length) {
-    var custom = state.customCards.filter(function(c) {
-      if (pref.indexOf(c.scale) === -1) return false;
-      if (scene === "together" && c.scene === "remote") return false;
-      return true;
-    });
-    base = base.concat(custom);
   }
-  deck = base;
+  var list = [];
+  /* 默认库：应用站内编辑 / 删除 */
+  for (var i = 0; i < CARDS.length; i++) {
+    var c = CARDS[i];
+    var e = lib.edits[c.id];
+    if (e && e.deleted) continue;
+    if (!pass(c)) continue;
+    var card = Object.assign({}, c);
+    if (e) {
+      if (e.content != null) card.content = e.content;
+      if (e.temp) card.temp = e.temp.slice ? e.temp.slice() : e.temp;
+    }
+    list.push(card);
+  }
+  /* 游戏内自定义卡 */
+  if (state.customCards && state.customCards.length) {
+    state.customCards.forEach(function(c){ if (pass(c)) list.push(c); });
+  }
+  /* 站内新增卡 */
+  if (lib.customs && lib.customs.length) {
+    lib.customs.forEach(function(c){ if (pass(c)) list.push(c); });
+  }
+  deck = list;
 }
 
 function getTitle(temp) {
@@ -1335,6 +1588,7 @@ function renderSetupInsight() {
 
 function init() {
   state = loadState();
+  loadLib();
   buildStages();
 
   /* 兼容旧存档：补齐新字段 */
@@ -1412,6 +1666,24 @@ function init() {
   $("btnAgain").addEventListener("click", onAgain);
   $("btnHome").addEventListener("click", onHome);
   $("btnAudio").addEventListener("click", toggleAudio);
+
+  /* 卡片库（站内可编辑） */
+  $("btnLib").addEventListener("click", openLibrary);
+  $("btnLibBack").addEventListener("click", closeLibrary);
+  $("btnLibExport").addEventListener("click", exportLib);
+  $("btnLibImport").addEventListener("click", importLib);
+  $("btnLibReset").addEventListener("click", resetLib);
+  var libWrap = $("libWrap");
+  if (libWrap) {
+    libWrap.addEventListener("input", onLibInput);
+    libWrap.addEventListener("click", onLibClick);
+  }
+  var libTabs = document.querySelectorAll(".lib-tab");
+  for (var ti = 0; ti < libTabs.length; ti++) {
+    (function (tab) {
+      tab.addEventListener("click", function () { setLibScene(tab.getAttribute("data-scene")); });
+    })(libTabs[ti]);
+  }
 }
 
 /* 启动 */
