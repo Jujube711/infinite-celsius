@@ -258,7 +258,7 @@ html, body {
 .lib-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.6; }
 
 /* ================= 开始动画：爱心 ================= */
-#startAnim{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 50% 30%, #2c1822 0%, #241419 55%, #1a0f14 100%);opacity:0;transition:opacity .4s ease;pointer-events:none;}
+#startAnim{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 50% 30%, #2c1822 0%, #241419 55%, #1a0f14 100%);opacity:0;transition:opacity .4s ease;pointer-events:auto;}
 #startAnim.play{opacity:1;}
 #startAnim.hidden{display:none;}
 #saStage{position:relative;width:min(80vw,340px);aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
@@ -278,6 +278,10 @@ html, body {
 @keyframes saBloom{0%{opacity:0;transform:scale(0);}35%{opacity:.6;}100%{opacity:0;transform:scale(1.7);}}
 @keyframes saTitleIn{from{opacity:0;transform:translateY(-50%) scale(.92);letter-spacing:.05em;}to{opacity:1;transform:translateY(-50%) scale(1);letter-spacing:.18em;}}
 @keyframes saSubIn{from{opacity:0;transform:translateY(6px);}to{opacity:.85;transform:translateY(0);}}
+#saContinue{position:absolute;left:0;right:0;top:calc(50% + 74px);text-align:center;opacity:0;font-size:13px;letter-spacing:.22em;color:#e3a4bd;transition:opacity .4s ease;pointer-events:none;}
+#startAnim.ready{cursor:pointer;}
+#startAnim.ready #saContinue{opacity:.95;animation:saPulse 1.5s ease-in-out infinite;}
+@keyframes saPulse{0%,100%{opacity:.4;}50%{opacity:1;}}
 
 
 </style>
@@ -1329,25 +1333,48 @@ function readConfig() {
   return { safeWord: safeWord, stage: stage, mode: mode, sceneMode: sceneMode, scalePref: pref, players: players };
 }
 
-function showStartAnim() {
+function showStartAnim(onDone) {
   var ov = document.getElementById("startAnim");
-  if (!ov) return;
+  if (!ov) { if (typeof onDone === "function") onDone(); return; }
   var hl = ov.querySelector("#saHeartLine");
   var sub = ov.querySelector("#saSub");
   try { sub.textContent = "♡ " + playerName(0) + "  ♡  " + playerName(1) + " ♡"; } catch(e) {}
   var len = hl.getTotalLength();
   hl.style.strokeDasharray = len;
   hl.style.strokeDashoffset = len;
-  ov.classList.remove("hidden");
+  ov.classList.remove("hidden", "ready");
   ov.classList.add("play");
   requestAnimationFrame(function(){
     hl.style.transition = "stroke-dashoffset .9s cubic-bezier(.65,0,.35,1)";
     hl.style.strokeDashoffset = 0;
   });
-  setTimeout(function(){
-    ov.classList.add("hidden");
-    ov.classList.remove("play");
-  }, 2000);
+  showStartAnim._onDone = (typeof onDone === "function") ? onDone : null;
+  clearTimeout(showStartAnim._t);
+  showStartAnim._t = setTimeout(function(){
+    /* 动画停留，等待用户按任意键 / 点击屏幕继续 */
+    ov.classList.add("ready");
+    document.addEventListener("keydown", startAnimContinue);
+    ov.addEventListener("click", startAnimContinue);
+  }, 1900);
+}
+
+function startAnimContinue() {
+  var ov = document.getElementById("startAnim");
+  if (!ov || !ov.classList.contains("ready")) return;  /* 强制停留，动画未完成前不响应 */
+  dismissStartAnim();
+}
+
+function dismissStartAnim() {
+  var ov = document.getElementById("startAnim");
+  if (!ov) return;
+  ov.classList.add("hidden");
+  ov.classList.remove("play", "ready");
+  clearTimeout(showStartAnim._t);
+  document.removeEventListener("keydown", startAnimContinue);
+  ov.removeEventListener("click", startAnimContinue);
+  var cb = showStartAnim._onDone;
+  showStartAnim._onDone = null;
+  if (typeof cb === "function") cb();
 }
 
 function onStart() {
@@ -1366,8 +1393,7 @@ function onStart() {
   nextPeek = null;
   buildDeck();
   ensureAudio();
-  showStartAnim();
-  showDice();
+  showStartAnim(showDice);
 }
 
 function onResume() {
@@ -1760,6 +1786,7 @@ if (document.readyState === "loading") {
     </svg>
     <div id="saTitle">无界升温</div>
     <div id="saSub">♡ 你们的名字 ♡</div>
+    <div id="saContinue">点击任意键继续 ♡</div>
   </div>
 </div>
 </body>
