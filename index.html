@@ -108,7 +108,10 @@ html, body {
 .card-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); }
 .card-type { font-size: 14px; font-weight: 700; color: var(--accent-3); }
 .card-body { font-size: 17px; line-height: 1.6; }
-.card-foot { margin-top: 12px; font-size: 12px; color: var(--text-dim); }
+.card-foot { margin-top: 12px; font-size: 12px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.admire-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--h-main, var(--accent)); background: rgba(255,255,255,.04); border: 1px solid var(--panel-border); border-radius: 999px; padding: 4px 10px; cursor: pointer; min-height: 26px; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: border-color .2s, transform .12s; }
+.admire-btn:active { transform: scale(.94); }
+.admire-box { max-width: 620px; }
 .tag { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
 .tag-scale { background: rgba(227,164,189,.12); color: var(--accent); }
 .tag-remote { background: rgba(178,133,204,.12); color: var(--accent-3); }
@@ -588,6 +591,15 @@ html, body {
     </div>
     <div id="galWrap"></div>
   </section>
+
+  <!-- ============ 卡面鉴赏弹窗（游戏内右下角「鉴赏」唤起） ============ -->
+  <div id="modalAdmire" class="modal hidden">
+    <div class="modal-box admire-box">
+      <h3 class="modal-title"><span data-ico="crystal"></span> 卡面鉴赏</h3>
+      <div id="admireBody"></div>
+      <button id="btnAdmireClose" class="btn btn-text">关闭</button>
+    </div>
+  </div>
 
   <!-- ============ 投骰子定先后弹窗 ============ -->
   <div id="modalDice" class="modal hidden">
@@ -1663,10 +1675,17 @@ function renderGalleryGrid(wrap) {
 
 function renderGalleryView(wrap, c) {
   if (!c) { galState.mode = "grid"; renderGalleryGrid(wrap); return; }
+  wrap.innerHTML = galViewHTML(c, galState.flipped, { grid: true });
+  afterGalViewRender(wrap);
+}
+
+/* 鉴赏视图 HTML（图鉴页与游戏内弹窗共用） */
+function galViewHTML(c, flipped, opts) {
+  opts = opts || {};
   var sm = scaleMetaOf(c);
   var no = cardNoOf(c);
   var remoteTxt = c.scene === "remote" ? " · 远程专属" : "";
-  wrap.innerHTML =
+  return '' +
     '<div class="gal-view" style="--h-main:' + sm.main + '">' +
       '<div class="gal-info">' +
         '<div class="gal-series">∞℃ · 情侣互动 · 无界升温 — WUJIE HOLO</div>' +
@@ -1676,21 +1695,52 @@ function renderGalleryView(wrap, c) {
         '<div class="gal-desc">' + esc(c.content || "") + '</div>' +
         '<div class="gal-skill"><small>升温 · TYPE OF THE HEART</small><b>' + c.temp[0] + '~' + c.temp[1] + '℃</b><p>' + GAL_FLAVOR[c.scale] + '</p></div>' +
         '<div class="gal-btns">' +
-          '<button class="btn btn-ghost" id="btnGalFlip">翻看背面</button>' +
-          '<button class="btn btn-ghost" id="btnGalSave">保存此刻</button>' +
-          '<button class="btn btn-text" id="btnGalGrid">回图鉴</button>' +
+          '<button class="btn btn-ghost jsGalFlip">翻看背面</button>' +
+          '<button class="btn btn-ghost jsGalSave">保存此刻</button>' +
+          (opts.grid ? '<button class="btn btn-text jsGalGrid">回图鉴</button>' : '') +
         '</div>' +
         '<div class="gal-no">' + no + ' / ' + (CARDS.length + lib.customs.length) + ' · HOLOGRAPHIC</div>' +
       '</div>' +
       '<div class="gal-stage">' +
-        '<div id="galStage">' + holoFace(c, { flipped: galState.flipped, autoplay: !!galState.autoTimer }) + '</div>' +
-        '<div class="gal-back-row"><span class="' + (!galState.flipped ? "on" : "") + '">FRONT</span><span class="' + (galState.flipped ? "on" : "") + '">BACK</span></div>' +
+        '<div class="jsGalStage">' + holoFace(c, { flipped: flipped, autoplay: !!galState.autoTimer }) + '</div>' +
+        '<div class="gal-back-row"><span class="' + (!flipped ? "on" : "") + '">FRONT</span><span class="' + (flipped ? "on" : "") + '">BACK</span></div>' +
       '</div>' +
     '</div>';
-  bindHolo($("galStage").querySelector(".holo"), true);
-  $("btnGalFlip").addEventListener("click", function () { galState.flipped = !galState.flipped; renderGallery(); });
-  $("btnGalSave").addEventListener("click", function () { galSave(c); });
-  $("btnGalGrid").addEventListener("click", function () { galState.mode = "grid"; stopGalAuto(); renderGallery(); });
+}
+
+function afterGalViewRender(container) {
+  var h = container.querySelector(".jsGalStage .holo");
+  if (h) bindHolo(h, true);
+}
+
+/* 鉴赏视图按钮委托：host = "gallery" | "admire" */
+function galViewDelegate(ev, host) {
+  var b = ev.target.closest ? ev.target.closest("button") : null;
+  if (!b) return;
+  if (b.classList.contains("jsGalFlip")) {
+    if (host === "gallery") { galState.flipped = !galState.flipped; renderGallery(); }
+    else { admireFlipped = !admireFlipped; renderAdmire(); }
+  } else if (b.classList.contains("jsGalSave")) {
+    var c = (host === "gallery") ? galState.card : admireCardRef;
+    if (c) galSave(c);
+  } else if (b.classList.contains("jsGalGrid")) {
+    galState.mode = "grid"; stopGalAuto(); renderGallery();
+  }
+}
+
+/* ---- 游戏内「鉴赏」弹窗：鉴赏当前桌上的卡 ---- */
+var admireCardRef = null, admireFlipped = false;
+function openAdmire(card) {
+  admireCardRef = card;
+  admireFlipped = false;
+  renderAdmire();
+  $("modalAdmire").classList.remove("hidden");
+}
+function renderAdmire() {
+  var body = $("admireBody");
+  if (!admireCardRef) { body.innerHTML = ""; return; }
+  body.innerHTML = galViewHTML(admireCardRef, admireFlipped, { grid: false });
+  afterGalViewRender(body);
 }
 
 function toggleGalAuto() {
@@ -1859,7 +1909,8 @@ function renderCard(card) {
         '</div>' +
         '<div class="card-body">' + esc(card.content) + '</div>' +
         ownerLine +
-        '<div class="card-foot">完成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃ · ' + (TYPE_EN[card.type]||"ORIGINAL") + '</div>' +
+        '<div class="card-foot"><span>完成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃ · ' + (TYPE_EN[card.type]||"ORIGINAL") + '</span>' +
+          '<button class="admire-btn" type="button" title="鉴赏这张卡">' + ico("crystal", 12) + ' 鉴赏</button></div>' +
       '</div>' +
     '</div>';
 }
@@ -2745,6 +2796,16 @@ function init() {
   $("btnGallery").addEventListener("click", openGallery);
   $("btnGalBack").addEventListener("click", closeGallery);
   $("btnGalAuto").addEventListener("click", toggleGalAuto);
+  /* 鉴赏视图按钮委托（图鉴页 + 游戏内弹窗共用） */
+  $("galWrap").addEventListener("click", function (ev) { galViewDelegate(ev, "gallery"); });
+  $("admireBody").addEventListener("click", function (ev) { galViewDelegate(ev, "admire"); });
+  $("btnAdmireClose").addEventListener("click", function () { $("modalAdmire").classList.add("hidden"); });
+  /* 游戏内任务卡右下角「鉴赏」 */
+  $("cardArea").addEventListener("click", function (ev) {
+    var b = ev.target.closest ? ev.target.closest(".admire-btn") : null;
+    if (!b || !lastCard) return;
+    openAdmire(resolveCard(lastCard.id) || lastCard);
+  });
   $("btnLibExport").addEventListener("click", exportLib);
   $("btnLibImport").addEventListener("click", importLib);
   $("btnLibReset").addEventListener("click", resetLib);
