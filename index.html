@@ -8,6 +8,10 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%2333202c'/%3E%3Cpath%20d='M22%2040c-6%200-10-5-10-10s4-10%2010-10c4%200%207%202%208%206%201-4%204-6%208-6%206%200%2010%205%2010%2010s-4%2010-10%2010c-4%200-7-2-8-6-1%204-4%206-8%206z'%20fill='%23e3a4bd'/%3E%3Ccircle%20cx='32'%20cy='44'%20r='5'%20fill='%23eab7c8'/%3E%3C/svg%3E" />
 <link rel="apple-touch-icon" href="icon.png" />
 <link rel="manifest" href="manifest.webmanifest" />
+<!-- 联网增强：书法/衬线字体（断网自动回退系统字体，游戏功能不受影响） -->
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://fonts.gstatic.loli.net" crossorigin />
+<link href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet" />
 <style>
 :root {
   --bg: #241419;
@@ -25,7 +29,8 @@
   --shadow: 0 10px 34px rgba(24,10,16,0.5);
   --shadow-soft: 0 2px 8px rgba(24,10,16,0.16), 0 18px 44px rgba(24,10,16,0.34);
   --ease: cubic-bezier(.22,1,.36,1);
-  --font-display: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+  --font-display: "Noto Serif SC", "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+  --font-brush: "Ma Shan Zheng", "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
   --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
@@ -334,13 +339,20 @@ html, body {
   50% { background: radial-gradient(circle at 68% 60%, rgba(255,240,246,.34) 0%, rgba(255,240,246,.1) 26%, transparent 54%); }
 }
 .holo-inner { position: absolute; inset: 7px; border-radius: 9px; border: 1px solid var(--h-soft, rgba(227,164,189,.22)); display: flex; flex-direction: column; overflow: hidden; }
-.holo-type-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px 0; }
+/* 金线双框工艺 */
+.holo-inner::before { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(232,201,168,.2); border-radius: 7px; pointer-events: none; z-index: 3; }
+.holo-orn { position: absolute; z-index: 3; pointer-events: none; opacity: .75; }
+.holo-orn.tl { top: 5px; left: 5px; } .holo-orn.tr { top: 5px; right: 5px; transform: rotate(90deg); }
+.holo-orn.bl { bottom: 5px; left: 5px; transform: rotate(-90deg); } .holo-orn.br { bottom: 5px; right: 5px; transform: rotate(180deg); }
+.holo-type-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px 0; position: relative; z-index: 2; }
 .holo-type { font-size: 10px; letter-spacing: .28em; color: var(--h-main, var(--accent)); font-weight: 700; }
 .holo-en { font-size: 8px; letter-spacing: .22em; color: var(--text-dim); }
-.holo-name { text-align: center; margin-top: 14px; font-family: var(--font-display); }
-.holo-name small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); margin-bottom: 5px; }
-.holo-name b { font-size: 25px; font-weight: 700; letter-spacing: .18em; color: var(--text); text-shadow: 0 2px 18px var(--h-main, var(--accent)); }
-.holo-rose { flex: 1; display: flex; align-items: center; justify-content: center; opacity: .5; }
+.holo-name { text-align: center; margin-top: 10px; font-family: var(--font-brush); position: relative; z-index: 2; }
+.holo-name small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); margin-bottom: 4px; font-family: var(--font-body); }
+.holo-name b { font-size: 24px; font-weight: 400; letter-spacing: .16em; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent)), 0 2px 4px rgba(0,0,0,.45); }
+.holo-rose { flex: 1; display: flex; align-items: center; justify-content: center; opacity: .85; position: relative; z-index: 2; }
+.gal-name { font-family: var(--font-brush); font-weight: 400; }
+.temp-title { font-family: var(--font-brush); font-weight: 400; letter-spacing: 3px; }
 .holo-desc { padding: 0 13px; font-size: 11px; line-height: 1.65; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .holo-temp-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px 10px; }
 .holo-temp { font-size: 12px; font-weight: 800; color: var(--h-main, var(--accent)); letter-spacing: .1em; }
@@ -399,6 +411,7 @@ html, body {
 /* 游戏内任务卡 × 收藏卡质感 */
 .card.glowing { position: relative; }
 .card-frame { position: relative; border-radius: 14px; padding: 16px; background: linear-gradient(150deg, rgba(227,164,189,.10) 0%, rgba(255,234,238,.03) 45%, rgba(178,133,204,.08) 100%); border: 1px solid var(--panel-border); overflow: hidden; }
+.card-frame::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(232,201,168,.16); border-radius: 10px; pointer-events: none; z-index: 1; }
 .card-frame::after { content: ""; position: absolute; left: -60%; top: 0; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,242,247,.14), transparent); animation: frameSheen 4.5s ease-in-out infinite; pointer-events: none; }
 @keyframes frameSheen { 0%, 55% { left: -60%; } 90%, 100% { left: 130%; } }
 .card-no { position: absolute; top: 9px; right: 12px; font-size: 9px; letter-spacing: .22em; color: var(--text-dim); }
@@ -1616,25 +1629,36 @@ function cardNoOf(c) {
 function cardNameOf(c) { return CARD_NAMES[c.id] || (c.custom ? (c.type || "自定义") : c.id); }
 function scaleMetaOf(c) { return SCALE_VOL[c.scale] || SCALE_VOL.light; }
 
-function roseSvg(color, size) {
-  size = size || 64;
-  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 64 64" fill="none" stroke="' + color + '" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">' +
-    '<path d="M32 50 C 32 50 13 39 13 25 C 13 17 18.5 12 25 12 C 28.6 12 31.2 14 32 17 C 32.8 14 35.4 12 39 12 C 45.5 12 51 17 51 25 C 51 39 32 50 32 50 Z"/>' +
-    '<path d="M32 19 L 32 41 M32 25 C 28.5 27.5 26 30.5 24.5 34 M32 25 C 35.5 27.5 38 30.5 39.5 34"/>' +
-    '</svg>';
+/* 角花饰（卡面四角，金线工艺） */
+function ornSvg() {
+  return '<svg class="holo-orn tl" width="22" height="22" viewBox="0 0 26 26" fill="none" stroke="rgba(232,201,168,.55)" stroke-width="1"><path d="M2 10 C2 5 5 2 10 2 M2 16 C2 8 8 2 16 2"/><circle cx="4.5" cy="4.5" r="1" fill="rgba(232,201,168,.55)" stroke="none"/></svg>' +
+         '<svg class="holo-orn tr" width="22" height="22" viewBox="0 0 26 26" fill="none" stroke="rgba(232,201,168,.55)" stroke-width="1"><path d="M2 10 C2 5 5 2 10 2 M2 16 C2 8 8 2 16 2"/><circle cx="4.5" cy="4.5" r="1" fill="rgba(232,201,168,.55)" stroke="none"/></svg>' +
+         '<svg class="holo-orn bl" width="22" height="22" viewBox="0 0 26 26" fill="none" stroke="rgba(232,201,168,.55)" stroke-width="1"><path d="M2 10 C2 5 5 2 10 2 M2 16 C2 8 8 2 16 2"/><circle cx="4.5" cy="4.5" r="1" fill="rgba(232,201,168,.55)" stroke="none"/></svg>' +
+         '<svg class="holo-orn br" width="22" height="22" viewBox="0 0 26 26" fill="none" stroke="rgba(232,201,168,.55)" stroke-width="1"><path d="M2 10 C2 5 5 2 10 2 M2 16 C2 8 8 2 16 2"/><circle cx="4.5" cy="4.5" r="1" fill="rgba(232,201,168,.55)" stroke="none"/></svg>';
+}
+
+/* 类型母题：花环底座 + 类型图标 */
+function motifArt(c, color, size) {
+  var meta = TYPE_META[c.type] || { icon: "sparkle" };
+  size = size || 92;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 96 96" fill="none">' +
+    '<circle cx="48" cy="48" r="35" stroke="' + color + '" stroke-width="1" stroke-dasharray="2 5" opacity=".45"/>' +
+    '<circle cx="48" cy="48" r="29" stroke="' + color + '" stroke-width="1.4" opacity=".8"/>' +
+    '<g transform="translate(36,36)" stroke="' + color + '" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[meta.icon] || ICONS.sparkle) + '</g>' +
+  '</svg>';
 }
 
 function cardFaceHTML(c, mini) {
   var sm = scaleMetaOf(c);
   var en = TYPE_EN[c.type] || "ORIGINAL";
   return '' +
-    '<div class="holo-inner">' +
+    '<div class="holo-inner">' + ornSvg() +
       '<div class="holo-type-row">' +
         '<span class="holo-type">' + esc(c.type || "自定义") + '</span>' +
         '<span class="holo-en">' + en + '</span>' +
       '</div>' +
       '<div class="holo-name"><small>『 ' + esc(c.type || "自定义") + ' 』</small><b>' + esc(cardNameOf(c)) + '</b></div>' +
-      '<div class="holo-rose">' + roseSvg(sm.main, mini ? 44 : 62) + '</div>' +
+      '<div class="holo-rose">' + motifArt(c, sm.main, mini ? 58 : 92) + '</div>' +
       '<div class="holo-desc">' + esc(c.content || "") + '</div>' +
       '<div class="holo-temp-row">' +
         '<span class="holo-temp">♥ ' + c.temp[0] + '~' + c.temp[1] + '℃</span>' +
@@ -1645,7 +1669,7 @@ function cardFaceHTML(c, mini) {
 
 function cardBackHTML() {
   return '' +
-    '<div class="holo-inner holo-back">' +
+    '<div class="holo-inner holo-back">' + ornSvg() +
       '<span class="bk-corner bk-tl">∞℃ SERIES</span>' +
       '<div class="emblem"><span>∞℃</span></div>' +
       '<div class="bk-name">无界升温</div>' +
@@ -1806,10 +1830,10 @@ function titleHolo(t, color, temp, flipped) {
   if (flipped) inner = cardBackHTML();
   else {
     var idx = TITLES.indexOf(t);
-    inner = '<div class="holo-inner">' +
+    inner = '<div class="holo-inner">' + ornSvg() +
       '<div class="holo-type-row"><span class="holo-type">称号典藏</span><span class="holo-en">' + t.en + '</span></div>' +
       '<div class="holo-name"><small>STAGE ' + pad2(idx + 1) + '</small><b>' + t.label + '</b></div>' +
-      '<div class="holo-rose">' + titleSvg(t.icon, color, 78) + '</div>' +
+      '<div class="holo-rose">' + titleSvg(t.icon, color, 76) + '</div>' +
       '<div class="holo-desc">' + t.desc + '</div>' +
       '<div class="holo-temp-row"><span class="holo-temp">♥ 当前 ' + temp + '℃</span><span class="holo-en">' + t.min + '℃ 封号</span></div>' +
     '</div>';
