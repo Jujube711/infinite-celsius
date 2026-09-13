@@ -93,12 +93,14 @@ html, body {
 .resume-bar span { color: var(--text-dim); }
 .resume-btns { display: flex; gap: 8px; }
 .resume-btns .btn { padding: 6px 14px; font-size: 13px; }
+.home-links { display: flex; gap: 8px; }
+.home-link { flex: 1; padding: 11px 6px; font-size: 13px; min-width: 0; }
 
-/* 温度面板 → 称号收藏卡 */
+/* 温度面板 → 称号收藏卡（紧凑横条版，为任务卡让出主视觉空间） */
 .temp-panel {
   --mx: 50%; --my: 50%; --t-main: #b7a6e8;
   position: relative; background: linear-gradient(150deg, rgba(255,234,238,.07) 0%, rgba(255,234,238,.02) 48%, rgba(227,164,189,.06) 100%);
-  border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 26px 20px; text-align: center; overflow: hidden;
+  border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 13px 16px 11px; text-align: center; overflow: hidden;
   box-shadow: var(--shadow-soft); cursor: pointer; touch-action: manipulation;
   transition: border-color .6s, box-shadow .3s, transform .12s;
 }
@@ -115,32 +117,33 @@ html, body {
   -webkit-mask-image: repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px);
   mask-image: repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px);
 }
-.th-corner { position: absolute; width: 30px; height: 30px; z-index: 2; opacity: .9; transition: border-color .6s; }
+.th-corner { position: absolute; width: 22px; height: 22px; z-index: 2; opacity: .9; transition: border-color .6s; }
 .th-corner.tl { top: 0; left: 0; border-top: 2px solid var(--t-main); border-left: 2px solid var(--t-main); border-top-left-radius: var(--radius); }
 .th-corner.br { bottom: 0; right: 0; border-bottom: 2px solid var(--t-main); border-right: 2px solid var(--t-main); border-bottom-right-radius: var(--radius); }
-.th-art { position: absolute; right: -6px; top: 50%; transform: translateY(-50%); z-index: 2; opacity: .34; color: var(--t-main); pointer-events: none; filter: drop-shadow(0 0 12px currentColor); transition: color .6s; }
+.th-art { position: absolute; right: -4px; top: 50%; transform: translateY(-50%); z-index: 2; opacity: .32; color: var(--t-main); pointer-events: none; filter: drop-shadow(0 0 12px currentColor); transition: color .6s; }
 .th-center { position: relative; z-index: 3; }
-.th-no { position: absolute; top: 9px; right: 12px; z-index: 3; font-size: 9px; letter-spacing: .22em; color: var(--text-dim); }
-.th-hint { position: absolute; bottom: 9px; right: 12px; z-index: 3; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: var(--t-main); display: inline-flex; align-items: center; gap: 4px; opacity: .85; }
-.th-progress { position: relative; z-index: 3; margin: 10px auto 0; width: min(78%, 240px); height: 4px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
+.th-no { position: absolute; top: 7px; right: 11px; z-index: 3; font-size: 8px; letter-spacing: .2em; color: var(--text-dim); }
+.th-hint { position: absolute; bottom: 7px; right: 11px; z-index: 3; font-size: 10px; font-weight: 700; letter-spacing: .12em; color: var(--t-main); display: inline-flex; align-items: center; gap: 4px; opacity: .85; }
+.th-progress { position: relative; z-index: 3; margin: 6px auto 0; width: min(72%, 230px); height: 3px; border-radius: 999px; background: rgba(255,255,255,.08); overflow: hidden; }
 .th-progress i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--t-main), #f4e6ea); box-shadow: 0 0 8px var(--t-main); transition: width .6s var(--ease); }
 .temp-glow { position: absolute; width: 320px; height: 320px; border-radius: 50%; filter: blur(60px); opacity: .12; transition: opacity .6s, transform .6s, background .6s; pointer-events: none; }
 .temp-center { position: relative; z-index: 1; }
-.temp-value { font-size: 64px; font-weight: 800; line-height: 1; color: #b7a6e8; text-shadow: 0 0 14px currentColor; transition: color .6s; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
-.temp-title { margin-top: 8px; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
+.temp-value { font-size: 40px; font-weight: 800; line-height: 1; color: #b7a6e8; text-shadow: 0 0 14px currentColor; transition: color .6s; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
+.temp-title { margin-top: 3px; font-size: 17px; font-weight: 700; letter-spacing: 2px; }
 .temp-next { margin-top: 4px; font-size: 12px; color: var(--text-dim); }
 .boiling-tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 12px; border-radius: 999px; background: var(--accent-2); color: #33141f; font-size: 12px; font-weight: 700; animation: pulse 1.2s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 
 /* 卡牌区 */
-.card-area { min-height: 160px; background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 20px; display: flex; align-items: center; justify-content: center; }
+.card-area { min-height: 330px; background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 16px; display: flex; align-items: center; justify-content: center; }
 .card-empty { color: var(--text-dim); font-size: 14px; text-align: center; }
 .card { width: 100%; text-align: left; animation: cardIn .4s ease; }
 @keyframes cardIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: none; } }
 .card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.card-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); }
+.card-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); }
 .card-type { font-size: 14px; font-weight: 700; color: var(--accent-3); }
-.card-body { font-size: 17px; line-height: 1.6; }
+.card-body { font-size: 19px; line-height: 1.7; }
+.card-name-line { font-family: var(--font-brush); font-weight: 400; font-size: 24px; letter-spacing: .14em; text-align: center; margin: 12px 0 8px; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent-2)), 0 2px 4px rgba(0,0,0,.4); }
 .card-foot { margin-top: 12px; font-size: 12px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .admire-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--h-main, var(--accent)); background: rgba(255,255,255,.04); border: 1px solid var(--panel-border); border-radius: 999px; padding: 4px 10px; cursor: pointer; min-height: 26px; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: border-color .2s, transform .12s; }
 .admire-btn:active { transform: scale(.94); }
@@ -191,6 +194,10 @@ html, body {
 }
 .np-label { color: var(--accent-3); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
 .np-meta { color: var(--text); }
+
+/* ---------- 游戏屏顶部行 ---------- */
+.game-top-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; }
+.game-top-row .scene-badge, .game-top-row .turn-badge { align-self: auto; margin: 0; }
 
 /* ---------- 场景模式徽章 ---------- */
 .scene-badge {
@@ -350,6 +357,9 @@ html, body {
 .holo-name { text-align: center; margin-top: 10px; font-family: var(--font-brush); position: relative; z-index: 2; }
 .holo-name small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); margin-bottom: 4px; font-family: var(--font-body); }
 .holo-name b { font-size: 24px; font-weight: 400; letter-spacing: .16em; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent)), 0 2px 4px rgba(0,0,0,.45); }
+.holo-art { flex: 1; min-height: 0; margin: 9px 11px 7px; border-radius: 9px; overflow: hidden; position: relative; z-index: 2; border: 1px solid var(--h-soft, rgba(227,164,189,.18)); }
+.holo-art svg { display: block; width: 100%; height: 100%; }
+.gal-cell .holo-art { margin: 4px 6px; border-radius: 7px; }
 .holo-rose { flex: 1; display: flex; align-items: center; justify-content: center; opacity: .85; position: relative; z-index: 2; }
 .gal-name { font-family: var(--font-brush); font-weight: 400; }
 .temp-title { font-family: var(--font-brush); font-weight: 400; letter-spacing: 3px; }
@@ -384,9 +394,9 @@ html, body {
 .gal-cell .holo-temp { font-size: 10px; }
 .gal-cell .holo-rose svg { width: 40px; height: 40px; }
 .gal-count { text-align: center; font-size: 12px; color: var(--text-dim); padding: 10px 0 4px; }
-/* 鉴赏视图（浮世绘卡式：左信息右卡面） */
-.gal-view { display: flex; gap: 20px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
-.gal-info { flex: 1 1 220px; max-width: 400px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+/* 鉴赏视图（卡面优先：stage 最显眼，信息精简居中） */
+.gal-view { display: flex; gap: 14px; align-items: center; justify-content: center; flex-direction: column; }
+.gal-info { flex: 0 0 auto; width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 9px; min-width: 0; text-align: center; align-items: center; }
 .gal-series { font-size: 11px; letter-spacing: .26em; color: var(--text-dim); }
 .gal-quote { font-size: 15px; color: var(--text-dim); letter-spacing: .12em; }
 .gal-name { font-size: 34px; font-weight: 700; letter-spacing: .16em; font-family: var(--font-display); line-height: 1.2; }
@@ -396,21 +406,22 @@ html, body {
 .gal-skill small { display: block; font-size: 10px; letter-spacing: .26em; color: var(--text-dim); margin-bottom: 4px; }
 .gal-skill b { font-size: 17px; letter-spacing: .14em; }
 .gal-skill p { margin: 3px 0 0; font-size: 12px; color: var(--text-dim); line-height: 1.6; }
-.gal-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.gal-btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .gal-btns .btn { font-size: 13px; padding: 10px 12px; }
 .gal-no { font-size: 11px; letter-spacing: .3em; color: var(--text-dim); margin-top: 4px; }
-.gal-stage { flex: 0 0 auto; width: min(62vw, 320px); align-self: center; }
+.gal-stage { flex: 0 0 auto; width: min(76vw, 350px); align-self: center; order: -1; }
 .gal-back-row { display: flex; justify-content: center; gap: 18px; margin-top: 10px; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); }
 .gal-back-row span.on { color: var(--h-main, var(--accent)); font-weight: 800; }
 @media (max-width: 620px) {
-  .gal-stage { width: min(72vw, 300px); }
-  .gal-view { gap: 14px; }
-  .gal-name { font-size: 28px; }
+  .gal-stage { width: min(80vw, 330px); }
+  .gal-view { gap: 12px; }
+  .gal-name { font-size: 30px; }
+  .gal-desc { font-size: 13px; }
 }
 
 /* 游戏内任务卡 × 收藏卡质感 */
 .card.glowing { position: relative; }
-.card-frame { position: relative; border-radius: 14px; padding: 16px; background: linear-gradient(150deg, rgba(227,164,189,.10) 0%, rgba(255,234,238,.03) 45%, rgba(178,133,204,.08) 100%); border: 1px solid var(--panel-border); overflow: hidden; }
+.card-frame { position: relative; border-radius: 16px; padding: 20px 18px; background: linear-gradient(150deg, rgba(227,164,189,.10) 0%, rgba(255,234,238,.03) 45%, rgba(178,133,204,.08) 100%); border: 1px solid var(--panel-border); overflow: hidden; }
 .card-frame::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(232,201,168,.16); border-radius: 10px; pointer-events: none; z-index: 1; }
 .card-frame::after { content: ""; position: absolute; left: -60%; top: 0; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,242,247,.14), transparent); animation: frameSheen 4.5s ease-in-out infinite; pointer-events: none; }
 @keyframes frameSheen { 0%, 55% { left: -60%; } 90%, 100% { left: 130%; } }
@@ -478,15 +489,36 @@ html, body {
 <body>
 <div id="app">
 
-  <!-- ============ 设置屏 ============ -->
+  <!-- ============ 首页（一屏式：安全词 + 开始 + 入口） ============ -->
   <section id="screen-setup" class="screen">
     <h1 class="brand">∞<span>℃</span> 无界升温</h1>
-    <p class="brand-sub">温度无上限 · 安全词是唯一刹车<br/>让每一次靠近，都有迹可循</p>
+    <p class="brand-sub">温度无上限 · 安全词是唯一刹车</p>
     <div class="setup-card">
       <div class="field">
         <label><span data-ico="shield"></span> 安全词（必填）— 任何一方说出立即停止</label>
         <input id="inpSafeWord" type="text" maxlength="20" placeholder="例如：菠萝、红灯、月亮…" />
       </div>
+      <button id="btnStart" class="btn btn-primary btn-block btn-draw">开始游戏</button>
+      <div id="resumeBar" class="resume-bar hidden">
+        <span>检测到未完成的上一局</span>
+        <div class="resume-btns">
+          <button id="btnResume" class="btn btn-ghost">继续</button>
+          <button id="btnNew" class="btn btn-text">重开</button>
+        </div>
+      </div>
+      <div class="home-links">
+        <button id="btnCfg" class="btn btn-ghost home-link"><span data-ico="gamepad"></span> 对局设置</button>
+        <button id="btnGallery" class="btn btn-ghost home-link"><span data-ico="crystal"></span> 图鉴</button>
+        <button id="btnLib" class="btn btn-ghost home-link"><span data-ico="book"></span> 卡库</button>
+      </div>
+    </div>
+    <div id="setupInsight" class="report-insight hidden"></div>
+    <p class="safety-note">数据仅存于本设备浏览器，不上传任何服务器。</p>
+  </section>
+
+  <!-- ============ 对局设置（第二步） ============ -->
+  <section id="screen-cfg" class="screen hidden">
+    <div class="setup-card">
       <div class="field">
         <label><span data-ico="heart"></span> 关系阶段</label>
         <select id="selStage">
@@ -529,26 +561,17 @@ html, body {
         </div>
       </div>
       <button id="btnRemote" class="btn btn-ghost btn-block"><span data-ico="phone"></span> 远程同玩（两地玩同一局）</button>
-      <button id="btnGallery" class="btn btn-ghost btn-block"><span data-ico="crystal"></span> 卡面图鉴（60 张全息收藏卡）</button>
-      <button id="btnLib" class="btn btn-ghost btn-block"><span data-ico="book"></span> 编辑卡片库（改内容 · 留意见）</button>
-      <button id="btnStart" class="btn btn-primary btn-block">开始游戏</button>
+      <button id="btnCfgBack" class="btn btn-primary btn-block">完成，返回首页</button>
     </div>
-    <div id="resumeBar" class="resume-bar hidden">
-      <span>检测到未完成的上一局</span>
-      <div class="resume-btns">
-        <button id="btnResume" class="btn btn-ghost">继续</button>
-        <button id="btnNew" class="btn btn-text">重开</button>
-      </div>
-    </div>
-    <div id="setupInsight" class="report-insight hidden"></div>
-    <p class="safety-note">所有数据仅存于本设备浏览器，不上传任何服务器。<br/>安全词触发后不可追问、不可反驳——尊重为最高级亲密。</p>
   </section>
 
   <!-- ============ 游戏屏 ============ -->
   <section id="screen-game" class="screen hidden">
-    <div id="sceneBadge" class="scene-badge"><span data-ico="pin"></span> 当面模式</div>
-    <div id="remoteTag" class="scene-badge remote hidden"><span data-ico="phone"></span> 远程已连</div>
-    <div id="turnBadge" class="turn-badge hidden"><span data-ico="target"></span> 轮到 ♂ 男方</div>
+    <div class="game-top-row">
+      <div id="sceneBadge" class="scene-badge"><span data-ico="pin"></span> 当面模式</div>
+      <div id="remoteTag" class="scene-badge remote hidden"><span data-ico="phone"></span> 远程已连</div>
+      <div id="turnBadge" class="turn-badge hidden"><span data-ico="target"></span> 轮到 ♂ 男方</div>
+    </div>
     <div id="tempPanel" class="temp-panel" role="button" title="点击鉴赏当前称号">
       <div class="temp-glow" id="tempGlow"></div>
       <span class="th-corner tl"></span><span class="th-corner br"></span>
@@ -573,14 +596,14 @@ html, body {
         <button id="btnSkip" class="btn btn-ghost">跳过</button>
       </div>
     </div>
+    <div id="nextPreview" class="next-preview">
+      <span class="np-label"><span data-ico="crystal"></span> 下一张预告</span>
+      <span id="npMeta" class="np-meta">准备就绪…</span>
+    </div>
     <div class="game-footer">
       <button id="btnAudio" class="btn btn-text"><span data-ico="speaker"></span> 音效</button>
       <button id="btnEnd" class="btn btn-text">结束本局</button>
       <button id="btnSafeWord" class="btn btn-safe"><span data-ico="shield"></span> 安全词</button>
-    </div>
-    <div id="nextPreview" class="next-preview">
-      <span class="np-label"><span data-ico="crystal"></span> 下一张预告</span>
-      <span id="npMeta" class="np-meta">准备就绪…</span>
     </div>
   </section>
 
@@ -1648,6 +1671,161 @@ function motifArt(c, color, size) {
   '</svg>';
 }
 
+/* ================= V2 精修插画（逐张扩充）+ 通用拱窗场景底 ================= */
+/* 专属插画表：id → function(color, uid)；uid 保证 SVG defs id 全页唯一 */
+var CARD_ART = {
+  M04: function (color, uid) { return artKissForehead(color, uid); },
+  L03: function (color, uid) { return artFirstHand(color, uid); },
+  H15: function (color, uid) { return artSyncHeart(color, uid); }
+};
+
+function artKissForehead(color, uid) {
+  uid = uid || "k1";
+  var S = uid + "s", F = uid + "f", M = uid + "m", B = uid + "b", SO = uid + "so", G = uid + "g", P = uid + "p";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs>' +
+    '<linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#52293c"/><stop offset=".55" stop-color="#381c29"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b3044"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<radialGradient id="' + M + '" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#fbeef4"/><stop offset=".7" stop-color="#eab7c8"/><stop offset="1" stop-color="#c987a4"/></radialGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.2"/></filter>' +
+    '<filter id="' + SO + '" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.1"/></filter>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ff9dbb" flood-opacity=".9"/></filter>' +
+    '<filter id="' + P + '"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.82  0 0 0 0 0.78  0 0 0 0.05 0"/></filter>' +
+    '</defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<path d="M0 190 C 28 176 44 182 66 172 C 92 161 108 172 128 166 C 152 159 172 168 200 160 L 200 238 L 0 238 Z" fill="#1b0d13" opacity=".85"/>' +
+    '<path d="M0 208 C 34 198 60 204 92 196 C 124 188 156 198 200 190 L 200 238 L 0 238 Z" fill="#140a0f" opacity=".9"/>' +
+    '<circle cx="104" cy="62" r="44" fill="#e3a4bd" opacity=".07"/>' +
+    '<circle cx="104" cy="62" r="33" fill="#e3a4bd" opacity=".1"/>' +
+    '<circle cx="104" cy="62" r="23" fill="url(#' + M + ')"/>' +
+    '<path d="M 96 48 A 18 18 0 0 0 114 74" fill="none" stroke="#c987a4" stroke-width="2" opacity=".35" filter="url(#' + SO + ')"/>' +
+    '<ellipse cx="60" cy="120" rx="52" ry="9" fill="#d2739d" opacity=".1" filter="url(#' + B + ')"/>' +
+    '<ellipse cx="150" cy="150" rx="46" ry="8" fill="#b285cc" opacity=".08" filter="url(#' + B + ')"/>' +
+    '<g fill="#f4e3ec"><circle cx="32" cy="42" r="1.3"/><circle cx="66" cy="26" r="1"/><circle cx="170" cy="38" r="1.2"/><circle cx="26" cy="98" r="1"/><circle cx="182" cy="120" r="1.1"/><circle cx="52" cy="152" r="1" opacity=".7"/><circle cx="146" cy="182" r="1" opacity=".6"/></g>' +
+    '<g stroke="#f4e3ec" stroke-width="1" opacity=".85" stroke-linecap="round"><path d="M 46 60 l 0 8 M 42 64 l 8 0"/><path d="M 160 92 l 0 7 M 156.5 95.5 l 7 0"/></g>' +
+    '<ellipse cx="100" cy="206" rx="62" ry="7" fill="#0d0609" opacity=".75"/>' +
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 143 78 C 147 72.5 153.5 72.5 155.5 77 C 157.5 72.5 164 72.5 168 78 C 163.5 84.5 147.5 84.5 143 78 Z" fill="#ff8fae"/>' +
+    '<path d="M 147 77.2 C 151 74.4 156 74.8 160.5 77.4" fill="none" stroke="#ffd3e0" stroke-width="1" opacity=".8"/></g>' +
+    '<g><path d="M 74 130 C 69 132.5 64.5 137 62 143.5 C 58.5 152 56.5 162 55.5 174 C 55 179.5 57.5 182.5 62 182.5 L 87 182.5 C 91.5 182.5 94 179.5 93.3 174 C 92 160.5 89 147.5 83 136.5 C 80.5 132 77.5 129 74 130 Z" fill="url(#' + F + ')"/>' +
+    '<path d="M 61.5 143.5 C 59 152 57 162 56 174" fill="none" stroke="#f2a9c4" stroke-width="1" opacity=".5" filter="url(#' + SO + ')"/>' +
+    '<circle cx="72.5" cy="119" r="10" fill="url(#' + F + ')"/>' +
+    '<path d="M 79.5 110.5 C 83.5 109 87 110.5 88.5 114 C 85.5 113 82 113.5 79.5 115.5 Z" fill="url(#' + F + ')"/>' +
+    '<path d="M 81 105.5 C 85 103.5 89.5 104.5 91.5 108 C 88 106.5 84 107 81 109.5 Z" fill="url(#' + F + ')" opacity=".95"/>' +
+    '<path d="M 80 138 C 87 141 93.5 146 98 152.5" fill="none" stroke="#e88cab" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<path d="M 80.5 137.2 C 87 140 93 144.6 97 150" fill="none" stroke="#ffc9da" stroke-width="1" opacity=".55" filter="url(#' + SO + ')"/></g>' +
+    '<g><path d="M 111 121 C 102 127 96 138 93.5 152 C 91.5 163 91 174 91.5 182.5 L 129 182.5 C 129.5 164 126.5 144 120 130.5 C 117.5 125.5 114.5 122 111 121 Z" fill="url(#' + F + ')"/>' +
+    '<path d="M 94.5 152 C 92.8 163 92.2 173 92.4 181.5" fill="none" stroke="#f2a9c4" stroke-width="1" opacity=".45" filter="url(#' + SO + ')"/>' +
+    '<circle cx="112" cy="110" r="10" fill="url(#' + F + ')"/>' +
+    '<path d="M 103.5 106.5 C 103 101 107 96.5 112.5 96 C 118 95.5 122 99 122.8 103.5 C 119.5 101 115 100.4 111 101.8 C 107.5 103 104.8 104.5 103.5 106.5 Z" fill="#170c11"/>' +
+    '<path d="M 104 126 C 96 128.5 88 129.5 81 128.5" fill="none" stroke="#e88cab" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<path d="M 104 125.2 C 96.5 127.4 89 128.3 82 127.5" fill="none" stroke="#ffc9da" stroke-width="1" opacity=".55" filter="url(#' + SO + ')"/></g>' +
+    '<g fill="#e88cab"><ellipse cx="38" cy="168" rx="4.2" ry="2" transform="rotate(-26 38 168)" opacity=".9"/><ellipse cx="164" cy="156" rx="3.6" ry="1.8" transform="rotate(20 164 156)" opacity=".8"/><ellipse cx="146" cy="196" rx="3" ry="1.5" transform="rotate(-42 146 196)" opacity=".7"/><ellipse cx="58" cy="206" rx="2.6" ry="1.3" transform="rotate(30 58 206)" opacity=".6"/></g>' +
+    '<rect width="200" height="238" filter="url(#' + P + ')"/>' +
+    '</svg>';
+}
+
+function artFirstHand(color, uid) {
+  uid = uid || "k2";
+  var S = uid + "s", F = uid + "f", N = uid + "n", B = uid + "b", SO = uid + "so", G = uid + "g", P = uid + "p";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs>' +
+    '<linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4b2740"/><stop offset=".55" stop-color="#331a29"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5c3247"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<radialGradient id="' + N + '" cx=".5" cy=".38" r=".55"><stop offset="0" stop-color="#8a5a78" stop-opacity=".4"/><stop offset="1" stop-color="#8a5a78" stop-opacity="0"/></radialGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.4"/></filter>' +
+    '<filter id="' + SO + '" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1"/></filter>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffb9d2" flood-opacity=".95"/></filter>' +
+    '<filter id="' + P + '"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.82  0 0 0 0 0.78  0 0 0 0.05 0"/></filter>' +
+    '</defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect width="200" height="150" fill="url(#' + N + ')"/>' +
+    '<path d="M -10 66 C 40 44 92 50 140 34 C 168 25 188 28 210 22" fill="none" stroke="#d9b3c9" stroke-width="14" opacity=".07" filter="url(#' + B + ')"/>' +
+    '<path d="M -10 78 C 44 60 96 64 146 48 C 172 40 190 42 210 38" fill="none" stroke="#e3a4bd" stroke-width="6" opacity=".1" filter="url(#' + B + ')"/>' +
+    '<g fill="#f4e3ec"><circle cx="30" cy="36" r="1.4"/><circle cx="62" cy="22" r="1"/><circle cx="96" cy="40" r="1.2"/><circle cx="126" cy="20" r="1"/><circle cx="158" cy="44" r="1.5"/><circle cx="182" cy="70" r="1"/><circle cx="22" cy="84" r="1"/><circle cx="70" cy="58" r=".9" opacity=".8"/><circle cx="142" cy="66" r=".9" opacity=".8"/><circle cx="188" cy="108" r="1" opacity=".7"/><circle cx="14" cy="120" r="1" opacity=".6"/></g>' +
+    '<g stroke="#f4e3ec" stroke-width="1" opacity=".9" stroke-linecap="round"><path d="M 44 66 l 0 9 M 39.5 70.5 l 9 0"/><path d="M 156 88 l 0 8 M 152 92 l 8 0"/><path d="M 84 28 l 0 7 M 80.5 31.5 l 7 0" opacity=".8"/></g>' +
+    '<ellipse cx="100" cy="212" rx="66" ry="7" fill="#0d0609" opacity=".75"/>' +
+    '<path d="M 66 158 C 74 172 84 178 96 178 C 112 178 124 170 133 158" fill="none" stroke="#ff6d95" stroke-width="1.6" opacity=".9"/>' +
+    '<path d="M 66 158 C 60 150 58 142 60 134 M 133 158 C 139 150 141 142 139 134" fill="none" stroke="#ff6d95" stroke-width="1.2" opacity=".55"/>' +
+    '<g><path d="M 62 134 C 57 136.5 52.5 141 50 147.5 C 46.5 156 44.5 166 43.5 178 C 43 183.5 45.5 186.5 50 186.5 L 75 186.5 C 79.5 186.5 82 183.5 81.3 178 C 80 164.5 77 151.5 71 140.5 C 68.5 136 65.5 133 62 134 Z" fill="url(#' + F + ')"/>' +
+    '<circle cx="60.5" cy="123" r="10" fill="url(#' + F + ')"/>' +
+    '<path d="M 67.5 114.5 C 71.5 113 75 114.5 76.5 118 C 73.5 117 70 117.5 67.5 119.5 Z" fill="url(#' + F + ')"/>' +
+    '<path d="M 69.5 109.5 C 73.5 107.5 78 108.5 80 112 C 76.5 110.5 72.5 111 69.5 113.5 Z" fill="url(#' + F + ')" opacity=".95"/>' +
+    '<path d="M 68 142 C 76 148 84 154 90 160" fill="none" stroke="#f0aec6" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<path d="M 68.5 141.2 C 76 146.6 83.5 152.2 89 157" fill="none" stroke="#ffc9da" stroke-width="1" opacity=".55" filter="url(#' + SO + ')"/></g>' +
+    '<g><path d="M 138 134 C 143 136.5 147.5 141 150 147.5 C 153.5 156 155.5 166 156.5 178 C 157 183.5 154.5 186.5 150 186.5 L 125 186.5 C 120.5 186.5 118 183.5 118.7 178 C 120 164.5 123 151.5 129 140.5 C 131.5 136 134.5 133 138 134 Z" fill="url(#' + F + ')"/>' +
+    '<circle cx="139.5" cy="123" r="10" fill="url(#' + F + ')"/>' +
+    '<path d="M 131 116.5 C 128 110.5 132 105 138 104.3 C 144 103.6 148.5 107.5 149.4 112.5 C 145.5 109.8 140.5 109.2 136 110.8 C 134 111.6 132.2 113.6 131 116.5 Z" fill="#170c11"/>' +
+    '<path d="M 132 142 C 124 148 116 154 110 160" fill="none" stroke="#f0aec6" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<path d="M 131.5 141.2 C 124 146.6 116.5 152.2 111 157" fill="none" stroke="#ffc9da" stroke-width="1" opacity=".55" filter="url(#' + SO + ')"/></g>' +
+    '<g filter="url(#' + G + ')"><path d="M 88 160 C 90 155 95 153 99 155 C 101 152.5 105 152.5 107 155 C 110 153 114 154 115.5 157 C 113.5 162.5 106 165.5 99 164.5 C 93.5 163.8 89.5 162.4 88 160 Z" fill="#2a1620" stroke="#ffd7e6" stroke-width="1.3"/>' +
+    '<path d="M 99 155 C 100.5 157.5 100.5 160 99 162.5 M 107 155 C 105.8 157.5 105.8 160 107 162.4" fill="none" stroke="#ffd7e6" stroke-width="1" opacity=".75"/>' +
+    '<path d="M 90 158.8 C 96 156.8 108 156.8 114 158.6" fill="none" stroke="#ff9dbb" stroke-width=".9" opacity=".65"/></g>' +
+    '<path d="M 52 96 Q 100 74 148 96" fill="none" stroke="#e3a4bd" stroke-width="1" opacity=".6" stroke-dasharray="1 6" stroke-linecap="round"/>' +
+    '<g fill="#ffd7e6"><circle cx="84" cy="130" r="1.1" opacity=".8"/><circle cx="112" cy="128" r=".9" opacity=".7"/><circle cx="100" cy="120" r="1.3" opacity=".9"/><circle cx="100" cy="110" r=".8" opacity=".6"/></g>' +
+    '<rect width="200" height="238" filter="url(#' + P + ')"/>' +
+    '</svg>';
+}
+
+function artSyncHeart(color, uid) {
+  uid = uid || "k3";
+  var S = uid + "s", H = uid + "h", F = uid + "f", B = uid + "b", SO = uid + "so", G = uid + "g", P = uid + "p";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs>' +
+    '<linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f2350"/><stop offset=".55" stop-color="#2c1834"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + H + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2b6f5"/><stop offset="1" stop-color="#9a5fc4"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#54355c"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="3"/></filter>' +
+    '<filter id="' + SO + '" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="1.2"/></filter>' +
+    '<filter id="' + G + '" x="-90%" y="-90%" width="280%" height="280%"><feDropShadow dx="0" dy="0" stdDeviation="3.4" flood-color="#d8a8f2" flood-opacity="1"/></filter>' +
+    '<filter id="' + P + '"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0.9  0 0 0 0 0.8  0 0 0 0 0.95  0 0 0 0.05 0"/></filter>' +
+    '</defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="36" cy="34" r="1.3"/><circle cx="164" cy="30" r="1.3"/><circle cx="28" cy="108" r="1"/><circle cx="174" cy="118" r="1"/><circle cx="58" cy="58" r=".9" opacity=".8"/><circle cx="142" cy="62" r=".9" opacity=".8"/><circle cx="100" cy="24" r="1" opacity=".7"/></g>' +
+    '<path d="M0 196 C 30 186 56 192 86 184 C 118 176 148 186 200 178 L 200 238 L 0 238 Z" fill="#170c14" opacity=".9"/>' +
+    '<path d="M 100 141 C 100 141 76 125 76 107 C 76 96.5 84 90 92.5 90 C 96.6 90 100 93 100 97 C 100 93 104 90 107.5 90 C 116 90 124 96.5 124 107 C 124 125 100 141 100 141 Z" fill="#c98fe8" opacity=".12" filter="url(#' + B + ')"/>' +
+    '<path d="M 100 141 C 100 141 78 126.5 78 109.5 C 78 99.5 85.5 93 93.5 93 C 97.2 93 100 95.8 100 99.2 C 100 95.8 102.8 93 106.5 93 C 114.5 93 122 99.5 122 109.5 C 122 126.5 100 141 100 141 Z" fill="#c98fe8" opacity=".2" filter="url(#' + B + ')"/>' +
+    '<path d="M 100 139 C 100 139 79 125 79 108.5 C 79 98.8 86.2 92.5 94 92.5 C 97.5 92.5 100 95.2 100 98.4 C 100 95.2 102.5 92.5 106 92.5 C 113.8 92.5 121 98.8 121 108.5 C 121 125 100 139 100 139 Z" fill="url(#' + H + ')" filter="url(#' + G + ')"/>' +
+    '<path d="M 88 102 C 87.5 98.5 89.5 95.5 92.5 94.6" fill="none" stroke="#f3e3fb" stroke-width="1.6" opacity=".85" stroke-linecap="round"/>' +
+    '<g fill="none" stroke="#c98fe8" stroke-linecap="round"><path d="M 70 92 A 40 40 0 0 1 130 92" stroke-width="1.2" stroke-dasharray="2 6" opacity=".55"/><path d="M 59 87 A 52 52 0 0 1 141 87" stroke-width="1" stroke-dasharray="2 8" opacity=".35"/></g>' +
+    '<path d="M 20 172 L 60 172 L 71 158 L 82 180 L 91 148 L 97 166 L 103 166 L 109 148 L 118 180 L 129 158 L 140 172 L 180 172" fill="none" stroke="#d8b0ef" stroke-width="6" opacity=".14" filter="url(#' + B + ')"/>' +
+    '<path d="M 20 172 L 60 172 L 71 158 L 82 180 L 91 148 L 97 166 L 103 166 L 109 148 L 118 180 L 129 158 L 140 172 L 180 172" fill="none" stroke="#e2c4f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+    '<circle cx="20" cy="172" r="2.6" fill="#e2c4f5"/><circle cx="180" cy="172" r="2.6" fill="#e2c4f5"/>' +
+    '<g><path d="M 64 206 C 57 209 52.5 213.5 51 218 L 79 218 C 77.5 213.5 73 209 66 206 C 65.3 205.8 64.7 205.8 64 206 Z" fill="url(#' + F + ')"/><circle cx="65" cy="197" r="9" fill="url(#' + F + ')"/><path d="M 71.5 189 C 75 187.8 78.2 189 79.8 191.8 C 76.6 190.7 73.2 191 70.5 192.8 Z" fill="url(#' + F + ')"/></g>' +
+    '<g><path d="M 136 206 C 143 209 147.5 213.5 149 218 L 121 218 C 122.5 213.5 127 209 134 206 C 134.7 205.8 135.3 205.8 136 206 Z" fill="url(#' + F + ')"/><circle cx="135" cy="197" r="9" fill="url(#' + F + ')"/><path d="M 126.5 192.5 C 124 187.5 127 182.8 132.2 181.8 C 137.4 180.8 141.6 183.8 142.4 188.2 C 139 186 134.8 185.6 131.2 187.1 C 129.2 188 127.5 189.9 126.5 192.5 Z" fill="#170c11"/></g>' +
+    '<path d="M 76 202 C 88 197.5 112 197.5 124 202" fill="none" stroke="#c98fe8" stroke-width="1" opacity=".6" stroke-dasharray="1 4" stroke-linecap="round"/>' +
+    '<rect width="200" height="238" filter="url(#' + P + ')"/>' +
+    '</svg>';
+}
+
+/* 通用拱窗场景底：其余卡牌的 V2 观感（夜空+月+星+远山+类型母题） */
+function archScene(c, sm, mini) {
+  var uid = "ar" + c.id;
+  var top = { light: "#4b2a3d", medium: "#52293c", high: "#3f2350" }[c.scale] || "#4b2a3d";
+  var color = sm.main;
+  var starY = mini ? 40 : 36;
+  var mR = mini ? 15 : 20, haloR = mini ? 26 : 34;
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + uid + 's" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0" stop-color="' + top + '"/><stop offset=".55" stop-color="#331a29"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + uid + 's)"/>' +
+    '<circle cx="100" cy="70" r="' + haloR + '" fill="' + color + '" opacity=".1"/>' +
+    '<circle cx="100" cy="70" r="' + mR + '" fill="#eab7c8" opacity=".9"/>' +
+    '<g fill="#f4e3ec"><circle cx="34" cy="' + starY + '" r="1.2"/><circle cx="166" cy="' + (starY + 8) + '" r="1.2"/><circle cx="56" cy="' + (starY + 26) + '" r=".9" opacity=".8"/><circle cx="148" cy="' + (starY + 30) + '" r=".9" opacity=".8"/></g>' +
+    '<g stroke="#f4e3ec" stroke-width="1" opacity=".8" stroke-linecap="round"><path d="M 44 ' + (starY + 4) + ' l 0 7 M 40.5 ' + (starY + 7.5) + ' l 7 0"/><path d="M 156 ' + (starY + 16) + ' l 0 6 M 153 ' + (starY + 19) + ' l 6 0"/></g>' +
+    '<path d="M0 196 C 34 186 62 192 96 184 C 130 176 158 186 200 178 L 200 238 L 0 238 Z" fill="#170c14" opacity=".85"/>' +
+    '<ellipse cx="100" cy="206" rx="60" ry="6" fill="#0d0609" opacity=".7"/>' +
+    '<g transform="translate(' + (100 - (mini ? 33 : 48)) + ',' + (mini ? 92 : 88) + ')">' + motifArt(c, color, mini ? 66 : 96) + '</g>' +
+    '</svg>';
+}
+
+/* 卡面主视觉：专属插画优先，否则通用拱窗场景 */
+function cardArtHTML(c, sm, mini) {
+  var fn = CARD_ART[c.id];
+  if (fn) return fn(sm.main, "a" + c.id);
+  return archScene(c, sm, mini);
+}
+
 function cardFaceHTML(c, mini) {
   var sm = scaleMetaOf(c);
   var en = TYPE_EN[c.type] || "ORIGINAL";
@@ -1658,7 +1836,7 @@ function cardFaceHTML(c, mini) {
         '<span class="holo-en">' + en + '</span>' +
       '</div>' +
       '<div class="holo-name"><small>『 ' + esc(c.type || "自定义") + ' 』</small><b>' + esc(cardNameOf(c)) + '</b></div>' +
-      '<div class="holo-rose">' + motifArt(c, sm.main, mini ? 58 : 92) + '</div>' +
+      '<div class="holo-art">' + cardArtHTML(c, sm, mini) + '</div>' +
       '<div class="holo-desc">' + esc(c.content || "") + '</div>' +
       '<div class="holo-temp-row">' +
         '<span class="holo-temp">♥ ' + c.temp[0] + '~' + c.temp[1] + '℃</span>' +
@@ -1760,23 +1938,19 @@ function galViewHTML(c, flipped, opts) {
   var remoteTxt = c.scene === "remote" ? " · 远程专属" : "";
   return '' +
     '<div class="gal-view" style="--h-main:' + sm.main + '">' +
+      '<div class="gal-stage">' +
+        '<div class="jsGalStage">' + holoFace(c, { flipped: flipped, autoplay: !!galState.autoTimer }) + '</div>' +
+        '<div class="gal-back-row"><span class="' + (!flipped ? "on" : "") + '">FRONT</span><span class="' + (flipped ? "on" : "") + '">BACK</span></div>' +
+      '</div>' +
       '<div class="gal-info">' +
-        '<div class="gal-series">∞℃ · 情侣互动 · 无界升温 — WUJIE HOLO</div>' +
-        '<div class="gal-quote">「 ' + esc(c.type || "自定义") + ' 」</div>' +
         '<div class="gal-name">' + esc(cardNameOf(c)) + '</div>' +
-        '<div class="gal-cat">◆ 无界升温图鉴 · ' + sm.vol + ' · ' + ((SCALE_META[c.scale]||{}).label||c.scale) + remoteTxt + '</div>' +
+        '<div class="gal-cat">◆ ' + esc(c.type || "自定义") + ' · ' + sm.vol + ' · ' + ((SCALE_META[c.scale]||{}).label||c.scale) + remoteTxt + ' · ' + no + '</div>' +
         '<div class="gal-desc">' + esc(c.content || "") + '</div>' +
-        '<div class="gal-skill"><small>升温 · TYPE OF THE HEART</small><b>' + c.temp[0] + '~' + c.temp[1] + '℃</b><p>' + GAL_FLAVOR[c.scale] + '</p></div>' +
         '<div class="gal-btns">' +
           '<button class="btn btn-ghost jsGalFlip">翻看背面</button>' +
           '<button class="btn btn-ghost jsGalSave">保存此刻</button>' +
           (opts.grid ? '<button class="btn btn-text jsGalGrid">回图鉴</button>' : '') +
         '</div>' +
-        '<div class="gal-no">' + no + ' / ' + (CARDS.length + lib.customs.length) + ' · HOLOGRAPHIC</div>' +
-      '</div>' +
-      '<div class="gal-stage">' +
-        '<div class="jsGalStage">' + holoFace(c, { flipped: flipped, autoplay: !!galState.autoTimer }) + '</div>' +
-        '<div class="gal-back-row"><span class="' + (!flipped ? "on" : "") + '">FRONT</span><span class="' + (flipped ? "on" : "") + '">BACK</span></div>' +
       '</div>' +
     '</div>';
 }
@@ -1848,18 +2022,15 @@ function renderTitleAdmire(body) {
   var next = getNextTitle(temp);
   body.innerHTML =
     '<div class="gal-view" style="--h-main:' + color + '">' +
+      '<div class="gal-stage"><div class="jsGalStage">' + titleHolo(t, color, temp, admireFlipped) + '</div>' +
+        '<div class="gal-back-row"><span class="' + (!admireFlipped ? "on" : "") + '">FRONT</span><span class="' + (admireFlipped ? "on" : "") + '">BACK</span></div>' +
+      '</div>' +
       '<div class="gal-info">' +
-        '<div class="gal-series">∞℃ · 称号典藏 — WUJIE HOLO</div>' +
-        '<div class="gal-quote">「 ' + t.en + ' 」</div>' +
         '<div class="gal-name">' + t.label + '</div>' +
-        '<div class="gal-cat">◆ 无界升温 · 阶段 ' + pad2(idx + 1) + ' / 08 · ' + t.min + '℃ 封号</div>' +
+        '<div class="gal-cat">◆ 称号典藏 · 阶段 ' + pad2(idx + 1) + ' / 08 · ' + t.en + '</div>' +
         '<div class="gal-desc">' + t.desc + '</div>' +
         '<div class="gal-skill"><small>当前温度 · TEMPERATURE</small><b>' + temp + '℃</b><p>' + t.flavor + (next ? ' 距「' + next.label + '」还差 ' + (next.min - temp) + '℃。' : ' 已达最高称号。') + '</p></div>' +
         '<div class="gal-btns"><button class="btn btn-ghost jsGalFlip">翻看背面</button></div>' +
-        '<div class="gal-no">STAGE ' + pad2(idx + 1) + ' / 08 · HOLOGRAPHIC</div>' +
-      '</div>' +
-      '<div class="gal-stage"><div class="jsGalStage">' + titleHolo(t, color, temp, admireFlipped) + '</div>' +
-        '<div class="gal-back-row"><span class="' + (!admireFlipped ? "on" : "") + '">FRONT</span><span class="' + (admireFlipped ? "on" : "") + '">BACK</span></div>' +
       '</div>' +
     '</div>';
   afterGalViewRender(body);
@@ -2046,6 +2217,7 @@ function renderCard(card) {
           '<span class="tag tag-scale">' + scaleLabel + '</span>' +
           remoteTag +
         '</div>' +
+        '<div class="card-name-line">' + esc(cardNameOf(card)) + '</div>' +
         '<div class="card-body">' + esc(card.content) + '</div>' +
         ownerLine +
         '<div class="card-foot"><span>完成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃ · ' + (TYPE_EN[card.type]||"ORIGINAL") + '</span>' +
@@ -2935,6 +3107,9 @@ function init() {
   $("btnGallery").addEventListener("click", openGallery);
   $("btnGalBack").addEventListener("click", closeGallery);
   $("btnGalAuto").addEventListener("click", toggleGalAuto);
+  /* 对局设置（第二步） */
+  $("btnCfg").addEventListener("click", function () { showScreen("cfg"); });
+  $("btnCfgBack").addEventListener("click", function () { showScreen("setup"); refreshResume(); });
   /* 鉴赏视图按钮委托（图鉴页 + 游戏内弹窗共用） */
   $("galWrap").addEventListener("click", function (ev) { galViewDelegate(ev, "gallery"); });
   $("admireBody").addEventListener("click", function (ev) { galViewDelegate(ev, "admire"); });
