@@ -21,14 +21,19 @@
   --accent-3: #b285cc;
   --danger: #e35d75;
   --radius: 18px;
+  --radius-sm: 12px;
   --shadow: 0 10px 34px rgba(24,10,16,0.5);
+  --shadow-soft: 0 2px 8px rgba(24,10,16,0.16), 0 18px 44px rgba(24,10,16,0.34);
+  --ease: cubic-bezier(.22,1,.36,1);
+  --font-display: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", sans-serif;
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
 html, body {
   margin: 0; padding: 0;
   background: radial-gradient(120% 120% at 50% 0%, var(--bg-2) 0%, var(--bg) 60%);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
   touch-action: manipulation;
@@ -36,8 +41,10 @@ html, body {
   text-size-adjust: 100%;
 }
 #app {
-  min-height: 100vh;
-  min-height: 100dvh;
+  /* 固定高度让 #app 成为真正的滚动容器：内容超出时内部滚动，
+     卡片库顶部的 sticky 工具栏才能吸附（min-height 方案会让内容撑高、sticky 失效） */
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,9 +57,10 @@ html, body {
 .hidden { display: none !important; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-.btn { border: none; border-radius: 14px; padding: 14px 18px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform .12s, box-shadow .2s; color: var(--text); background: var(--panel); touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; appearance: none; }
+.btn { border: none; border-radius: 14px; padding: 14px 18px; font-size: 16px; font-weight: 600; cursor: pointer; transition: transform .12s, box-shadow .2s, background .2s, border-color .2s; color: var(--text); background: var(--panel); touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
 .btn:active { transform: scale(.97); }
-.btn-primary { background: var(--accent); color: #33141f; box-shadow: 0 8px 22px rgba(227,164,189,.28); }
+.btn-primary { background: linear-gradient(135deg, #eab2c7 0%, var(--accent) 45%, var(--accent-2) 100%); color: #33141f; box-shadow: 0 8px 22px rgba(227,164,189,.28); }
+.btn-primary:hover { box-shadow: 0 10px 28px rgba(227,164,189,.36); }
 .btn-ghost { background: var(--panel); border: 1px solid var(--panel-border); color: var(--text); }
 .btn-text { background: transparent; color: var(--text-dim); font-weight: 500; font-size: 14px; padding: 9px 14px; }
 .btn-danger { background: rgba(227,93,117,.14); border: 1px solid rgba(227,93,117,.45); color: var(--danger); }
@@ -62,11 +70,11 @@ html, body {
 
 /* 设置屏 */
 .setup-card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
-.brand { text-align: center; font-size: 30px; font-weight: 800; letter-spacing: 1px; margin: 0; }
+.brand { text-align: center; font-size: 34px; font-weight: 700; letter-spacing: 4px; margin: 0; font-family: var(--font-display); text-shadow: 0 2px 22px rgba(210,115,157,.3); }
 .brand span { color: var(--accent); }
-.brand-sub { text-align: center; color: var(--text-dim); font-size: 13px; margin: 0; line-height: 1.5; }
+.brand-sub { text-align: center; color: var(--text-dim); font-size: 13px; margin: 8px 0 0; line-height: 1.6; letter-spacing: 1px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-size: 13px; color: var(--text-dim); font-weight: 600; }
+.field label { font-size: 13px; color: var(--text-dim); font-weight: 600; display: flex; align-items: center; gap: 6px; }
 .field input[type="text"], .field select { background: rgba(255,255,255,.06); border: 1px solid var(--panel-border); border-radius: 10px; padding: 12px 14px; color: var(--text); font-size: 16px; outline: none; transition: border-color .2s; -webkit-user-select: auto; user-select: auto; }
 .field input[type="text"]:focus, .field select:focus { border-color: var(--accent); }
 .field input[type="text"] { -webkit-appearance: none; appearance: none; }
@@ -85,10 +93,10 @@ html, body {
 .temp-panel { position: relative; background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 28px 20px; text-align: center; overflow: hidden; }
 .temp-glow { position: absolute; width: 320px; height: 320px; border-radius: 50%; filter: blur(60px); opacity: .12; transition: opacity .6s, transform .6s, background .6s; pointer-events: none; }
 .temp-center { position: relative; z-index: 1; }
-.temp-value { font-size: 64px; font-weight: 800; line-height: 1; color: #b7a6e8; text-shadow: 0 0 14px currentColor; transition: color .6s; }
+.temp-value { font-size: 64px; font-weight: 800; line-height: 1; color: #b7a6e8; text-shadow: 0 0 14px currentColor; transition: color .6s; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
 .temp-title { margin-top: 8px; font-size: 20px; font-weight: 700; letter-spacing: 2px; }
 .temp-next { margin-top: 4px; font-size: 12px; color: var(--text-dim); }
-.boiling-tag { display: inline-block; margin-top: 8px; padding: 4px 12px; border-radius: 999px; background: var(--accent-2); color: #33141f; font-size: 12px; font-weight: 700; animation: pulse 1.2s infinite; }
+.boiling-tag { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 5px 12px; border-radius: 999px; background: var(--accent-2); color: #33141f; font-size: 12px; font-weight: 700; animation: pulse 1.2s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
 
 /* 卡牌区 */
@@ -97,7 +105,7 @@ html, body {
 .card { width: 100%; text-align: left; animation: cardIn .4s ease; }
 @keyframes cardIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: none; } }
 .card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.card-icon { font-size: 22px; }
+.card-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); }
 .card-type { font-size: 14px; font-weight: 700; color: var(--accent-3); }
 .card-body { font-size: 17px; line-height: 1.6; }
 .card-foot { margin-top: 12px; font-size: 12px; color: var(--text-dim); }
@@ -117,19 +125,19 @@ html, body {
 .report-title { font-size: 22px; font-weight: 700; }
 .report-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin: 8px 0; }
 .report-stat { background: rgba(255,255,255,.04); border-radius: 10px; padding: 10px; }
-.report-stat .num { font-size: 22px; font-weight: 700; }
+.report-stat .num { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .report-stat .lbl { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 .report-meta { font-size: 13px; color: var(--text-dim); margin-bottom: 12px; }
 .report-note { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
 .report-insight { font-size: 12px; color: var(--text-dim); line-height: 1.7; text-align: left; background: rgba(227,164,189,.06); border: 1px solid rgba(227,164,189,.2); border-radius: 10px; padding: 10px 14px; }
-.report-insight strong { color: var(--accent); }
+.report-insight strong { color: var(--accent); display: inline-flex; align-items: center; gap: 6px; }
 .report-btns { display: flex; gap: 12px; margin-top: 8px; }
 .report-btns .btn { flex: 1; }
 
 /* 弹窗 */
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; padding: 0; z-index: 50; overflow-y: auto; -webkit-overflow-scrolling: touch; animation: fadeIn .2s ease; }
-.modal-box { width: 100%; max-width: 360px; margin: auto; max-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg-2); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); }
-.modal-title { margin: 0; font-size: 19px; text-align: center; }
+.modal-box { width: 100%; max-width: 360px; margin: auto; max-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg-2); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-soft); }
+.modal-title { margin: 0; font-size: 19px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
 .modal-sub { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); text-align: center; line-height: 1.5; }
 
 /* 轻提示 */
@@ -145,15 +153,15 @@ html, body {
   background: rgba(178,133,204,.06); border: 1px solid rgba(178,133,204,.22);
   font-size: 13px; text-align: center;
 }
-.np-label { color: var(--accent-3); font-weight: 700; }
+.np-label { color: var(--accent-3); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
 .np-meta { color: var(--text); }
 
 /* ---------- 场景模式徽章 ---------- */
 .scene-badge {
-  align-self: center; padding: 5px 16px; border-radius: 999px;
+  align-self: center; padding: 6px 16px; border-radius: 999px;
   font-size: 12px; font-weight: 700;
   background: rgba(227,164,189,.1); border: 1px solid rgba(227,164,189,.25);
-  color: var(--accent);
+  color: var(--accent); display: inline-flex; align-items: center; gap: 6px;
 }
 .scene-badge.remote {
   background: rgba(178,133,204,.1); border-color: rgba(178,133,204,.3);
@@ -165,9 +173,9 @@ html, body {
   align-self: center; padding: 6px 18px; border-radius: 999px;
   font-size: 13px; font-weight: 700;
   background: rgba(210,115,157,.12); border: 1px solid rgba(210,115,157,.3);
-  color: var(--accent-2); animation: fadeIn .3s ease;
+  color: var(--accent-2); animation: fadeIn .3s ease; display: inline-flex; align-items: center; gap: 6px;
 }
-.card-owner { margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--accent-2); }
+.card-owner { margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--accent-2); display: flex; align-items: center; gap: 6px; }
 
 /* ---------- 昵称输入 ---------- */
 .name-row { display: flex; gap: 10px; }
@@ -230,11 +238,11 @@ html, body {
 
 /* ---------- 站内卡片库（可编辑 / 留意见） ---------- */
 .lib-head { position: sticky; top: 0; z-index: 6; background: var(--bg); padding: 4px 0 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--panel-border); margin-bottom: 4px; }
-.lib-title { font-size: 19px; font-weight: 800; text-align: center; }
+.lib-title { font-size: 19px; font-weight: 800; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
 .lib-tools { display: flex; gap: 8px; flex-wrap: wrap; }
 .lib-tools .btn { flex: 1; min-width: 78px; padding: 9px 8px; font-size: 13px; }
 .lib-tabs { display: flex; gap: 8px; }
-.lib-tab { flex: 1; text-align: center; padding: 10px; border-radius: 12px; border: 1px solid var(--panel-border); background: var(--panel); cursor: pointer; font-weight: 700; font-size: 14px; transition: all .2s; user-select: none; }
+.lib-tab { flex: 1; text-align: center; padding: 10px; border-radius: 12px; border: 1px solid var(--panel-border); background: var(--panel); cursor: pointer; font-weight: 700; font-size: 14px; transition: all .2s; user-select: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .lib-tab.active { background: var(--accent); color: #33141f; border-color: transparent; }
 .lib-section { display: flex; flex-direction: column; gap: 10px; }
 .lib-section-title { font-size: 15px; font-weight: 700; margin: 8px 0 0; display: flex; align-items: center; gap: 8px; }
@@ -246,7 +254,7 @@ html, body {
 .lib-card.lib-deleted { opacity: .45; }
 .lib-card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .lib-id { font-size: 12px; color: var(--text-dim); font-weight: 700; }
-.lib-type { font-size: 12px; color: var(--accent-3); font-weight: 700; }
+.lib-type { font-size: 12px; color: var(--accent-3); font-weight: 700; display: inline-flex; align-items: center; gap: 5px; }
 .lib-content { width: 100%; box-sizing: border-box; background: rgba(255,255,255,.06); border: 1px solid var(--panel-border); border-radius: 10px; padding: 10px 12px; color: var(--text); font-size: 16px; line-height: 1.5; resize: vertical; min-height: 58px; -webkit-user-select: auto; user-select: auto; font-family: inherit; }
 .lib-content:focus, .lib-note:focus, .lib-temp-row input:focus, .lib-type-input:focus { border-color: var(--accent); outline: none; }
 .lib-temp-row { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
@@ -298,6 +306,14 @@ html, body {
 .rtc-status.ok { color: var(--accent); }
 .rtc-btnrow { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 
+/* ---------- 图标 & 细节 ---------- */
+.ico { display: inline-block; vertical-align: -0.22em; flex-shrink: 0; }
+::selection { background: rgba(227,164,189,.35); color: #fff; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(227,164,189,.22); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(227,164,189,.4); }
+::-webkit-scrollbar-track { background: transparent; }
+
 </style>
 </head>
 <body>
@@ -309,52 +325,52 @@ html, body {
     <p class="brand-sub">温度无上限 · 安全词是唯一刹车<br/>让每一次靠近，都有迹可循</p>
     <div class="setup-card">
       <div class="field">
-        <label>🛑 安全词（必填）— 任何一方说出立即停止</label>
+        <label><span data-ico="shield"></span> 安全词（必填）— 任何一方说出立即停止</label>
         <input id="inpSafeWord" type="text" maxlength="20" placeholder="例如：菠萝、红灯、月亮…" />
       </div>
       <div class="field">
-        <label>💑 关系阶段</label>
+        <label><span data-ico="heart"></span> 关系阶段</label>
         <select id="selStage">
           <option value="">请选择…</option>
         </select>
       </div>
       <div class="field">
-        <label>📍 场景模式 — 你们现在怎么玩？</label>
+        <label><span data-ico="pin"></span> 场景模式 — 你们现在怎么玩？</label>
         <div class="radio-row">
-          <label class="radio-pill"><input type="radio" name="sceneMode" value="together" checked /> 📍 当面一起</label>
-          <label class="radio-pill"><input type="radio" name="sceneMode" value="remote" /> 📱 异地远程</label>
+          <label class="radio-pill"><input type="radio" name="sceneMode" value="together" checked /><span data-ico="pin"></span> 当面一起</label>
+          <label class="radio-pill"><input type="radio" name="sceneMode" value="remote" /><span data-ico="phone"></span> 异地远程</label>
         </div>
         <p style="margin:4px 0 0;font-size:11px;color:var(--text-dim);line-height:1.5;">
           当面模式：肢体接触类卡牌 · 异地模式：额外解锁声音/视觉/同步等远程专属卡
         </p>
       </div>
       <div class="field">
-        <label>💞 双方昵称（可选，默认男方 / 女方）</label>
+        <label><span data-ico="heart"></span> 双方昵称（可选，默认男方 / 女方）</label>
         <div class="name-row">
           <input id="inpP0" type="text" maxlength="8" placeholder="男方昵称" />
           <input id="inpP1" type="text" maxlength="8" placeholder="女方昵称" />
         </div>
         <p style="margin:4px 0 0;font-size:11px;color:var(--text-dim);line-height:1.5;">
-          开局用「🎲 投骰子」决定谁先拿第一张卡，之后轮流进行
+          开局用「<span data-ico="dice"></span> 投骰子」决定谁先拿第一张卡，之后轮流进行
         </p>
       </div>
       <div class="field">
-        <label>🎮 卡牌来源</label>
+        <label><span data-ico="gamepad"></span> 卡牌来源</label>
         <div class="radio-row">
           <label class="radio-pill"><input type="radio" name="mode" value="basic" checked /> 基础模式</label>
           <label class="radio-pill"><input type="radio" name="mode" value="free" /> 自由混合</label>
         </div>
       </div>
       <div class="field">
-        <label>🔥 尺度偏好（可多选）</label>
+        <label><span data-ico="flame"></span> 尺度偏好（可多选）</label>
         <div class="check-row">
           <label class="check-pill"><input type="checkbox" id="chkLight" checked /> 轻度</label>
           <label class="check-pill"><input type="checkbox" id="chkMedium" /> 中度</label>
           <label class="check-pill"><input type="checkbox" id="chkHigh" /> 高度</label>
         </div>
       </div>
-      <button id="btnRemote" class="btn btn-ghost btn-block">📱 远程同玩（两地玩同一局）</button>
-      <button id="btnLib" class="btn btn-ghost btn-block">📚 编辑卡片库（改内容 · 留意见）</button>
+      <button id="btnRemote" class="btn btn-ghost btn-block"><span data-ico="phone"></span> 远程同玩（两地玩同一局）</button>
+      <button id="btnLib" class="btn btn-ghost btn-block"><span data-ico="book"></span> 编辑卡片库（改内容 · 留意见）</button>
       <button id="btnStart" class="btn btn-primary btn-block">开始游戏</button>
     </div>
     <div id="resumeBar" class="resume-bar hidden">
@@ -370,16 +386,16 @@ html, body {
 
   <!-- ============ 游戏屏 ============ -->
   <section id="screen-game" class="screen hidden">
-    <div id="sceneBadge" class="scene-badge">📍 当面模式</div>
-    <div id="remoteTag" class="scene-badge remote hidden">📱 远程已连</div>
-    <div id="turnBadge" class="turn-badge hidden">🎯 轮到 ♂ 男方</div>
+    <div id="sceneBadge" class="scene-badge"><span data-ico="pin"></span> 当面模式</div>
+    <div id="remoteTag" class="scene-badge remote hidden"><span data-ico="phone"></span> 远程已连</div>
+    <div id="turnBadge" class="turn-badge hidden"><span data-ico="target"></span> 轮到 ♂ 男方</div>
     <div class="temp-panel">
       <div class="temp-glow" id="tempGlow"></div>
       <div class="temp-center">
         <div class="temp-value" id="tempValue">0℃</div>
         <div class="temp-title" id="tempTitle">破冰期</div>
         <div class="temp-next" id="tempNext"></div>
-        <div id="boilingTag" class="boiling-tag hidden">🔥 沸腾模式 · 升温翻倍</div>
+        <div id="boilingTag" class="boiling-tag hidden"><span data-ico="flame"></span> 沸腾模式 · 升温翻倍</div>
       </div>
     </div>
     <div id="cardArea" class="card-area">
@@ -393,12 +409,12 @@ html, body {
       </div>
     </div>
     <div class="game-footer">
-      <button id="btnAudio" class="btn btn-text">🔊 音效</button>
+      <button id="btnAudio" class="btn btn-text"><span data-ico="speaker"></span> 音效</button>
       <button id="btnEnd" class="btn btn-text">结束本局</button>
-      <button id="btnSafeWord" class="btn btn-safe">🛑 安全词</button>
+      <button id="btnSafeWord" class="btn btn-safe"><span data-ico="shield"></span> 安全词</button>
     </div>
     <div id="nextPreview" class="next-preview">
-      <span class="np-label">🔮 下一张预告</span>
+      <span class="np-label"><span data-ico="crystal"></span> 下一张预告</span>
       <span id="npMeta" class="np-meta">准备就绪…</span>
     </div>
   </section>
@@ -429,16 +445,16 @@ html, body {
   <!-- ============ 卡片库（站内可编辑） ============ -->
   <section id="screen-library" class="screen hidden">
     <div class="lib-head">
-      <div class="lib-title">📚 卡片库 · 编辑与意见</div>
+      <div class="lib-title"><span data-ico="book"></span> 卡片库 · 编辑与意见</div>
       <div class="lib-tools">
-        <button id="btnLibExport" class="btn btn-ghost">⬇ 导出</button>
-        <button id="btnLibImport" class="btn btn-ghost">⬆ 导入</button>
-        <button id="btnLibReset" class="btn btn-danger">↺ 重置默认</button>
-        <button id="btnLibBack" class="btn btn-primary">← 返回</button>
+        <button id="btnLibExport" class="btn btn-ghost"><span data-ico="download"></span> 导出</button>
+        <button id="btnLibImport" class="btn btn-ghost"><span data-ico="upload"></span> 导入</button>
+        <button id="btnLibReset" class="btn btn-danger"><span data-ico="reset"></span> 重置默认</button>
+        <button id="btnLibBack" class="btn btn-primary"><span data-ico="back"></span> 返回</button>
       </div>
       <div class="lib-tabs">
-        <div class="lib-tab active" data-scene="both">💞 通用卡</div>
-        <div class="lib-tab" data-scene="remote">📱 异地专属</div>
+        <div class="lib-tab active" data-scene="both"><span data-ico="heart"></span> 通用卡</div>
+        <div class="lib-tab" data-scene="remote"><span data-ico="phone"></span> 异地专属</div>
       </div>
     </div>
     <div id="libWrap"></div>
@@ -448,7 +464,7 @@ html, body {
   <!-- ============ 投骰子定先后弹窗 ============ -->
   <div id="modalDice" class="modal hidden">
     <div class="modal-box">
-      <h3 class="modal-title">🎲 投骰子 · 定先后</h3>
+      <h3 class="modal-title"><span data-ico="dice"></span> 投骰子 · 定先后</h3>
       <p class="modal-sub">各掷一颗骰子，点数大的一方先拿第一张卡</p>
       <div class="dice-row">
         <div class="dice-side">
@@ -462,8 +478,8 @@ html, body {
         </div>
       </div>
       <div id="diceResult" class="dice-result"></div>
-      <button id="btnRollDice" class="btn btn-primary">🎲 投骰子</button>
-      <button id="btnStartAfterDice" class="btn btn-primary hidden">开始游戏 →</button>
+      <button id="btnRollDice" class="btn btn-primary"><span data-ico="dice"></span> 投骰子</button>
+      <button id="btnStartAfterDice" class="btn btn-primary hidden">开始游戏 <span data-ico="right"></span></button>
       <button id="btnCancelDice" class="btn btn-text">取消</button>
     </div>
   </div>
@@ -471,11 +487,11 @@ html, body {
   <!-- ============ 安全词弹窗 ============ -->
   <div id="modalSafe" class="modal hidden">
     <div class="modal-box">
-      <h3 class="modal-title">🛑 安全词已触发</h3>
+      <h3 class="modal-title"><span data-ico="shield"></span> 安全词已触发</h3>
       <p class="modal-sub">尊重为最高级亲密。请选择接下来的方式，不可被追问、不可被反驳。</p>
-      <button id="btnPause" class="btn btn-ghost">⏸ 暂停一下，稍后继续</button>
-      <button id="btnSafeSkip" class="btn btn-ghost">⏭ 跳过当前卡牌</button>
-      <button id="btnTerminate" class="btn btn-danger">⏹ 终止本局游戏</button>
+      <button id="btnPause" class="btn btn-ghost"><span data-ico="pause"></span> 暂停一下，稍后继续</button>
+      <button id="btnSafeSkip" class="btn btn-ghost"><span data-ico="skip"></span> 跳过当前卡牌</button>
+      <button id="btnTerminate" class="btn btn-danger"><span data-ico="stop"></span> 终止本局游戏</button>
       <button id="btnCancelSafe" class="btn btn-text">取消，继续游戏</button>
     </div>
   </div>
@@ -483,22 +499,22 @@ html, body {
   <!-- ============ 远程同玩弹窗（WebRTC P2P 手动信令，无服务器） ============ -->
   <div id="modalRemote" class="modal hidden">
     <div class="modal-box">
-      <h3 class="modal-title">📱 远程同玩 · 点对点直连</h3>
+      <h3 class="modal-title"><span data-ico="phone"></span> 远程同玩 · 点对点直连</h3>
       <p class="modal-sub">相隔两地也能玩同一局。全程点对点直连，游戏数据不经任何服务器。<br/>安全词 / 昵称 / 卡库设置以<strong>房主设备</strong>为准。</p>
       <div id="rtcRoleRow" class="rtc-roles">
-        <button id="btnRtcHost" class="btn btn-primary">🏠 我是房主（创建房间）</button>
-        <button id="btnRtcJoin" class="btn btn-ghost">📲 我是加入方</button>
+        <button id="btnRtcHost" class="btn btn-primary"><span data-ico="home"></span> 我是房主（创建房间）</button>
+        <button id="btnRtcJoin" class="btn btn-ghost"><span data-ico="phoneIn"></span> 我是加入方</button>
       </div>
       <div id="rtcHostBox" class="hidden">
         <p class="rtc-step">① 生成邀请码，发给对方（微信 / QQ 直接粘贴文字）</p>
         <textarea id="rtcOfferOut" class="rtc-code" readonly placeholder="点「我是房主」自动生成…"></textarea>
         <div class="rtc-btnrow">
-          <button id="btnCopyOffer" class="btn btn-text">📋 复制邀请码</button>
+          <button id="btnCopyOffer" class="btn btn-text"><span data-ico="copy"></span> 复制邀请码</button>
         </div>
         <p class="rtc-step">② 对方生成回执码后，粘贴到下面并点「接通」</p>
         <textarea id="rtcAnswerIn" class="rtc-code" placeholder="粘贴对方的回执码…"></textarea>
         <div class="rtc-btnrow">
-          <button id="btnRtcConnect" class="btn btn-primary">🔗 接通</button>
+          <button id="btnRtcConnect" class="btn btn-primary"><span data-ico="link"></span> 接通</button>
         </div>
       </div>
       <div id="rtcJoinBox" class="hidden">
@@ -510,12 +526,12 @@ html, body {
         <p class="rtc-step">② 把回执码发给房主，房主点「接通」后自动同步，等房主开始游戏</p>
         <textarea id="rtcAnswerOut" class="rtc-code" readonly placeholder="回执码将显示在这里…"></textarea>
         <div class="rtc-btnrow">
-          <button id="btnCopyAnswer" class="btn btn-text">📋 复制回执码</button>
+          <button id="btnCopyAnswer" class="btn btn-text"><span data-ico="copy"></span> 复制回执码</button>
         </div>
       </div>
       <div id="rtcStatus" class="rtc-status"></div>
       <div class="rtc-btnrow">
-        <button id="btnRtcDisconnect" class="btn btn-danger">⏏ 断开连接</button>
+        <button id="btnRtcDisconnect" class="btn btn-danger"><span data-ico="eject"></span> 断开连接</button>
         <button id="btnRtcClose" class="btn btn-text">关闭</button>
       </div>
     </div>
@@ -540,21 +556,21 @@ var TITLES = [
 ];
 
 var TYPE_META = {
-  "默契问答":   { icon: "🧠" },
-  "回忆杀":     { icon: "📸" },
-  "真心话":     { icon: "💬" },
-  "亲密任务":   { icon: "💋" },
-  "未来约定":   { icon: "🌟" },
-  "声音卡":     { icon: "🎧" },
-  "视觉卡":     { icon: "👁" },
-  "想象卡":     { icon: "💭" },
-  "同步卡":     { icon: "🔄" },
-  "角色扮演卡": { icon: "🎭" },
-  "欲望卡":     { icon: "🔥" },
-  "挑逗卡":     { icon: "😏" },
-  "褪衣卡":     { icon: "👗" },
-  "指令卡":     { icon: "📋" },
-  "同步刺激卡": { icon: "⚡" }
+  "默契问答":   { icon: "brain" },
+  "回忆杀":     { icon: "camera" },
+  "真心话":     { icon: "chat" },
+  "亲密任务":   { icon: "kiss" },
+  "未来约定":   { icon: "star" },
+  "声音卡":     { icon: "headset" },
+  "视觉卡":     { icon: "eye" },
+  "想象卡":     { icon: "thought" },
+  "同步卡":     { icon: "sync" },
+  "角色扮演卡": { icon: "masks" },
+  "欲望卡":     { icon: "flame" },
+  "挑逗卡":     { icon: "smiley" },
+  "褪衣卡":     { icon: "dress" },
+  "指令卡":     { icon: "clipboard" },
+  "同步刺激卡": { icon: "bolt" }
 };
 
 var SCALE_META = {
@@ -698,7 +714,7 @@ function saveLib() {
 }
 function getLibEdit(id) { return lib.edits[id] || null; }
 
-/* 合并单张卡：默认库 → 站内编辑/删除；再查游戏内自定义卡与站内新增卡 */
+/* 合并单张卡：默认库 → 站内编辑/删除；再查游戏内自定义卡与站内新增卡（同样应用编辑） */
 function resolveCard(id) {
   for (var i = 0; i < CARDS.length; i++) {
     if (CARDS[i].id !== id) continue;
@@ -711,10 +727,21 @@ function resolveCard(id) {
     }
     return c;
   }
-  if (state && state.customCards) {
-    for (var j = 0; j < state.customCards.length; j++) if (state.customCards[j].id === id) return state.customCards[j];
+  function mergeCustom(card) {
+    var e2 = lib.edits[card.id];
+    if (e2 && e2.deleted) return null;
+    var c2 = Object.assign({}, card);
+    if (e2) {
+      if (e2.content != null) c2.content = e2.content;
+      if (e2.type != null) c2.type = e2.type;
+      if (e2.temp) c2.temp = e2.temp.slice ? e2.temp.slice() : e2.temp;
+    }
+    return c2;
   }
-  for (var k = 0; k < lib.customs.length; k++) if (lib.customs[k].id === id) return lib.customs[k];
+  if (state && state.customCards) {
+    for (var j = 0; j < state.customCards.length; j++) if (state.customCards[j].id === id) return mergeCustom(state.customCards[j]);
+  }
+  for (var k = 0; k < lib.customs.length; k++) if (lib.customs[k].id === id) return mergeCustom(lib.customs[k]);
   return null;
 }
 
@@ -735,7 +762,7 @@ function renderLibrary() {
     html += '<div class="lib-section-title lib-' + sc + '">' + scaleLabel +
             '<span class="lib-scale-tag">' + cards.length + ' 张</span></div>';
     cards.forEach(function (c) { html += libCardHTML(c); });
-    html += '<div class="lib-add"><button class="btn btn-ghost" data-act="add" data-add="' + scene + '|' + sc + '">＋ 新增' + scaleLabel + '卡</button></div>';
+    html += '<div class="lib-add"><button class="btn btn-ghost" data-act="add" data-add="' + scene + '|' + sc + '">' + ico("plus", 14) + ' 新增' + scaleLabel + '卡</button></div>';
     html += '</div>';
   });
   wrap.innerHTML = html;
@@ -750,7 +777,7 @@ function libCardHTML(c) {
   var deleted = !!(e && e.deleted);
   var typeHtml = isCustom
     ? '<input class="lib-type-input" data-id="' + c.id + '" data-field="type" value="' + esc(c.type) + '" style="background:rgba(255,255,255,.06);border:1px solid var(--panel-border);border-radius:8px;padding:5px 8px;color:var(--accent-3);font-size:12px;font-weight:700;width:96px;" />'
-    : '<span class="lib-type">' + ((TYPE_META[c.type] && TYPE_META[c.type].icon) ? TYPE_META[c.type].icon + " " : "") + esc(c.type) + '</span>';
+    : '<span class="lib-type">' + ((TYPE_META[c.type] && TYPE_META[c.type].icon) ? ico(TYPE_META[c.type].icon, 13) + " " : "") + esc(c.type) + '</span>';
   var actions = isCustom
     ? '<button class="btn btn-danger" data-act="delCustom" data-id="' + c.id + '">删除此卡</button>'
     : '<button class="btn btn-ghost" data-act="restore" data-id="' + c.id + '">恢复默认</button>' +
@@ -784,8 +811,17 @@ function onLibInput(ev) {
   var e = lib.edits[id] || (lib.edits[id] = {});
   if (field === "content") e.content = t.value;
   else if (field === "note") e.note = t.value;
-  else if (field === "tempMin") { e.temp = e.temp ? e.temp.slice() : [0, 0]; e.temp[0] = parseInt(t.value || "0", 10) || 0; }
-  else if (field === "tempMax") { e.temp = e.temp ? e.temp.slice() : [0, 0]; e.temp[1] = parseInt(t.value || "0", 10) || 0; }
+  else if (field === "tempMin" || field === "tempMax") {
+    /* 初值取卡片当前温度，避免只改一端时另一端变成 0 */
+    if (!e.temp) {
+      var cur = resolveCard(id);
+      e.temp = (cur && cur.temp) ? [cur.temp[0], cur.temp[1]] : [0, 0];
+    } else {
+      e.temp = e.temp.slice();
+    }
+    if (field === "tempMin") e.temp[0] = parseInt(t.value || "0", 10) || 0;
+    else e.temp[1] = parseInt(t.value || "0", 10) || 0;
+  }
   saveLib();
 }
 
@@ -909,20 +945,87 @@ function esc(s) {
   if (!s) return "";
   var d = document.createElement("div");
   d.textContent = s;
-  return d.innerHTML;
+  /* innerHTML 只转义 &<>，属性值里的双引号需额外转义，防止破坏 value="..." 结构 */
+  return d.innerHTML.replace(/"/g, "&quot;");
+}
+
+/* ================= 图标（统一描边 SVG，随文字颜色） ================= */
+var ICONS = {
+  shield:  '<path d="M12 3l7 3v5.5c0 4.6-3 8.2-7 9.5-4-1.3-7-4.9-7-9.5V6z"/><path d="M9.3 12l1.9 1.9 3.5-3.7"/>',
+  heart:   '<path d="M12 20.3S4.5 15.6 4.5 10a4.6 4.6 0 017.5-3.4A4.6 4.6 0 0119.5 10c0 5.6-7.5 10.3-7.5 10.3z"/>',
+  pin:     '<path d="M12 21.5S6 15.8 6 10.8a6 6 0 1112 0c0 5-6 10.7-6 10.7z"/><circle cx="12" cy="10.8" r="2.4"/>',
+  phone:   '<rect x="7" y="3" width="10" height="18" rx="2.6"/><path d="M10.6 17.6h2.8"/>',
+  dice:    '<rect x="4.5" y="4.5" width="15" height="15" rx="3.4"/><circle cx="9" cy="9" r="1.05" fill="currentColor" stroke="none"/><circle cx="15" cy="9" r="1.05" fill="currentColor" stroke="none"/><circle cx="9" cy="15" r="1.05" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.05" fill="currentColor" stroke="none"/>',
+  gamepad: '<rect x="3" y="7" width="18" height="10" rx="5"/><path d="M7.5 10v3M6 11.5h3M16.5 11h.01M18.5 13h.01"/>',
+  flame:   '<path d="M12 3.5c1.1 3-3.2 4.6-3.2 8a3.7 3.7 0 007.4 0c0-1.1-.5-2.2-1.6-3.3.1 2.1-2 2.6-2 2.6.9-2.6-.6-5.3-.6-7.3z"/>',
+  book:    '<path d="M4 5.5A2.5 2.5 0 016.5 3H20v15.5H6.5A2.5 2.5 0 004 21z"/><path d="M4 18.5A2.5 2.5 0 016.5 16H20"/>',
+  target:  '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+  speaker: '<path d="M4 9.5v5h3.6L12 18V6L7.6 9.5z"/><path d="M15.5 9.5a4.2 4.2 0 010 5"/>',
+  muted:   '<path d="M4 9.5v5h3.6L12 18V6L7.6 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+  crystal: '<circle cx="12" cy="13.5" r="6.5"/><path d="M12 7V4.5M9.5 3h5"/><path d="M10.2 16.5l1.4-2.8 2.2 1-1.4 2.8z"/>',
+  download:'<path d="M12 3.5V14M8 10.5l4 4 4-4"/><path d="M4.5 17v1.5a2 2 0 002 2h11a2 2 0 002-2V17"/>',
+  upload:  '<path d="M12 15V4.5M8 8.5l4-4 4 4"/><path d="M4.5 17v1.5a2 2 0 002 2h11a2 2 0 002-2V17"/>',
+  reset:   '<path d="M4.5 12a7.5 7.5 0 101.4-4.4"/><path d="M4.5 4.5V9H9"/>',
+  back:    '<path d="M15 5.5L8.5 12l6.5 6.5"/>',
+  right:   '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  brain:   '<path d="M12 4.5a3 3 0 00-3 3 3 3 0 00-2 5 3 3 0 002 5 3 3 0 006 0 3 3 0 002-5 3 3 0 00-2-5 3 3 0 00-3-3z"/><path d="M12 4.5V19"/>',
+  camera:  '<path d="M4 8h3.2l1.8-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13.5" r="3.4"/>',
+  chat:    '<path d="M4 5.5h16v11H9.5L4 20z"/>',
+  kiss:    '<path d="M12 20.3S4.5 15.6 4.5 10a4.6 4.6 0 017.5-3.4A4.6 4.6 0 0119.5 10c0 5.6-7.5 10.3-7.5 10.3z"/><path d="M9 12.2l1.4 1.4 1.4-1.4 1.4 1.4 1.4-1.4"/>',
+  star:    '<path d="M12 3.5l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z"/>',
+  headset: '<path d="M4.5 14v-2a7.5 7.5 0 0115 0v2"/><rect x="3" y="14" width="4.5" height="6" rx="1.8"/><rect x="16.5" y="14" width="4.5" height="6" rx="1.8"/>',
+  eye:     '<path d="M3 12s3.4-6 9-6 9 6 9 6-3.4 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/>',
+  thought: '<path d="M12 4.5a5 5 0 00-5 5c0 2.6 1.6 4.1 2.6 5.6v1.9h4.8v-1.9c1-1.5 2.6-3 2.6-5.6a5 5 0 00-5-5z"/><circle cx="7.5" cy="3.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="3.5" r="1.1" fill="currentColor" stroke="none"/>',
+  sync:    '<path d="M20 12a8 8 0 11-2.4-5.7"/><path d="M20 4.5V8h-3.5"/>',
+  masks:   '<path d="M12 4.5c-3.8 0-6 1.8-6 3.8 0 2.8 2.2 4.7 6 4.7s6-1.9 6-4.7c0-2-2.2-3.8-6-3.8z"/><path d="M6 8.3c-1.9.2-3 1-3 2 0 2 2.2 3 5 3M18 8.3c1.9.2 3 1 3 2 0 2-2.2 3-5 3"/>',
+  smiley:  '<circle cx="12" cy="12" r="8.2"/><path d="M8.4 14.6a4.6 4.6 0 007.2 0"/><circle cx="9.2" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="14.8" cy="10" r="1" fill="currentColor" stroke="none"/>',
+  dress:   '<path d="M12 4c1.6 0 2.2 1 2.2 2.2l3.3-1.2 1.8 4.2-3.3 1.6V20H8v-9.2L4.7 9.2l1.8-4.2 3.3 1.2C9.8 5 10.4 4 12 4z"/>',
+  clipboard:'<rect x="6" y="4" width="12" height="16.5" rx="2.2"/><path d="M9.5 4a2.5 2.5 0 015 0"/><path d="M9 10h6M9 13.5h6"/>',
+  bolt:    '<path d="M13 3L5.5 13H11l-1 8 7.5-10H12z"/>',
+  chartDown:'<path d="M4.5 4.5v15h15"/><path d="M8 15l4-4 3 3 4.5-5.5"/>',
+  chart:   '<path d="M4.5 4.5v15h15"/><path d="M8 15v-4M12 15V8M16 15v-6"/>',
+  home:    '<path d="M4 11.5l8-7 8 7"/><path d="M6 10v10h12V10"/>',
+  phoneIn: '<rect x="7" y="3" width="10" height="18" rx="2.6"/><path d="M12 8v5M10 11l2 2 2-2"/>',
+  copy:    '<rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7.5a2 2 0 002 2h2.5"/>',
+  link:    '<path d="M10 14a5 5 0 007.1 0l3-3a5 5 0 00-7.1-7.1L11.5 5.4"/><path d="M14 10a5 5 0 00-7.1 0l-3 3a5 5 0 007.1 7.1l1.5-1.5"/>',
+  pause:   '<rect x="7" y="5.5" width="3.4" height="13" rx="1.1"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.1"/>',
+  skip:    '<path d="M6.5 5.5l8.5 6.5-8.5 6.5z"/><path d="M18 5.5v13"/>',
+  stop:    '<rect x="6.5" y="6.5" width="11" height="11" rx="2"/>',
+  eject:   '<path d="M5.5 14l6.5-7.5 6.5 7.5z"/><path d="M5.5 18.5h13"/>',
+  plus:    '<path d="M12 5.5v13M5.5 12h13"/>',
+  sparkle: '<path d="M12 4l1.6 4.4L18 10l-4.4 1.6L12 16l-1.6-4.4L6 10l4.4-1.6z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8z"/>'
+};
+
+function ico(name, size) {
+  var p = ICONS[name] || ICONS.sparkle;
+  size = size || 18;
+  return '<svg class="ico" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg>';
+}
+
+function renderIcons() {
+  document.querySelectorAll("[data-ico]").forEach(function (el) {
+    el.innerHTML = ico(el.getAttribute("data-ico"));
+  });
 }
 
 function toast(msg) {
   var t = $("toast");
   t.textContent = msg;
   t.classList.add("show");
-  setTimeout(function(){ t.classList.remove("show"); }, 2200);
+  /* 连续提示时先清掉上一条的隐藏计时，避免后一条被提前隐藏 */
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function(){ t.classList.remove("show"); }, 2200);
 }
 
 function showScreen(name) {
   document.querySelectorAll(".screen").forEach(function(s){ s.classList.add("hidden"); });
   var el = $("screen-" + name);
   if (el) el.classList.remove("hidden");
+  /* 切屏后回到页面顶部，避免残留上一个长列表的滚动位置 */
+  var app = document.getElementById("app");
+  if (app) app.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 /* ================= 玩家 / 回合 ================= */
@@ -1083,7 +1186,7 @@ function toggleAudio() {
   if (masterGain) masterGain.gain.value = audioOn ? 0.7 : 0;
   if (audioOn) { initAudio(); }
   var b = document.getElementById("btnAudio");
-  if (b) b.textContent = audioOn ? "🔊 音效" : "🔇 静音";
+  if (b) b.innerHTML = (audioOn ? ico("speaker", 16) : ico("muted", 16)) + " " + (audioOn ? "音效" : "静音");
 }
 
 /* 仅初始化音频上下文，保证音效可播放；背景音乐按用户要求已关闭 */
@@ -1096,15 +1199,25 @@ var state = null;
 var deck = [];
 var lastCard = null;
 var nextPeek = null;   /* 预留的下一张卡（用于「下一张预告」，保证预告准确） */
+var pendingCard = null; /* 桌上待处理的卡（完成/跳过后清空，防无卡时错误记账） */
 
 function buildDeck() {
   if (!state) { deck = []; return; }
   var pref = state.scalePref || ["light","medium","high"];
   var scene = state.sceneMode || "together";
+  var freeMix = (state.mode !== "basic");   /* 基础模式只用内置卡；自由混合加入自定义卡 */
   function pass(c) {
     if (pref.indexOf(c.scale) === -1) return false;
     if (scene === "together" && c.scene === "remote") return false;
     return true;
+  }
+  function applyEdit(card, e) {
+    if (e) {
+      if (e.content != null) card.content = e.content;
+      if (e.type != null) card.type = e.type;
+      if (e.temp) card.temp = e.temp.slice ? e.temp.slice() : e.temp;
+    }
+    return card;
   }
   var list = [];
   /* 默认库：应用站内编辑 / 删除 */
@@ -1113,20 +1226,26 @@ function buildDeck() {
     var e = lib.edits[c.id];
     if (e && e.deleted) continue;
     if (!pass(c)) continue;
-    var card = Object.assign({}, c);
-    if (e) {
-      if (e.content != null) card.content = e.content;
-      if (e.temp) card.temp = e.temp.slice ? e.temp.slice() : e.temp;
+    list.push(applyEdit(Object.assign({}, c), e));
+  }
+  /* 自定义卡仅自由混合模式加入；站内新增卡同样应用其编辑 */
+  if (freeMix) {
+    if (state.customCards && state.customCards.length) {
+      state.customCards.forEach(function (c2) {
+        var e2 = lib.edits[c2.id];
+        if (e2 && e2.deleted) return;
+        if (!pass(c2)) return;
+        list.push(applyEdit(Object.assign({}, c2), e2));
+      });
     }
-    list.push(card);
-  }
-  /* 游戏内自定义卡 */
-  if (state.customCards && state.customCards.length) {
-    state.customCards.forEach(function(c){ if (pass(c)) list.push(c); });
-  }
-  /* 站内新增卡 */
-  if (lib.customs && lib.customs.length) {
-    lib.customs.forEach(function(c){ if (pass(c)) list.push(c); });
+    if (lib.customs && lib.customs.length) {
+      lib.customs.forEach(function (c3) {
+        var e3 = lib.edits[c3.id];
+        if (e3 && e3.deleted) return;
+        if (!pass(c3)) return;
+        list.push(applyEdit(Object.assign({}, c3), e3));
+      });
+    }
   }
   deck = list;
 }
@@ -1173,11 +1292,14 @@ function pickRandom() {
 }
 
 function drawCard() {
+  /* 牌堆为空时不出卡（即使有旧预留） */
+  if (!deck.length) { nextPeek = null; return null; }
   /* 优先使用预留的下一张卡，保证「预告」准确 */
   var card = nextPeek ? nextPeek : pickRandom();
   if (!card) return null;
   nextPeek = null;
   lastCard = card;
+  pendingCard = card;
   state.game.rounds++;
   saveState(state);
   return card;
@@ -1197,10 +1319,10 @@ function renderPeek() {
   var el = $("npMeta");
   if (!el) return;
   if (!nextPeek) { el.textContent = "准备就绪…"; return; }
-  var meta = TYPE_META[nextPeek.type] || { icon: "🔥" };
+  var meta = TYPE_META[nextPeek.type] || { icon: "bolt" };
   var scaleLabel = (SCALE_META[nextPeek.scale] || {}).label || "";
-  var remote = nextPeek.scene === "remote" ? " · 📱远程专属" : "";
-  el.textContent = meta.icon + " " + nextPeek.type + " · " + scaleLabel + remote +
+  var remote = nextPeek.scene === "remote" ? " · " + ico("phone", 13) + "远程专属" : "";
+  el.innerHTML = ico(meta.icon, 14) + " " + nextPeek.type + " · " + scaleLabel + remote +
     " · " + nextPeek.temp[0] + "~" + nextPeek.temp[1] + "℃";
 }
 
@@ -1217,20 +1339,24 @@ function completeCard() {
   g.temperature += gain;
   g.completed++;
   if (g.perPlayer[owner]) g.perPlayer[owner].done++;
+  pendingCard = null;
   saveState(state);
   return { gain: gain, boiling: !wasBoiling && g.boiling };
 }
 
 function skipCard() {
   var g = state.game;
+  if (!pendingCard) return false;   /* 桌上无卡可跳，不记账 */
   var owner = (typeof state.turn === "number") ? state.turn : 0;
   g.consecutive = 0;
   g.boiling = false;
   g.skipped++;
   if (g.perPlayer[owner]) g.perPlayer[owner].skip++;
-  recordSkip(lastCard ? lastCard.id : null);
+  recordSkip(pendingCard.id);
   addFailPt(owner);   /* 失败积分：跳过记 1 分 */
+  pendingCard = null;
   saveState(state);
+  return true;
 }
 
 function safeAction(action) {
@@ -1240,17 +1366,20 @@ function safeAction(action) {
     g.consecutive = 0;
     g.boiling = false;
   } else if (action === "skip") {
+    if (!pendingCard) { saveState(state); return false; }   /* 无卡可跳，不记账 */
     var owner = (typeof state.turn === "number") ? state.turn : 0;
     g.consecutive = 0;
     g.boiling = false;
     g.skipped++;
     if (g.perPlayer[owner]) g.perPlayer[owner].skip++;
-    recordSkip(lastCard ? lastCard.id : null);
+    recordSkip(pendingCard.id);
     addFailPt(owner);   /* 失败积分：安全词跳过同样记 1 分 */
+    pendingCard = null;
   } else if (action === "terminate") {
     g.active = false;
   }
   saveState(state);
+  return true;
 }
 
 /* ================= UI 渲染 ================= */
@@ -1303,15 +1432,15 @@ function renderCard(card) {
     area.innerHTML = '<div class="card-empty">点击下方按钮，抽取你们的专属任务</div>';
     return;
   }
-  var meta = TYPE_META[card.type] || { icon: "🔥" };
+  var meta = TYPE_META[card.type] || { icon: "bolt" };
   var scaleLabel = (SCALE_META[card.scale] || {}).label || "";
   var remoteTag = card.scene === "remote" ? '<span class="tag tag-remote">远程</span>' : "";
   var owner = (typeof state.turn === "number") ? state.turn : 0;
-  var ownerLine = '<div class="card-owner">🎯 这张属于 ' + playerLabel(owner) + '</div>';
+  var ownerLine = '<div class="card-owner">' + ico("target", 14) + ' 这张属于 ' + playerLabel(owner) + '</div>';
   area.innerHTML =
     '<div class="card">' +
       '<div class="card-head">' +
-        '<span class="card-icon">' + meta.icon + '</span>' +
+        '<span class="card-icon">' + ico(meta.icon, 22) + '</span>' +
         '<span class="card-type">' + esc(card.type) + '</span>' +
         '<span class="tag tag-scale">' + scaleLabel + '</span>' +
         remoteTag +
@@ -1359,7 +1488,7 @@ function showReport() {
   var f0 = failPts[0] || 0, f1 = failPts[1] || 0;
   if (f0 || f1) {
     var tail = (f0 === f1) ? " · 目前平手" : " · " + (f0 > f1 ? playerLabel(0) : playerLabel(1)) + " 暂时领先";
-    $("reportFailPts").textContent = "📉 失败积分（跨局累计）· " + playerLabel(0) + " " + f0 + " 分 · " + playerLabel(1) + " " + f1 + " 分" + tail;
+    $("reportFailPts").innerHTML = ico("chartDown", 14) + " 失败积分（跨局累计）· " + playerLabel(0) + " " + f0 + " 分 · " + playerLabel(1) + " " + f1 + " 分" + tail;
   } else {
     $("reportFailPts").textContent = "";
   }
@@ -1377,7 +1506,7 @@ function showReport() {
       if (label.length > 28) label = label.slice(0, 28) + "…";
       return "· " + label + "（跳过 " + skipStats[id] + " 次）";
     });
-    insEl.innerHTML = "<strong>📊 牌库洞察 · 最常被跳过</strong><br/>" + lines.join("<br/>");
+    insEl.innerHTML = "<strong>" + ico("chart", 14) + " 牌库洞察 · 最常被跳过</strong><br/>" + lines.join("<br/>");
     insEl.classList.remove("hidden");
   } else {
     insEl.classList.add("hidden");
@@ -1387,7 +1516,7 @@ function showReport() {
     "每一次靠近，都是一次勇敢的表达。",
     "温度没有上限，你们的故事也是。",
     "尊重与亲密并存，才是最好的关系。",
-    "下一局，继续升温。🔥"
+    "下一局，继续升温。"
   ];
   $("reportNote").textContent = notes[Math.floor(Math.random() * notes.length)];
 
@@ -1465,6 +1594,9 @@ function dismissStartAnim() {
 
 function onStart() {
   if (RTC.role === "join" && RTC.connected) { toast("远程模式：请等房主开始游戏"); return; }
+  /* 开始前收起远程弹窗，避免被开始动画盖住后残留 */
+  var remoteModal = $("modalRemote");
+  if (remoteModal) remoteModal.classList.add("hidden");
   var cfg = readConfig();
   if (!cfg.safeWord) {
     toast("请先设定安全词，它是你们的刹车");
@@ -1478,6 +1610,7 @@ function onStart() {
   saveState(state);
   lastCard = null;
   nextPeek = null;
+  pendingCard = null;
   buildDeck();
   ensureAudio();
   rtcHostSync("setup");
@@ -1496,11 +1629,11 @@ function onResume() {
 }
 
 function enterGame() {
-  $("btnSafeWord").textContent = "🛑 " + (state.safeWord || "安全词");
+  $("btnSafeWord").innerHTML = ico("shield", 16) + " " + (state.safeWord || "安全词");
   /* 场景徽章 */
   var badge = $("sceneBadge");
   if (badge) {
-    badge.textContent = state.sceneMode === "remote" ? "📱 异地模式" : "📍 当面模式";
+    badge.innerHTML = (state.sceneMode === "remote" ? ico("phone", 15) : ico("pin", 15)) + " " + (state.sceneMode === "remote" ? "异地模式" : "当面模式");
     badge.classList.toggle("remote", state.sceneMode === "remote");
   }
   renderTurn();
@@ -1510,7 +1643,7 @@ function enterGame() {
   computePeek();
   renderPeek();
   showScreen("game");
-  toast("游戏开始，安全第一 🔥");
+  toast("游戏开始，安全第一");
   rtcHostSync("game");
 }
 
@@ -1526,7 +1659,7 @@ function renderTurn() {
   var el = $("turnBadge");
   if (!el) return;
   if (typeof state.turn !== "number") { el.classList.add("hidden"); return; }
-  el.textContent = "🎯 轮到 " + playerLabel(state.turn);
+  el.innerHTML = ico("target", 15) + " 轮到 " + playerLabel(state.turn);
   el.classList.remove("hidden");
 }
 
@@ -1561,7 +1694,7 @@ function rollDice() {
   f0.classList.add("rolling"); f1.classList.add("rolling");
   btn.disabled = true;
   btn.style.opacity = ".55";
-  $("diceResult").textContent = "🎲 投掷中…";
+  $("diceResult").textContent = "投掷中…";
   $("btnStartAfterDice").classList.add("hidden");
   sfxDice();
   rtcHostSync("dice");   /* 让对方看到「投掷中」 */
@@ -1598,7 +1731,7 @@ function rollDice() {
 function finishDice(a, b) {
   sfxSettle();
   if (a === b) {
-    $("diceResult").textContent = "🎲 平局！再来一次";
+    $("diceResult").textContent = "平局！再来一次";
     $("btnStartAfterDice").classList.add("hidden");
     rtcHostSync("dice");
     return;
@@ -1643,7 +1776,7 @@ function onComplete() {
   sfxTemp();
   rtcHostSync();
   if (r.boiling) {
-    setTimeout(function(){ toast("🔥 沸腾模式开启，升温翻倍！"); }, 1200);
+    setTimeout(function(){ toast("沸腾模式开启，升温翻倍！"); }, 1200);
   }
 }
 
@@ -1670,6 +1803,12 @@ function onEnd(skipConfirm) {
 }
 
 function onSafeWord() {
+  /* 桌上无卡时禁用「跳过当前卡牌」，防止误记账 */
+  var btnSkip = $("btnSafeSkip");
+  if (btnSkip) {
+    btnSkip.disabled = !pendingCard;
+    btnSkip.style.opacity = pendingCard ? "" : ".45";
+  }
   $("modalSafe").classList.remove("hidden");
   sfxSafe();
 }
@@ -1686,13 +1825,14 @@ function onSafePause() {
 
 function onSafeSkip() {
   if (rtcJoinAct("safeskip")) { $("modalSafe").classList.add("hidden"); return; }
+  var hadCard = !!pendingCard;
   safeAction("skip");
   $("modalSafe").classList.add("hidden");
   var old = state.game.temperature;
   renderTemp(old);
   renderCard(null);
   showCardActions(false);
-  toast("已跳过当前卡牌，还是你的回合");
+  toast(hadCard ? "已跳过当前卡牌，还是你的回合" : "当前没有可跳过的卡牌");
   rtcHostSync();
 }
 
@@ -1719,6 +1859,7 @@ function onAgain() {
   saveState(state);
   lastCard = null;
   nextPeek = null;
+  pendingCard = null;
   buildDeck();
   ensureAudio();
   showDice();
@@ -1737,7 +1878,11 @@ function onHome() {
    房主为权威端：本地或收到对方动作后，广播全量快照（state + lastCard + nextPeek + 当前屏）。
    加入方所有游戏动作转发给房主执行，自己只按快照渲染，断线后自动退回本机单人模式。 */
 var RTC = { pc: null, dc: null, role: "", connected: false };
-var RTC_ICE = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+/* STUN：国内优先（小米，2026-09 实测 152ms 可达），Google 作国际回退；ICE 并行收集候选，多配无害 */
+var RTC_ICE = { iceServers: [
+  { urls: "stun:stun.miwifi.com:3478" },
+  { urls: "stun:stun.l.google.com:19302" }
+]};
 
 function rtcEnc(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
 function rtcDec(s) { return JSON.parse(decodeURIComponent(escape(atob(String(s).replace(/\s+/g, ""))))); }
@@ -1858,7 +2003,7 @@ function currentScreenName() {
 /* 房主：广播全量快照 */
 function rtcHostSync(screenName) {
   if (RTC.role !== "host" || !RTC.connected) return;
-  var snap = { t: "s", st: screenName || currentScreenName(), s: state, lc: lastCard, np: nextPeek };
+  var snap = { t: "s", st: screenName || currentScreenName(), s: state, lc: lastCard, np: nextPeek, pc: pendingCard };
   if (snap.st === "dice") {
     snap.dice = [ $("diceFace0").textContent, $("diceFace1").textContent ];
     snap.diceMsg = $("diceResult").textContent || "";
@@ -1910,6 +2055,7 @@ function rtcApplySnap(m) {
     if (m.s) { state = m.s; saveState(state); }
     lastCard = m.lc || null;
     nextPeek = m.np || null;
+    pendingCard = m.pc || null;
   } catch (e) { return; }
   var st = m.st || "setup";
   try {
@@ -1932,10 +2078,10 @@ function rtcApplySnap(m) {
     } else if (st === "game") {
       $("modalDice").classList.add("hidden");
       $("modalSafe").classList.add("hidden");
-      $("btnSafeWord").textContent = "🛑 " + (state.safeWord || "安全词");
+      $("btnSafeWord").innerHTML = ico("shield", 16) + " " + (state.safeWord || "安全词");
       var badge = $("sceneBadge");
       if (badge) {
-        badge.textContent = state.sceneMode === "remote" ? "📱 异地模式" : "📍 当面模式";
+        badge.innerHTML = (state.sceneMode === "remote" ? ico("phone", 15) : ico("pin", 15)) + " " + (state.sceneMode === "remote" ? "异地模式" : "当面模式");
         badge.classList.toggle("remote", state.sceneMode === "remote");
       }
       renderTurn();
@@ -2044,7 +2190,7 @@ function renderSetupInsight() {
       if (label.length > 26) label = label.slice(0, 26) + "…";
       return "· " + label + "（跳过 " + skipStats[id] + " 次）";
     });
-    html += "<strong>📊 牌库洞察 · 最常被跳过</strong><br/>" + lines.join("<br/>") +
+    html += "<strong>" + ico("chart", 14) + " 牌库洞察 · 最常被跳过</strong><br/>" + lines.join("<br/>") +
       "<br/><span style='font-size:11px;color:var(--text-dim);'>更新牌库时这些卡优先替换</span>";
   }
   var failPts = loadFailPts();
@@ -2052,7 +2198,7 @@ function renderSetupInsight() {
   if (f0 || f1) {
     if (html) html += "<br/><br/>";
     var tail = (f0 === f1) ? "平手" : (f0 > f1 ? playerLabel(0) : playerLabel(1)) + " 领先";
-    html += "<strong>📉 失败积分（跨局累计）</strong><br/>" +
+    html += "<strong>" + ico("chartDown", 14) + " 失败积分（跨局累计）</strong><br/>" +
       playerLabel(0) + " " + f0 + " 分 · " + playerLabel(1) + " " + f1 + " 分 · " + tail;
   }
   if (!html) { el.classList.add("hidden"); return; }
@@ -2064,6 +2210,7 @@ function init() {
   state = loadState();
   loadLib();
   buildStages();
+  renderIcons();
 
   /* 兼容旧存档：补齐新字段 */
   if (state && state.game) {
@@ -2136,7 +2283,7 @@ function init() {
   $("btnDraw").addEventListener("click", onDraw);
   $("btnComplete").addEventListener("click", onComplete);
   $("btnSkip").addEventListener("click", onSkip);
-  $("btnEnd").addEventListener("click", onEnd);
+  $("btnEnd").addEventListener("click", function(){ onEnd(false); });
   $("btnSafeWord").addEventListener("click", onSafeWord);
   $("btnPause").addEventListener("click", onSafePause);
   $("btnSafeSkip").addEventListener("click", onSafeSkip);
