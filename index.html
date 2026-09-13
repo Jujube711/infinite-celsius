@@ -263,6 +263,121 @@ html, body {
 .lib-card-actions { display: flex; gap: 8px; }
 .lib-card-actions .btn { flex: 1; padding: 9px; font-size: 13px; }
 .lib-add { margin: 0 0 4px; }
+/* ================= 卡面图鉴 · 全息收藏卡 =================
+   流光原理参考 simeydotme/pokemon-cards-css（纯 CSS 渐变+混合模式，零依赖）：
+   光泽层/彩虹层位置由 --mx/--my 驱动，卡体 3D 姿态由 --rx/--ry 驱动 */
+.holo {
+  --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
+  position: relative; width: 100%; aspect-ratio: 63 / 88; border-radius: 14px;
+  background: linear-gradient(135deg, #2c1822 0%, #1a0f14 100%);
+  border: 1px solid var(--h-line, rgba(227,164,189,.4));
+  box-shadow: 0 14px 34px rgba(20,8,14,.55), inset 0 0 0 1px rgba(255,234,238,.05);
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .18s ease-out;
+  overflow: hidden; user-select: none; -webkit-user-select: none;
+}
+.holo::before, .holo::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; }
+/* 白光扫过层 */
+.holo::before {
+  background: radial-gradient(circle at var(--mx) var(--my), rgba(255,240,246,.32) 0%, rgba(255,240,246,.09) 24%, transparent 52%);
+  mix-blend-mode: screen;
+}
+/* 彩虹色散网点层 */
+.holo::after {
+  background:
+    repeating-linear-gradient(115deg, rgba(227,164,189,.14) 0 9%, rgba(178,133,204,.12) 13% 22%, rgba(210,115,157,.12) 28% 37%, transparent 42% 60%),
+    radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.22), transparent 46%);
+  mix-blend-mode: color-dodge; opacity: .8;
+  -webkit-mask-image: repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px);
+  mask-image: repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px);
+  transform: translateX(calc((var(--mx) - 50%) * .18));
+}
+.holo.autoplay::after { animation: holoDrift 5.5s ease-in-out infinite; }
+.holo.autoplay::before { animation: holoGlow 5.5s ease-in-out infinite; }
+@keyframes holoDrift {
+  0%,100% { background-position: 0% 0%, 30% 40%; }
+  50% { background-position: 46% 10%, 68% 58%; }
+}
+@keyframes holoGlow {
+  0%,100% { background: radial-gradient(circle at 30% 35%, rgba(255,240,246,.3) 0%, rgba(255,240,246,.08) 24%, transparent 52%); }
+  50% { background: radial-gradient(circle at 68% 60%, rgba(255,240,246,.34) 0%, rgba(255,240,246,.1) 26%, transparent 54%); }
+}
+.holo-inner { position: absolute; inset: 7px; border-radius: 9px; border: 1px solid var(--h-soft, rgba(227,164,189,.22)); display: flex; flex-direction: column; overflow: hidden; }
+.holo-type-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px 0; }
+.holo-type { font-size: 10px; letter-spacing: .28em; color: var(--h-main, var(--accent)); font-weight: 700; }
+.holo-en { font-size: 8px; letter-spacing: .22em; color: var(--text-dim); }
+.holo-name { text-align: center; margin-top: 14px; font-family: var(--font-display); }
+.holo-name small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); margin-bottom: 5px; }
+.holo-name b { font-size: 25px; font-weight: 700; letter-spacing: .18em; color: var(--text); text-shadow: 0 2px 18px var(--h-main, var(--accent)); }
+.holo-rose { flex: 1; display: flex; align-items: center; justify-content: center; opacity: .5; }
+.holo-desc { padding: 0 13px; font-size: 11px; line-height: 1.65; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.holo-temp-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px 10px; }
+.holo-temp { font-size: 12px; font-weight: 800; color: var(--h-main, var(--accent)); letter-spacing: .1em; }
+.holo-remote { font-size: 9px; color: var(--accent-3); border: 1px solid rgba(178,133,204,.4); border-radius: 999px; padding: 2px 8px; }
+/* 卡背 */
+.holo-back { align-items: center; justify-content: center; gap: 12px; background: radial-gradient(120% 90% at 50% 30%, #3a2030 0%, #241419 70%); }
+.holo-back .emblem { width: 84px; height: 84px; border-radius: 50%; border: 1.5px solid var(--h-main, var(--accent)); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 34px rgba(227,164,189,.24), inset 0 0 18px rgba(227,164,189,.14); }
+.holo-back .emblem span { font-size: 30px; font-weight: 800; color: var(--h-main, var(--accent)); }
+.holo-back .bk-series { font-size: 9px; letter-spacing: .34em; color: var(--text-dim); }
+.holo-back .bk-name { font-size: 13px; letter-spacing: .5em; color: var(--text); font-family: var(--font-display); }
+.holo-back .bk-corner { position: absolute; font-size: 8px; letter-spacing: .2em; color: var(--h-main, var(--accent)); opacity: .7; }
+.holo-back .bk-tl { top: 8px; left: 10px; } .holo-back .bk-br { bottom: 8px; right: 10px; }
+
+/* 图鉴屏 */
+.gal-head { position: sticky; top: 0; z-index: 6; background: var(--bg); padding: 4px 0 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--panel-border); }
+.gal-title { font-size: 19px; font-weight: 800; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.gal-tools { display: flex; gap: 8px; }
+.gal-tools .btn { flex: 1; padding: 9px 8px; font-size: 13px; }
+.gal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.gal-cell { cursor: pointer; transition: transform .2s; }
+.gal-cell:active { transform: scale(.96); }
+.gal-cell .holo { border-radius: 10px; }
+.gal-cell .holo-inner { inset: 4px; }
+.gal-cell .holo-name b { font-size: 13px; }
+.gal-cell .holo-name { margin-top: 6px; }
+.gal-cell .holo-desc, .gal-cell .holo-en, .gal-cell .holo-remote { display: none; }
+.gal-cell .holo-type-row { padding: 6px 8px 0; }
+.gal-cell .holo-temp-row { padding: 6px 8px 7px; }
+.gal-cell .holo-temp { font-size: 10px; }
+.gal-cell .holo-rose svg { width: 40px; height: 40px; }
+.gal-count { text-align: center; font-size: 12px; color: var(--text-dim); padding: 10px 0 4px; }
+/* 鉴赏视图（浮世绘卡式：左信息右卡面） */
+.gal-view { display: flex; gap: 20px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+.gal-info { flex: 1 1 220px; max-width: 400px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.gal-series { font-size: 11px; letter-spacing: .26em; color: var(--text-dim); }
+.gal-quote { font-size: 15px; color: var(--text-dim); letter-spacing: .12em; }
+.gal-name { font-size: 34px; font-weight: 700; letter-spacing: .16em; font-family: var(--font-display); line-height: 1.2; }
+.gal-cat { font-size: 11px; letter-spacing: .2em; color: var(--h-main, var(--accent)); display: inline-flex; align-items: center; gap: 6px; }
+.gal-desc { font-size: 14px; line-height: 1.8; color: var(--text); }
+.gal-skill { border-left: 2px solid var(--h-main, var(--accent)); padding: 2px 0 2px 12px; }
+.gal-skill small { display: block; font-size: 10px; letter-spacing: .26em; color: var(--text-dim); margin-bottom: 4px; }
+.gal-skill b { font-size: 17px; letter-spacing: .14em; }
+.gal-skill p { margin: 3px 0 0; font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+.gal-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+.gal-btns .btn { font-size: 13px; padding: 10px 12px; }
+.gal-no { font-size: 11px; letter-spacing: .3em; color: var(--text-dim); margin-top: 4px; }
+.gal-stage { flex: 0 0 auto; width: min(62vw, 320px); align-self: center; }
+.gal-back-row { display: flex; justify-content: center; gap: 18px; margin-top: 10px; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); }
+.gal-back-row span.on { color: var(--h-main, var(--accent)); font-weight: 800; }
+@media (max-width: 620px) {
+  .gal-stage { width: min(72vw, 300px); }
+  .gal-view { gap: 14px; }
+  .gal-name { font-size: 28px; }
+}
+
+/* 游戏内任务卡 × 收藏卡质感 */
+.card.glowing { position: relative; }
+.card-frame { position: relative; border-radius: 14px; padding: 16px; background: linear-gradient(150deg, rgba(227,164,189,.10) 0%, rgba(255,234,238,.03) 45%, rgba(178,133,204,.08) 100%); border: 1px solid var(--panel-border); overflow: hidden; }
+.card-frame::after { content: ""; position: absolute; left: -60%; top: 0; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,242,247,.14), transparent); animation: frameSheen 4.5s ease-in-out infinite; pointer-events: none; }
+@keyframes frameSheen { 0%, 55% { left: -60%; } 90%, 100% { left: 130%; } }
+.card-no { position: absolute; top: 9px; right: 12px; font-size: 9px; letter-spacing: .22em; color: var(--text-dim); }
+.card-corner { position: absolute; top: 0; left: 0; width: 34px; height: 34px; border-top: 2px solid var(--h-main, var(--accent-2)); border-left: 2px solid var(--h-main, var(--accent-2)); border-top-left-radius: 13px; opacity: .8; }
+.card-frame.h { --h-main: var(--accent-3); } .card-frame.h .card-corner { border-color: var(--accent-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .holo, .holo::after, .holo.autoplay::after, .card-frame::after { animation: none !important; transition: none !important; }
+}
+
 .lib-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.6; }
 
 /* ================= 开始动画：爱心 ================= */
@@ -370,6 +485,7 @@ html, body {
         </div>
       </div>
       <button id="btnRemote" class="btn btn-ghost btn-block"><span data-ico="phone"></span> 远程同玩（两地玩同一局）</button>
+      <button id="btnGallery" class="btn btn-ghost btn-block"><span data-ico="crystal"></span> 卡面图鉴（60 张全息收藏卡）</button>
       <button id="btnLib" class="btn btn-ghost btn-block"><span data-ico="book"></span> 编辑卡片库（改内容 · 留意见）</button>
       <button id="btnStart" class="btn btn-primary btn-block">开始游戏</button>
     </div>
@@ -459,6 +575,18 @@ html, body {
     </div>
     <div id="libWrap"></div>
     <p class="lib-hint">改动只存在本机浏览器，不会破坏原游戏。<br/>「恢复默认」还原单卡，「重置默认」清空全部编辑，「我的意见」可写下你的修改建议。</p>
+  </section>
+
+  <!-- ============ 卡面图鉴 ============ -->
+  <section id="screen-gallery" class="screen hidden">
+    <div class="gal-head">
+      <div class="gal-title"><span data-ico="crystal"></span> 卡面图鉴 · 全息收藏</div>
+      <div class="gal-tools">
+        <button id="btnGalBack" class="btn btn-primary"><span data-ico="back"></span> 返回</button>
+        <button id="btnGalAuto" class="btn btn-ghost"><span data-ico="sparkle"></span> 自动赏卡</button>
+      </div>
+    </div>
+    <div id="galWrap"></div>
   </section>
 
   <!-- ============ 投骰子定先后弹窗 ============ -->
@@ -1021,6 +1149,8 @@ function showScreen(name) {
   document.querySelectorAll(".screen").forEach(function(s){ s.classList.add("hidden"); });
   var el = $("screen-" + name);
   if (el) el.classList.remove("hidden");
+  /* 切走图鉴时停掉自动赏卡 */
+  if (name !== "gallery" && typeof stopGalAuto === "function") stopGalAuto();
   /* 切屏后回到页面顶部，避免残留上一个长列表的滚动位置 */
   var app = document.getElementById("app");
   if (app) app.scrollTop = 0;
@@ -1382,6 +1512,284 @@ function safeAction(action) {
   return true;
 }
 
+/* ================= 卡面图鉴（全息收藏卡） ================= */
+/* 每张卡一张收藏卡：意境卡名 / 类型英文 / 卷名 / 尺度主色 */
+var CARD_NAMES = {
+  L01:"心愿暗号", L02:"一杯恰好", L03:"初牵如昨", L04:"笑不可仰", L05:"可爱清单",
+  L06:"备注之名", L07:"灯下谢谢", L08:"手心卅秒", L09:"未曾同行", L10:"五年之约",
+  L11:"声声唤你", L12:"藏在旋律", L13:"猜我心事", L14:"闭眼旅行", L15:"同一片天",
+  L16:"感动存档", L17:"三样爱吃", L18:"拥抱十秒", L19:"只有你懂", L20:"约会之约",
+  M01:"最爱之处", M02:"怦然时刻", M03:"耳语一句", M04:"额吻你好甜", M05:"贴身猜色",
+  M06:"指尖描摹", M07:"慵懒着装", M08:"锁骨来信", M09:"私密之夜", M10:"陌生搭讪",
+  M11:"同梦闭眼", M12:"未说出口", M13:"最可爱模样", M14:"暧昧档案", M15:"咬耳轻问",
+  M16:"颈后一阵风", M17:"性感时刻", M18:"秘密约会地", M19:"唇上特写", M20:"独家仪式",
+  H01:"梦里是你", H02:"直白渴望", H03:"外衣与真心", H04:"闭眼惊喜", H05:"锁骨到耳后",
+  H06:"同频愉悦", H07:"私密加班", H08:"完美之夜", H09:"气息私语", H10:"你的视角",
+  H11:"吻你所指", H12:"最大幻想", H13:"三个形容", H14:"画圈不止", H15:"同频心跳",
+  H16:"危险边缘", H17:"陌生撩拨", H18:"近墙三秒", H19:"廿四小时", H20:"冒险清单"
+};
+var TYPE_EN = {
+  "默契问答":"RAPPORT", "回忆杀":"FLASHBACK", "真心话":"TRUTH", "亲密任务":"INTIMACY",
+  "未来约定":"PROMISE", "声音卡":"VOICE", "视觉卡":"VISION", "想象卡":"IMAGINE",
+  "同步卡":"SYNC", "角色扮演卡":"ROLEPLAY", "欲望卡":"DESIRE", "挑逗卡":"TEASE",
+  "褪衣卡":"UNDRESS", "指令卡":"COMMAND", "同步刺激卡":"SURGE", "自定义":"ORIGINAL"
+};
+var SCALE_VOL = {
+  light:  { vol:"玫瑰之卷", main:"#e3a4bd", line:"rgba(227,164,189,.45)", soft:"rgba(227,164,189,.22)" },
+  medium: { vol:"绯红之卷", main:"#d2739d", line:"rgba(210,115,157,.5)",  soft:"rgba(210,115,157,.24)" },
+  high:   { vol:"紫耀之卷", main:"#b285cc", line:"rgba(178,133,204,.55)", soft:"rgba(178,133,204,.26)" }
+};
+var GAL_FLAVOR = {
+  light:  "让指尖先热起来。",
+  medium: "把呼吸调成同一个频率。",
+  high:   "此刻没有旁观者。"
+};
+var galState = { mode: "grid", card: null, flipped: false, autoTimer: null };
+
+function pad2(n) { return (n < 10 ? "0" : "") + n; }
+function cardNoOf(c) {
+  for (var i = 0; i < CARDS.length; i++) if (CARDS[i].id === c.id) return "No." + pad2(i + 1);
+  var j = lib.customs.indexOf(c);
+  return j >= 0 ? "No.C" + pad2(j + 1) : "No.??";
+}
+function cardNameOf(c) { return CARD_NAMES[c.id] || (c.custom ? (c.type || "自定义") : c.id); }
+function scaleMetaOf(c) { return SCALE_VOL[c.scale] || SCALE_VOL.light; }
+
+function roseSvg(color, size) {
+  size = size || 64;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 64 64" fill="none" stroke="' + color + '" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M32 50 C 32 50 13 39 13 25 C 13 17 18.5 12 25 12 C 28.6 12 31.2 14 32 17 C 32.8 14 35.4 12 39 12 C 45.5 12 51 17 51 25 C 51 39 32 50 32 50 Z"/>' +
+    '<path d="M32 19 L 32 41 M32 25 C 28.5 27.5 26 30.5 24.5 34 M32 25 C 35.5 27.5 38 30.5 39.5 34"/>' +
+    '</svg>';
+}
+
+function cardFaceHTML(c, mini) {
+  var sm = scaleMetaOf(c);
+  var en = TYPE_EN[c.type] || "ORIGINAL";
+  return '' +
+    '<div class="holo-inner">' +
+      '<div class="holo-type-row">' +
+        '<span class="holo-type">' + esc(c.type || "自定义") + '</span>' +
+        '<span class="holo-en">' + en + '</span>' +
+      '</div>' +
+      '<div class="holo-name"><small>『 ' + esc(c.type || "自定义") + ' 』</small><b>' + esc(cardNameOf(c)) + '</b></div>' +
+      '<div class="holo-rose">' + roseSvg(sm.main, mini ? 44 : 62) + '</div>' +
+      '<div class="holo-desc">' + esc(c.content || "") + '</div>' +
+      '<div class="holo-temp-row">' +
+        '<span class="holo-temp">♥ ' + c.temp[0] + '~' + c.temp[1] + '℃</span>' +
+        (c.scene === "remote" ? '<span class="holo-remote">📱 远程专属</span>' : '<span class="holo-en">WJ-' + c.id + '</span>') +
+      '</div>' +
+    '</div>';
+}
+
+function cardBackHTML() {
+  return '' +
+    '<div class="holo-inner holo-back">' +
+      '<span class="bk-corner bk-tl">∞℃ SERIES</span>' +
+      '<div class="emblem"><span>∞℃</span></div>' +
+      '<div class="bk-name">无界升温</div>' +
+      '<div class="bk-series">WUJIE HOLO · 60 CARDS</div>' +
+      '<span class="bk-corner bk-br">玫瑰粉雾 · ROSE MIST</span>' +
+    '</div>';
+}
+
+function bindHolo(el, enableTilt) {
+  if (!el) return;
+  el.addEventListener("pointermove", function (ev) {
+    var r = el.getBoundingClientRect();
+    var px = (ev.clientX - r.left) / r.width, py = (ev.clientY - r.top) / r.height;
+    el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+    el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+    if (enableTilt) {
+      el.style.setProperty("--ry", ((px - 0.5) * 14).toFixed(2) + "deg");
+      el.style.setProperty("--rx", ((0.5 - py) * 12).toFixed(2) + "deg");
+    }
+  });
+  el.addEventListener("pointerleave", function () {
+    el.style.setProperty("--rx", "0deg"); el.style.setProperty("--ry", "0deg");
+    el.style.setProperty("--mx", "50%"); el.style.setProperty("--my", "50%");
+  });
+}
+
+function holoFace(c, opts) {
+  opts = opts || {};
+  var sm = scaleMetaOf(c);
+  return '<div class="holo' + (opts.autoplay ? " autoplay" : "") + '" style="--h-main:' + sm.main + ';--h-line:' + sm.line + ';--h-soft:' + sm.soft + '">' +
+    (opts.flipped ? cardBackHTML() : cardFaceHTML(c, opts.mini)) + '</div>';
+}
+
+/* ---- 图鉴 ---- */
+function openGallery() { galState.mode = "grid"; stopGalAuto(); renderGallery(); showScreen("gallery"); }
+function closeGallery() { stopGalAuto(); showScreen("setup"); refreshResume(); }
+
+function renderGallery() {
+  var wrap = $("galWrap");
+  if (!wrap) return;
+  if (galState.mode === "grid") { renderGalleryGrid(wrap); return; }
+  renderGalleryView(wrap, galState.card);
+}
+
+function renderGalleryGrid(wrap) {
+  var html = "";
+  ["light","medium","high"].forEach(function (sc) {
+    var sm = SCALE_VOL[sc];
+    var cards = [];
+    CARDS.forEach(function (c) { if (c.scale === sc) cards.push(c); });
+    lib.customs.forEach(function (c) { if (c.scale === sc) cards.push(c); });
+    if (!cards.length) return;
+    html += '<div class="lib-section-title lib-' + sc + '" style="margin:10px 0 8px">' + sm.vol + ' · ' + ((SCALE_META[sc]||{}).label||sc) +
+            '<span class="lib-scale-tag">' + cards.length + ' 张</span></div>';
+    html += '<div class="gal-grid">';
+    cards.forEach(function (c) {
+      var rc = resolveCard(c.id) || c;
+      html += '<div class="gal-cell" data-galid="' + rc.id + '">' + holoFace(rc, { mini: true }) + '</div>';
+    });
+    html += '</div>';
+  });
+  html += '<div class="gal-count">共 ' + (CARDS.length + lib.customs.length) + ' 张 · 点击卡面进入鉴赏 · 流光跟随指尖</div>';
+  wrap.innerHTML = html;
+  var cells = wrap.querySelectorAll(".gal-cell");
+  for (var i = 0; i < cells.length; i++) {
+    (function (cell) {
+      bindHolo(cell, false);
+      cell.addEventListener("click", function () {
+        var id = cell.getAttribute("data-galid");
+        var c = resolveCard(id) || cardById(id);
+        if (c) { galState.card = c; galState.flipped = false; galState.mode = "view"; stopGalAuto(); renderGallery(); }
+      });
+    })(cells[i]);
+  }
+}
+
+function renderGalleryView(wrap, c) {
+  if (!c) { galState.mode = "grid"; renderGalleryGrid(wrap); return; }
+  var sm = scaleMetaOf(c);
+  var no = cardNoOf(c);
+  var remoteTxt = c.scene === "remote" ? " · 远程专属" : "";
+  wrap.innerHTML =
+    '<div class="gal-view" style="--h-main:' + sm.main + '">' +
+      '<div class="gal-info">' +
+        '<div class="gal-series">∞℃ · 情侣互动 · 无界升温 — WUJIE HOLO</div>' +
+        '<div class="gal-quote">「 ' + esc(c.type || "自定义") + ' 」</div>' +
+        '<div class="gal-name">' + esc(cardNameOf(c)) + '</div>' +
+        '<div class="gal-cat">◆ 无界升温图鉴 · ' + sm.vol + ' · ' + ((SCALE_META[c.scale]||{}).label||c.scale) + remoteTxt + '</div>' +
+        '<div class="gal-desc">' + esc(c.content || "") + '</div>' +
+        '<div class="gal-skill"><small>升温 · TYPE OF THE HEART</small><b>' + c.temp[0] + '~' + c.temp[1] + '℃</b><p>' + GAL_FLAVOR[c.scale] + '</p></div>' +
+        '<div class="gal-btns">' +
+          '<button class="btn btn-ghost" id="btnGalFlip">翻看背面</button>' +
+          '<button class="btn btn-ghost" id="btnGalSave">保存此刻</button>' +
+          '<button class="btn btn-text" id="btnGalGrid">回图鉴</button>' +
+        '</div>' +
+        '<div class="gal-no">' + no + ' / ' + (CARDS.length + lib.customs.length) + ' · HOLOGRAPHIC</div>' +
+      '</div>' +
+      '<div class="gal-stage">' +
+        '<div id="galStage">' + holoFace(c, { flipped: galState.flipped, autoplay: !!galState.autoTimer }) + '</div>' +
+        '<div class="gal-back-row"><span class="' + (!galState.flipped ? "on" : "") + '">FRONT</span><span class="' + (galState.flipped ? "on" : "") + '">BACK</span></div>' +
+      '</div>' +
+    '</div>';
+  bindHolo($("galStage").querySelector(".holo"), true);
+  $("btnGalFlip").addEventListener("click", function () { galState.flipped = !galState.flipped; renderGallery(); });
+  $("btnGalSave").addEventListener("click", function () { galSave(c); });
+  $("btnGalGrid").addEventListener("click", function () { galState.mode = "grid"; stopGalAuto(); renderGallery(); });
+}
+
+function toggleGalAuto() {
+  if (galState.autoTimer) { stopGalAuto(); renderGallery(); return; }
+  if (galState.mode !== "view" || !galState.card) {
+    var first = resolveCard(CARDS[0].id) || CARDS[0];
+    galState.card = first; galState.mode = "view"; galState.flipped = false;
+  }
+  galState.autoTimer = setInterval(function () {
+    var all = CARDS.concat(lib.customs);
+    var c = all[Math.floor(Math.random() * all.length)];
+    galState.card = resolveCard(c.id) || c;
+    galState.flipped = Math.random() < 0.25;
+    renderGallery();
+  }, 3400);
+  renderGallery();
+  toast("自动赏卡开启，再点一次停止");
+}
+function stopGalAuto() { if (galState.autoTimer) { clearInterval(galState.autoTimer); galState.autoTimer = null; } }
+
+/* ---- 保存此刻：canvas 绘制正面静态卡 ---- */
+function galSave(c) {
+  try {
+    var sm = scaleMetaOf(c);
+    var W = 630, H = 880, cv = document.createElement("canvas");
+    cv.width = W; cv.height = H;
+    var x = cv.getContext("2d");
+    var g = x.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, "#2c1822"); g.addColorStop(1, "#1a0f14");
+    x.fillStyle = g; x.fillRect(0, 0, W, H);
+    /* 尺度色氛围光 */
+    var glow = x.createRadialGradient(W * 0.7, H * 0.28, 20, W * 0.7, H * 0.28, W * 0.8);
+    glow.addColorStop(0, sm.main + "3d"); glow.addColorStop(1, "transparent");
+    x.fillStyle = glow; x.fillRect(0, 0, W, H);
+    /* 边框 */
+    x.strokeStyle = sm.line; x.lineWidth = 3;
+    x.beginPath();
+    if (x.roundRect) x.roundRect(6, 6, W - 12, H - 12, 26); else x.rect(6, 6, W - 12, H - 12);
+    x.stroke();
+    x.strokeStyle = sm.soft; x.lineWidth = 1.4;
+    x.beginPath();
+    if (x.roundRect) x.roundRect(20, 20, W - 40, H - 40, 18); else x.rect(20, 20, W - 40, H - 40);
+    x.stroke();
+    /* 顶部类型行 */
+    x.fillStyle = sm.main; x.textBaseline = "alphabetic";
+    x.font = "700 22px " + '"Microsoft YaHei", sans-serif';
+    x.fillText(c.type || "自定义", 46, 74);
+    x.fillStyle = "#c6a2ae"; x.font = "16px monospace"; x.textAlign = "right";
+    x.fillText(TYPE_EN[c.type] || "ORIGINAL", W - 46, 74);
+    x.textAlign = "left";
+    /* 卡名 */
+    x.fillStyle = "#f4e7ec"; x.textAlign = "center";
+    x.font = '700 58px "Songti SC", "SimSun", serif';
+    x.fillText(cardNameOf(c), W / 2, 190);
+    x.fillStyle = "#c6a2ae"; x.font = '18px "Songti SC", "SimSun", serif';
+    x.fillText("「 " + (c.type || "自定义") + " 」", W / 2, 138);
+    /* 玫瑰心 */
+    x.strokeStyle = sm.main; x.lineWidth = 2.4; x.lineCap = "round";
+    x.beginPath();
+    x.moveTo(W/2, 400);
+    x.bezierCurveTo(W/2, 400, W/2-152, 322, W/2-152, 218);
+    x.bezierCurveTo(W/2-152, 162, W/2-106, 128, W/2-56, 128);
+    x.bezierCurveTo(W/2-26, 128, W/2-6, 146, W/2, 172);
+    x.bezierCurveTo(W/2+6, 146, W/2+26, 128, W/2+56, 128);
+    x.bezierCurveTo(W/2+106, 128, W/2+152, 162, W/2+152, 218);
+    x.bezierCurveTo(W/2+152, 322, W/2, 400, W/2, 400);
+    x.stroke();
+    x.lineWidth = 1.6;
+    x.beginPath(); x.moveTo(W/2, 180); x.lineTo(W/2, 350); x.stroke();
+    x.beginPath(); x.moveTo(W/2, 218); x.quadraticCurveTo(W/2-52, 248, W/2-72, 292); x.stroke();
+    x.beginPath(); x.moveTo(W/2, 218); x.quadraticCurveTo(W/2+52, 248, W/2+72, 292); x.stroke();
+    /* 描述（自动换行，最多 5 行） */
+    x.fillStyle = "#d8bcca"; x.textAlign = "center"; x.font = '24px "Microsoft YaHei", sans-serif';
+    var line = "", lines = [], maxW = W - 120;
+    (c.content || "").split("").forEach(function (ch) {
+      if (x.measureText(line + ch).width > maxW) { lines.push(line); line = ch; } else line += ch;
+    });
+    if (line) lines.push(line);
+    lines.slice(0, 5).forEach(function (l, i) { x.fillText(l, W / 2, 500 + i * 38); });
+    /* 温度 + 编号 */
+    x.fillStyle = sm.main; x.font = '800 30px "Microsoft YaHei", sans-serif';
+    x.fillText("♥ " + c.temp[0] + "~" + c.temp[1] + "℃", W / 2, 700);
+    x.fillStyle = "#c6a2ae"; x.font = "18px monospace";
+    x.fillText(cardNoOf(c) + " / 0" + (CARDS.length + lib.customs.length) + " · HOLOGRAPHIC", W / 2, 820);
+    /* 斜向光带 */
+    x.save(); x.globalCompositeOperation = "screen";
+    var sheen = x.createLinearGradient(0, 0, W, H);
+    sheen.addColorStop(0.35, "transparent"); sheen.addColorStop(0.5, "rgba(255,240,246,.16)"); sheen.addColorStop(0.65, "transparent");
+    x.fillStyle = sheen; x.fillRect(0, 0, W, H);
+    x.restore();
+    /* 导出 */
+    var a = document.createElement("a");
+    a.href = cv.toDataURL("image/png");
+    a.download = "无界升温-" + cardNoOf(c).replace("No.", "") + "-" + cardNameOf(c) + ".png";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    toast("已保存卡面图片");
+  } catch (e) { toast("保存失败：浏览器不支持"); }
+}
+
 /* ================= UI 渲染 ================= */
 function renderTemp(fromVal) {
   var g = state.game;
@@ -1434,20 +1842,25 @@ function renderCard(card) {
   }
   var meta = TYPE_META[card.type] || { icon: "bolt" };
   var scaleLabel = (SCALE_META[card.scale] || {}).label || "";
+  var sm = scaleMetaOf(card);
   var remoteTag = card.scene === "remote" ? '<span class="tag tag-remote">远程</span>' : "";
   var owner = (typeof state.turn === "number") ? state.turn : 0;
   var ownerLine = '<div class="card-owner">' + ico("target", 14) + ' 这张属于 ' + playerLabel(owner) + '</div>';
   area.innerHTML =
-    '<div class="card">' +
-      '<div class="card-head">' +
-        '<span class="card-icon">' + ico(meta.icon, 22) + '</span>' +
-        '<span class="card-type">' + esc(card.type) + '</span>' +
-        '<span class="tag tag-scale">' + scaleLabel + '</span>' +
-        remoteTag +
+    '<div class="card-frame' + (card.scale === "high" ? " h" : "") + '" style="--h-main:' + sm.main + '">' +
+      '<span class="card-corner"></span>' +
+      '<span class="card-no">' + cardNoOf(card) + ' · ' + sm.vol + '</span>' +
+      '<div class="card">' +
+        '<div class="card-head">' +
+          '<span class="card-icon">' + ico(meta.icon, 22) + '</span>' +
+          '<span class="card-type">' + esc(card.type) + '</span>' +
+          '<span class="tag tag-scale">' + scaleLabel + '</span>' +
+          remoteTag +
+        '</div>' +
+        '<div class="card-body">' + esc(card.content) + '</div>' +
+        ownerLine +
+        '<div class="card-foot">完成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃ · ' + (TYPE_EN[card.type]||"ORIGINAL") + '</div>' +
       '</div>' +
-      '<div class="card-body">' + esc(card.content) + '</div>' +
-      ownerLine +
-      '<div class="card-foot">完成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃</div>' +
     '</div>';
 }
 
@@ -2327,6 +2740,11 @@ function init() {
   /* 卡片库（站内可编辑） */
   $("btnLib").addEventListener("click", openLibrary);
   $("btnLibBack").addEventListener("click", closeLibrary);
+
+  /* 卡面图鉴 */
+  $("btnGallery").addEventListener("click", openGallery);
+  $("btnGalBack").addEventListener("click", closeGallery);
+  $("btnGalAuto").addEventListener("click", toggleGalAuto);
   $("btnLibExport").addEventListener("click", exportLib);
   $("btnLibImport").addEventListener("click", importLib);
   $("btnLibReset").addEventListener("click", resetLib);
