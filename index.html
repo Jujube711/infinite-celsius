@@ -518,7 +518,75 @@ html, body {
 
 @media (prefers-reduced-motion: reduce) {
   .holo, .holo::after, .holo.autoplay::after, .card-frame::after { animation: none !important; transition: none !important; }
+  .draw-fx, .dc-wrap, .dc-3d, .dc-roll i, .dc-burst { animation: none !important; transition: none !important; }
 }
+
+/* ================= 抽卡过场动效（三段式：蓄力 → 揭晓 → 落定） ================= */
+.card-area { position: relative; }
+.draw-fx { position: absolute; inset: 0; z-index: 8; padding: 16px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: var(--radius); }
+/* 暗角不放在 .draw-fx 自己身上，而放在单独一层里：
+   落定时把它单独淡掉，卡面就从「叠在暗角上」变回「叠在面板底上」，
+   与真卡的合成结果逐像素一致。 */
+.draw-fx::before { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit; background: radial-gradient(130% 130% at 50% 40%, #2f1a24 0%, #241419 55%, #1a0f14 100%); opacity: 1; transition: opacity var(--dc-vig, .16s) ease; }
+.draw-fx.settled::before { opacity: 0; }
+.dc-wrap { position: relative; z-index: 1; width: 100%; perspective: 1200px; }
+.draw-fx.enter .dc-wrap { animation: dcEnter var(--dc-in, .5s) cubic-bezier(.22,1,.36,1) both; }
+@keyframes dcEnter { from { opacity: 0; transform: translate3d(42%, 16%, 0) rotate(-17deg) scale(.84); } to { opacity: 1; transform: none; } }
+.dc-3d { position: relative; width: 100%; transform-style: preserve-3d; transform: scale(var(--dc-charge, 1)) rotateY(var(--dc-turn, 0deg)); transition: transform var(--dc-dur, .42s) cubic-bezier(.34,1.06,.36,1); }
+.draw-fx.charge .dc-3d { --dc-charge: .965; --dc-dur: .16s; transition-timing-function: ease-out; }
+.draw-fx.flip .dc-3d { --dc-turn: 180deg; --dc-dur: var(--dc-flip, .42s); transition-timing-function: cubic-bezier(.34,1.06,.36,1); }
+/* 卡背朝前、真卡预转 180° 朝后；翻面由父级 .dc-3d 转 180° 完成。
+   spacer 走正常流，.dc-3d 的高度＝真卡高度，无需 JS 测量，位置与落定后逐像素对齐。 */
+.dc-spacer { transform: rotateY(180deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.dc-spacer .card, .dc-spacer .card-frame { animation: none; }
+.dc-back { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; transform: rotateY(0deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1px solid rgba(232,201,168,.30); background: radial-gradient(120% 78% at 50% -8%, rgba(227,164,189,.14) 0%, rgba(227,164,189,0) 58%), linear-gradient(150deg, rgba(227,164,189,.20) 0%, rgba(58,34,46,.97) 42%, rgba(178,133,204,.18) 100%), #241419; box-shadow: 0 16px 40px rgba(0,0,0,.55), inset 0 0 46px rgba(227,164,189,.10); }
+/* 顶部斜向高光：给卡背一点「压印纸面」的厚度，免得平得像块色板 */
+.dc-gloss { position: absolute; inset: 0; z-index: 1; background: linear-gradient(118deg, rgba(255,242,247,.09) 0%, rgba(255,242,247,.02) 26%, transparent 46%); pointer-events: none; }
+/* 四角小菱：与内框呼应，把版面撑住 */
+.dc-orn { position: absolute; z-index: 2; width: 7px; height: 7px; border: 1px solid rgba(232,201,168,.42); transform: rotate(45deg); }
+.dc-orn.tl { top: 15px; left: 15px; } .dc-orn.tr { top: 15px; right: 15px; }
+.dc-orn.bl { bottom: 15px; left: 15px; } .dc-orn.br { bottom: 15px; right: 15px; }
+.dc-back::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(232,201,168,.20); border-radius: 10px; }
+.dc-back::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,201,168,.38), transparent); }
+/* 层次：.dc-back::before / ::after 是最后生成的子盒，会自动压在真实子元素之上。
+   所以真实子元素一律给 z-index ≥ 1，把「内框 + 中线」压回底层。 */
+.dc-plate { position: absolute; z-index: 4; left: 50%; top: 50%; width: 42%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(62% 62% at 50% 34%, rgba(255,233,240,.13) 0%, rgba(227,164,189,.04) 44%, rgba(38,22,28,.55) 100%), #432a33; border: 1px solid rgba(232,201,168,.28); box-shadow: 0 0 0 5px rgba(34,19,24,.6), 0 0 0 6px rgba(232,201,168,.16), inset 0 1px 0 rgba(255,242,247,.12), inset 0 -8px 16px rgba(0,0,0,.32), 0 6px 22px rgba(0,0,0,.4); }
+.dc-mark { position: absolute; z-index: 5; left: 50%; top: 50%; width: 24%; max-width: 84px; transform: translate(-50%, -50%); opacity: .95; filter: drop-shadow(0 0 7px rgba(227,164,189,.55)); }
+.dc-roll { position: absolute; z-index: 3; left: 0; right: 0; top: 50%; height: 20px; margin-top: -10px; overflow: hidden; opacity: .34; }
+.dc-roll i { display: block; width: 200%; height: 100%; background: repeating-linear-gradient(90deg, transparent 0 6.5px, rgba(227,164,189,.62) 6.5px 8px), repeating-linear-gradient(90deg, transparent 0 38px, rgba(232,201,168,.8) 38px 40px); animation: dcRoll .8s linear infinite; }
+@keyframes dcRoll { from { transform: translateX(0); } to { transform: translateX(-40px); } }
+.dc-tag { position: absolute; z-index: 5; left: 50%; bottom: 9%; transform: translateX(-50%); padding: 3px 9px 3px 12px; border: 1px solid rgba(232,201,168,.22); border-radius: 999px; background: rgba(34,19,24,.35); font-size: 10px; letter-spacing: .26em; color: rgba(232,201,168,.62); text-shadow: 0 0 10px rgba(227,164,189,.4); white-space: nowrap; }
+.dc-burst { position: absolute; left: 50%; top: 50%; width: 62%; aspect-ratio: 1; transform: translate(-50%,-50%) scale(.35); border: 2px solid var(--fx-main, #e3a4bd); border-radius: 50%; opacity: 0; pointer-events: none; display: none; }
+.draw-fx.lv2 .dc-burst, .draw-fx.lv3 .dc-burst { display: block; }
+.draw-fx.settled .dc-burst { animation: dcBurst .66s cubic-bezier(.22,1,.36,1) 1; }
+@keyframes dcBurst { 0% { transform: translate(-50%,-50%) scale(.35); opacity: 0; } 28% { opacity: .72; } 100% { transform: translate(-50%,-50%) scale(1.85); opacity: 0; } }
+/* 落定后翻面已经结束，把 3D 相关的变换与合成层全部卸掉。
+   残留的 preserve-3d / backface-visibility 会把整张卡提升成合成层，
+   层里的文字会退化成灰度抗锯齿，与真卡的次像素抗锯齿不一致 —— 交接那一刻文字边缘会轻微变样。
+   卸干净之后，覆盖层这张卡与真卡连文字边缘都逐像素相同。
+   transform 必须一次性归零（配合 transition:none）：.dc-3d 与 .dc-spacer 的 180° 本来就互相抵消，
+   归零前后渲染结果都是单位矩阵，画面本身不会动。 */
+.draw-fx.settled .dc-wrap { perspective: none; }
+.draw-fx.settled .dc-3d { transform: none; transform-style: flat; transition: none; }
+.draw-fx.settled .dc-spacer { transform: none; backface-visibility: visible; -webkit-backface-visibility: visible; }
+.draw-fx.settled .dc-back { display: none; }
+/* 过场期间两侧都不扫光：覆盖层那张卡与真卡必须逐像素相同，
+   扫光带一旦只在其中一边出现，交接的那一刻就会被看见。
+   扫光改到「真卡显形之后」补一次（见 .sheen-once），从画面外扫入，天然无跳变。 */
+.draw-fx .card-frame::after { animation: none; }
+.card-area.fx-veil > .card-frame { visibility: hidden; }
+.card-area.fx-veil > .card-frame::after { animation: none; }
+.card-area.sheen-once > .card-frame::after { animation: dcSheen .52s ease-out 1; }
+@keyframes dcSheen { from { left: -60%; } to { left: 130%; } }
+.draw-fx.lv0 { --dc-in: .44s; --dc-flip: .36s; }
+.draw-fx.lv1 { --dc-in: .50s; --dc-flip: .42s; }
+.draw-fx.lv2 { --dc-in: .56s; --dc-flip: .46s; }
+.draw-fx.lv3 { --dc-in: .60s; --dc-flip: .50s; }
+.draw-fx.lv3 .dc-back { box-shadow: 0 16px 40px rgba(0,0,0,.55), 0 0 64px rgba(210,115,157,.48), inset 0 0 46px rgba(227,164,189,.16); }
+.draw-fx.lvneg::before { background: radial-gradient(130% 130% at 50% 40%, #20141a 0%, #150d12 60%, #0d080b 100%); }
+.draw-fx.lvneg .dc-back { border-color: rgba(198,162,174,.22); filter: saturate(.5) brightness(.85); }
+.draw-fx.lvneg .dc-mark { opacity: .3; }
+.draw-fx.lvneg .dc-roll { opacity: .28; }
 
 .lib-hint { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.6; }
 
@@ -1430,6 +1498,36 @@ function sfxSafe() {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
   tone(330, t, 0.5, "sine", 0.13);
+}
+/* 抽卡过场：蓄力（滑音 + 极轻摩擦），只用正弦，音量走 sfxGain */
+function sfxDrawCharge() {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  var o = AudioCtx.createOscillator(), g = AudioCtx.createGain();
+  o.type = "sine";
+  o.frequency.setValueAtTime(260, t);
+  o.frequency.exponentialRampToValueAtTime(520, t + 0.42);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(0.09, t + 0.06);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.46);
+  o.connect(g); g.connect(sfxGain);
+  o.start(t); o.stop(t + 0.5);
+  noiseBurst(t + 0.02, 0.32, 0.016, 2200);
+}
+/* 揭晓落定：音高随强度递增；收敛档（-1）走下行，主动压低期待 */
+function sfxDrawReveal(level) {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  if (level < 0) {
+    tone(392, t, 0.32, "sine", 0.10);
+    tone(294, t + 0.10, 0.42, "sine", 0.08);
+    return;
+  }
+  var base = [523, 587, 659, 784][Math.min(level, 3)];
+  tone(base, t, 0.30, "sine", 0.15);
+  tone(base * 1.5, t + 0.07, 0.34, "sine", 0.10);
+  if (level >= 2) tone(base * 2, t + 0.14, 0.44, "sine", 0.075);
+  if (level >= 3) { tone(base * 2.5, t + 0.21, 0.50, "sine", 0.06); tone(base * 3, t + 0.28, 0.50, "sine", 0.045); }
 }
 
 /* —— 背景音乐：缓慢流动的暖色和弦垫 + 偶尔铃音 —— */
@@ -4295,20 +4393,15 @@ function renderTemp(fromVal) {
   }
 }
 
-function renderCard(card) {
-  var area = $("cardArea");
-  if (!card) {
-    area.innerHTML = '<div class="card-empty">点击下方按钮，抽取你们的专属任务</div>';
-    return;
-  }
+/* 卡面 HTML（纯函数）——正式渲染与抽卡过场共用，保证两处结构逐字一致 */
+function cardHTML(card) {
   var meta = TYPE_META[card.type] || { icon: "bolt" };
   var scaleLabel = (SCALE_META[card.scale] || {}).label || "";
   var sm = scaleMetaOf(card);
   var remoteTag = card.scene === "remote" ? '<span class="tag tag-remote">远程</span>' : "";
   var owner = (typeof state.turn === "number") ? state.turn : 0;
   var ownerLine = '<div class="card-owner">' + ico("target", 14) + ' 这张属于 ' + playerLabel(owner) + '</div>';
-  area.innerHTML =
-    '<div class="card-frame' + (card.scale === "high" ? " h" : "") + '" style="--h-main:' + sm.main + '">' +
+  return '<div class="card-frame' + (card.scale === "high" ? " h" : "") + '" style="--h-main:' + sm.main + '">' +
       '<span class="card-corner"></span>' +
       '<span class="card-no">' + cardNoOf(card) + ' · ' + sm.vol + '</span>' +
       '<div class="card">' +
@@ -4325,6 +4418,147 @@ function renderCard(card) {
           '<button class="admire-btn" type="button" title="鉴赏这张卡">' + ico("crystal", 12) + ' 鉴赏</button></div>' +
       '</div>' +
     '</div>';
+}
+
+function renderCard(card) {
+  var area = $("cardArea");
+  if (!area) return;
+  /* 重画卡面 = 覆盖层的宿主被换掉。过场若还在播，先把它作废掉：
+     否则 innerHTML 会冲掉覆盖层、遮罩却留在 cardArea 上，新卡面会一直不可见。
+     过场中途被远程同步 / 完成 / 跳过打断，走的就是这条路径。 */
+  if (fxAbort) fxAbort();
+  area.classList.remove("fx-veil");
+  if (!card) {
+    area.innerHTML = '<div class="card-empty">点击下方按钮，抽取你们的专属任务</div>';
+    return;
+  }
+  area.innerHTML = cardHTML(card);
+}
+
+/* ================= 抽卡过场编排（蓄力 → 揭晓 → 落定） =================
+   纯表现层：不读写 state、不参与 rtc 同步，状态在 drawCard() 里已落库。
+   做法是「真卡先就位在底层 → 覆盖层盖住 → 过场播完覆盖层淡出露出真卡」，
+   这样揭晓与正式卡面之间零跳变。 */
+var drawBusy = false;
+var fxSeq = 0;        /* 过场世代号：连抽时旧过场的收尾定时器不得去动新过场的状态 */
+var fxAbort = null;   /* 当前过场的「立刻作废」入口；renderCard 重画卡面时调用 */
+
+/* 强度分级：-1 连跳收敛 / 0 轻度 / 1 中度 / 2 高度 / 3 沸腾 */
+function drawFxLevel(card) {
+  var g = (state && state.game) ? state.game : null;
+  if (g && g.boiling) return 3;
+  if (card.scale === "high") return 2;
+  if (card.scale === "medium") return 1;
+  if (g && g.skipped >= 3 && !g.consecutive) return -1;
+  return 0;
+}
+
+function fxReduced() {
+  return !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+}
+
+function fxVar(el, name, def) {
+  var n = parseFloat(getComputedStyle(el).getPropertyValue(name));
+  return (isNaN(n) || n <= 0) ? def : n;
+}
+
+function fxBackHTML() {
+  return '<div class="dc-gloss"></div>' +
+    '<div class="dc-roll"><i></i></div>' +
+    '<div class="dc-plate"></div>' +
+    '<svg class="dc-mark" viewBox="0 0 400 400" aria-hidden="true">' +
+      '<path d="M200 340 C 200 340 70 250 70 160 C 70 110 110 80 150 80 C 180 80 200 105 200 130 C 200 105 220 80 250 80 C 290 80 330 110 330 160 C 330 250 200 340 200 340 Z" fill="none" stroke="#e3a4bd" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path d="M200 340 C 200 340 70 250 70 160 C 70 110 110 80 150 80 C 180 80 200 105 200 130 C 200 105 220 80 250 80 C 290 80 330 110 330 160 C 330 250 200 340 200 340 Z" fill="none" stroke="#ffd9e6" stroke-width="1.4" stroke-linejoin="round" opacity=".5" transform="translate(200 200) scale(.9) translate(-200 -200)"/>' +
+    '</svg>' +
+    '<span class="dc-orn tl"></span><span class="dc-orn tr"></span>' +
+    '<span class="dc-orn bl"></span><span class="dc-orn br"></span>' +
+    '<span class="dc-tag">∞℃</span>';
+}
+
+/* 播过场。onReveal 在覆盖层开始淡出（真卡可见）那一刻调用，恰好一次 ——
+   包括过场被 renderCard 中途作废的情况，否则 onDraw 里的 drawBusy 会永远卡住。 */
+function playDrawFX(card, onReveal) {
+  var area = $("cardArea");
+  if (!area || !card || fxReduced()) {
+    renderCard(card);
+    if (onReveal) onReveal();
+    return;
+  }
+
+  var lv = drawFxLevel(card);
+  var sm = scaleMetaOf(card);
+  var frontHTML = cardHTML(card);
+
+  /* 真卡先落在底层（被覆盖层完全遮住），过场里的「亮面」直接复用同一个 cardHTML 结构。
+     高度不再用 JS 量：.dc-spacer 走正常流撑开 .dc-3d，.dc-back 绝对定位覆盖，
+     于是覆盖层里的卡与落定后的卡落在完全相同的盒子里，逐像素对齐、零跳变。 */
+  renderCard(card);
+  /* 真卡先占位（撑住 cardArea 的真实高度），但暂时不画：
+     覆盖层底下必须只剩「面板底」，否则半透明卡面会双重叠色 —— 过场结束时整张卡会突然亮一档。 */
+  area.classList.add("fx-veil");
+  var mySeq = ++fxSeq;
+
+  var fx = document.createElement("div");
+  fx.className = "draw-fx " + (lv < 0 ? "lvneg" : "lv" + lv);
+  fx.style.setProperty("--fx-main", sm.main);
+  fx.innerHTML = '<div class="dc-wrap"><div class="dc-3d">' +
+      '<div class="dc-back">' + fxBackHTML() + '</div>' +
+      '<div class="dc-spacer">' + frontHTML + '</div>' +
+    '</div><div class="dc-burst"></div></div>';
+
+  fx.classList.add("enter");
+  area.appendChild(fx);
+  sfxDrawCharge();
+
+  var inDur = fxVar(fx, "--dc-in", 0.5);
+  var flipDur = fxVar(fx, "--dc-flip", 0.42);
+  var tCharge = 0.12, tHold = 0.40;
+  var tFlip = inDur + tCharge;
+  var tSettle = tFlip + flipDur;
+  var tFlush = tSettle + tHold;
+
+  var revealed = false;
+  function revealOnce() {
+    if (revealed) return;
+    revealed = true;
+    if (onReveal) onReveal();
+  }
+  /* 作废：把世代号加一，后面所有定时器一并失效；立刻收掉覆盖层与遮罩，
+     并保证 onReveal 已经被调用过一次（抽卡按钮不会卡死）。 */
+  function abort() {
+    if (fxAbort === abort) fxAbort = null;
+    var wasCurrent = (mySeq === fxSeq);
+    fxSeq++;
+    revealOnce();
+    if (fx.parentNode) fx.parentNode.removeChild(fx);
+    if (wasCurrent) area.classList.remove("fx-veil");
+  }
+  fxAbort = abort;
+
+  function at(sec, fn) { setTimeout(fn, Math.round(sec * 1000)); }
+
+  at(inDur, function () { fx.classList.remove("enter"); fx.classList.add("charge"); });
+  at(tFlip, function () { fx.classList.remove("charge"); fx.classList.add("flip"); });
+  at(tFlip + flipDur * 0.55, function () { sfxDrawReveal(lv); });
+  at(tSettle, function () { fx.classList.add("settled"); });   /* 暗角同步淡掉，卡面改叠在面板底上 */
+  /* 交接：硬切，不做淡出。
+     此刻覆盖层那张卡与真卡逐像素相同（已实测 100% 位相同），硬切根本看不出来。
+     淡出反而是错的：真卡在显形后会叠在覆盖层那张半透明卡面底下，
+     卡面底色被叠两遍（10% 粉 × 2），整张卡会先跳亮约 3% 再慢慢降回去。
+     两处改动必须在同一个任务里完成，浏览器一次样式计算、一帧落地，中间不会闪。
+     tHold 取 0.40s 而不是更短：翻面时这张卡在合成层里，卸掉 3D 之后合成器要重新栅格化一遍，
+     留够时间再交接，两帧才是连 ±1 级都不差的同一张图。 */
+  at(tFlush, function () {
+    if (mySeq !== fxSeq) return;            /* 已被作废或被新过场取代 */
+    if (fxAbort === abort) fxAbort = null;
+    try { revealOnce(); }
+    finally {
+      area.classList.remove("fx-veil");     /* 真卡显形，与覆盖层那张卡逐像素相同 */
+      area.classList.add("sheen-once");     /* 扫光从画面外扫入，补一次落定高光 */
+      if (fx.parentNode) fx.parentNode.removeChild(fx);
+    }
+  });
+  at(tFlush + 0.6, function () { if (mySeq === fxSeq) area.classList.remove("sheen-once"); });
 }
 
 function showCardActions(show) {
@@ -4625,18 +4859,34 @@ function finishDice(a, b) {
 }
 
 function onDraw() {
+  if (drawBusy) return;                    /* 过场播放中：忽略连点，避免重复抽卡 */
   if (rtcJoinAct("draw")) return;
   var card = drawCard();
   if (!card) {
     toast("当前尺度下没有可用卡牌");
     return;
   }
-  renderCard(card);
-  showCardActions(true);
-  computePeek();   /* 预留下一张 */
-  renderPeek();    /* 展示预告 */
-  sfxDraw();
-  rtcHostSync();
+  computePeek();                           /* 预留下一张（逻辑先行） */
+  rtcHostSync();                           /* 同步先行：过场纯本地，不阻塞 P2P 时序 */
+  drawBusy = true;
+  $("btnDraw").classList.add("hidden");    /* 过场期间收走抽卡按钮 */
+
+  var revealed = false;
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    drawBusy = false;
+    if (pendingCard !== card) return;      /* 过场期间已被跳过/完成/结束，放弃补渲染 */
+    showCardActions(true);
+    renderPeek();                          /* 落定后才刷新「下一张预告」 */
+  }
+
+  try {
+    playDrawFX(card, reveal);
+  } catch (err) {
+    /* 兜底：过场出任何意外都必须放行，不能让界面锁死 */
+    if (!revealed) { renderCard(card); reveal(); }
+  }
 }
 
 function onComplete() {
