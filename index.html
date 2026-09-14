@@ -409,7 +409,8 @@ html, body {
 .gal-btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .gal-btns .btn { font-size: 13px; padding: 10px 12px; }
 .gal-no { font-size: 11px; letter-spacing: .3em; color: var(--text-dim); margin-top: 4px; }
-.gal-stage { flex: 0 0 auto; width: min(76vw, 350px); align-self: center; order: -1; }
+.gal-stage { flex: 0 0 auto; width: min(76vw, 400px); align-self: center; order: -1; cursor: zoom-in; touch-action: pan-y; }
+.gal-stage .holo { cursor: zoom-in; }
 .gal-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(232,201,168,.45); background: rgba(20,10,16,.55); color: #e8c9a8; font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: background .2s, transform .12s; }
 .gal-nav:active { transform: translateY(-50%) scale(.92); }
 .gal-nav.prev { left: 8px; }
@@ -422,10 +423,87 @@ html, body {
 .gal-swipe-hint { text-align: center; font-size: 10px; letter-spacing: .2em; color: var(--text-dim); opacity: .8; margin-top: 6px; }
 .gal-back-row span.on { color: var(--h-main, var(--accent)); font-weight: 800; }
 @media (max-width: 620px) {
-  .gal-stage { width: min(80vw, 330px); }
-  .gal-view { gap: 12px; }
+  .gal-stage { width: min(96vw, 430px); }
+  .gal-view { gap: 12px; margin-inline: -16px; }
   .gal-name { font-size: 30px; }
   .gal-desc { font-size: 13px; }
+}
+
+/* ================= 全屏卡面展示模式 =================
+   点鉴赏视图的大卡面进入：背景虚化（景深）+ 卡后柔光 + 视差微倾
+   零依赖纯 CSS/JS，不引入外部资源 */
+.gal-full {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px;
+  padding: max(16px, env(safe-area-inset-top)) 4px max(16px, env(safe-area-inset-bottom));
+  background: rgba(11, 5, 9, .5);
+  -webkit-backdrop-filter: blur(24px) saturate(.86) brightness(.8);
+  backdrop-filter: blur(24px) saturate(.86) brightness(.8);
+  animation: galFullIn .3s ease both;
+  will-change: opacity;
+}
+/* 向外渐暗的暗角：把视觉进一步压向中心卡面，强化「前实后虚」 */
+.gal-full::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 78% 62% at 50% 46%, transparent 26%, rgba(6, 2, 4, .62) 100%);
+}
+@keyframes galFullIn { from { opacity: 0; } to { opacity: 1; } }
+.gal-full.closing { animation: galFullOut .22s ease both; }
+@keyframes galFullOut { from { opacity: 1; } to { opacity: 0; } }
+/* 卡体背后的柔光晕：制造前实后虚的景深层次 */
+.gal-full-glow {
+  position: absolute; left: 50%; top: 50%; z-index: 2;
+  width: min(126vw, 760px); aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--h-main, #e3a4bd) 0%, rgba(178,133,204,.35) 38%, transparent 66%);
+  opacity: .26; filter: blur(46px); pointer-events: none;
+  animation: galFullGlow 6s ease-in-out infinite;
+}
+@keyframes galFullGlow {
+  0%, 100% { opacity: .2; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: .32; transform: translate(-50%, -50%) scale(1.06); }
+}
+/* 全屏卡体：宽度受「视口宽 / 视口高 / 上限」三重约束，矮屏不裁切、大屏能长到 540 */
+.gal-full-card {
+  position: relative; z-index: 3;
+  width: min(98vw, calc(78vh * 63 / 88), 540px);
+  animation: galFullCardIn .46s cubic-bezier(.22, 1, .36, 1) both;
+}
+@keyframes galFullCardIn {
+  from { opacity: 0; transform: translateZ(-160px) scale(.76); }
+  to { opacity: 1; transform: translateZ(0) scale(1); }
+}
+.gal-full-card.gal-slide-next { animation: galFullSlideR .34s cubic-bezier(.22, 1, .36, 1); }
+.gal-full-card.gal-slide-prev { animation: galFullSlideL .34s cubic-bezier(.22, 1, .36, 1); }
+@keyframes galFullSlideR { from { opacity: 0; transform: translateX(56px) translateZ(-60px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes galFullSlideL { from { opacity: 0; transform: translateX(-56px) translateZ(-60px) scale(.96); } to { opacity: 1; transform: none; } }
+/* 全屏态卡体加重投影 + 外发光，强化"浮在背景之上" */
+.gal-full-card .holo {
+  box-shadow: 0 44px 96px rgba(8, 2, 6, .74), 0 10px 30px rgba(8, 2, 6, .55),
+              0 0 64px var(--h-soft, rgba(227,164,189,.2)), inset 0 0 0 1px rgba(255,234,238,.07);
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1);
+}
+.gal-full-meta { position: static; flex: 0 0 auto; text-align: center; z-index: 3; pointer-events: none; padding: 0 16px; }
+.gal-full-name { font-size: 17px; letter-spacing: .18em; font-family: var(--font-display); color: #f6e9ee; text-shadow: 0 2px 20px rgba(0, 0, 0, .7); }
+.gal-full-name small { display: block; margin-top: 5px; font-size: 10px; letter-spacing: .26em; color: rgba(230,205,214,.66); font-family: var(--font-body); }
+.gal-full-hint { margin-top: 8px; font-size: 10px; letter-spacing: .2em; color: rgba(230,205,214,.5); }
+.gal-full-close {
+  position: absolute; top: max(14px, env(safe-area-inset-top)); right: 14px; z-index: 4;
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 1px solid rgba(232,201,168,.34); background: rgba(20,10,16,.48);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  color: #e8c9a8; font-size: 18px; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  touch-action: manipulation; -webkit-appearance: none; appearance: none;
+  transition: background .2s, transform .12s;
+}
+.gal-full-close:active { transform: scale(.92); }
+.gal-full .gal-nav { width: 44px; height: 44px; font-size: 23px; }
+.gal-full .gal-nav.prev { left: max(10px, env(safe-area-inset-left)); }
+.gal-full .gal-nav.next { right: max(10px, env(safe-area-inset-right)); }
+@media (prefers-reduced-motion: reduce) {
+  .gal-full, .gal-full-card, .gal-full-glow, .gal-full-card.gal-slide-next, .gal-full-card.gal-slide-prev { animation: none !important; }
 }
 
 /* 游戏内任务卡 × 收藏卡质感 */
@@ -676,6 +754,19 @@ html, body {
       <h3 class="modal-title"><span data-ico="crystal"></span> 卡面鉴赏</h3>
       <div id="admireBody"></div>
       <button id="btnAdmireClose" class="btn btn-text">关闭</button>
+    </div>
+  </div>
+
+  <!-- ============ 全屏卡面展示（点鉴赏视图的大卡面进入） ============ -->
+  <div id="galFull" class="gal-full hidden">
+    <div class="gal-full-glow" id="galFullGlow"></div>
+    <div class="gal-full-card" id="galFullCard"></div>
+    <button class="gal-nav prev" id="galFullPrev" type="button" aria-label="上一张">‹</button>
+    <button class="gal-nav next" id="galFullNext" type="button" aria-label="下一张">›</button>
+    <button class="gal-full-close" id="galFullClose" type="button" aria-label="关闭">✕</button>
+    <div class="gal-full-meta">
+      <div class="gal-full-name" id="galFullName"></div>
+      <div class="gal-full-hint" id="galFullHint">点击卡面翻面 · 左右滑动换卡 · 点击空白关闭</div>
     </div>
   </div>
 
@@ -1241,6 +1332,8 @@ function showScreen(name) {
   if (el) el.classList.remove("hidden");
   /* 切走图鉴时停掉自动赏卡 */
   if (name !== "gallery" && typeof stopGalAuto === "function") stopGalAuto();
+  /* 切屏时收掉全屏卡面展示层，避免盖在别的屏上 */
+  if (galFullOpen && name !== "gallery") closeGalFull(true);
   /* 切屏后回到页面顶部，避免残留上一个长列表的滚动位置 */
   var app = document.getElementById("app");
   if (app) app.scrollTop = 0;
@@ -3710,8 +3803,19 @@ function closeGallery() { stopGalAuto(); showScreen("setup"); refreshResume(); }
 function renderGallery() {
   var wrap = $("galWrap");
   if (!wrap) return;
-  if (galState.mode === "grid") { renderGalleryGrid(wrap); return; }
+  if (galState.mode === "grid") {
+    renderGalleryGrid(wrap);
+    /* 回到图鉴网格 = 已在展示模式则一并收掉 */
+    if (galFullOpen) closeGalFull(true);
+    return;
+  }
   renderGalleryView(wrap, galState.card);
+  /* 展示模式开着时（如「自动赏卡」轮播）保持两边同卡 */
+  if (galFullOpen && galState.card && galFullCardRef && galState.card.id !== galFullCardRef.id) {
+    galFullCardRef = galState.card;
+    galFullFlipped = false;
+    renderGalFull(0);
+  }
 }
 
 function renderGalleryGrid(wrap) {
@@ -3824,7 +3928,17 @@ function bindGalSwipe(wrap) {
 /* 鉴赏视图按钮委托：host = "gallery" | "admire" */
 function galViewDelegate(ev, host) {
   var b = ev.target.closest ? ev.target.closest("button") : null;
-  if (!b) return;
+  if (!b) {
+    /* 点卡面 → 进入全屏展示模式。限定在 .gal-stage 内：
+       网格小卡里也含 .holo，且网格卡点击会先重渲染使 target 脱离文档，
+       用复合选择器才不会把「点网格卡」误判成「点鉴赏卡面」 */
+    var holo = ev.target.closest ? ev.target.closest(".gal-stage .holo") : null;
+    if (holo) {
+      var gc = (host === "gallery") ? galState.card : admireCardRef;
+      if (gc) openGalFull(gc, host);
+    }
+    return;
+  }
   if (b.classList.contains("jsGalFlip")) {
     if (host === "gallery") { galState.flipped = !galState.flipped; renderGallery(); }
     else { admireFlipped = !admireFlipped; renderAdmire(); }
@@ -3838,6 +3952,128 @@ function galViewDelegate(ev, host) {
   } else if (b.classList.contains("jsGalNext")) {
     galSlide(1);
   }
+}
+
+/* ================= 全屏卡面展示模式 =================
+   从鉴赏视图点卡面进入。景深三件套：背景虚化(backdrop-filter) + 卡后柔光晕 + 加重投影，
+   外加进入时的 Z 轴推入与指针视差微倾。纯原生，无外部资源。 */
+var galFullOpen = false, galFullHost = "gallery", galFullFlipped = false, galFullCardRef = null;
+var galFullBound = false, galFullSwiped = false;
+
+function openGalFull(c, host) {
+  var el = $("galFull");
+  if (!c || !el) return;
+  galFullHost = host || "gallery";
+  galFullCardRef = c;
+  galFullFlipped = (galFullHost === "admire") ? !!admireFlipped : !!galState.flipped;
+  galFullOpen = true;
+  el.classList.remove("hidden", "closing");
+  setGalFullLock(true);
+  renderGalFull(0);
+  bindGalFullOnce();
+}
+
+function toggleGalFullFlip() {
+  if (!galFullOpen) return;
+  galFullFlipped = !galFullFlipped;
+  renderGalFull(0);
+}
+
+/* 全屏内换卡：走全量序列（内置卡 + 站内新增卡），与图鉴翻页同一顺序 */
+function galFullSlide(dir) {
+  if (!galFullOpen || !galFullCardRef) return;
+  var list = galAllCards();
+  if (!list.length) return;
+  var idx = 0;
+  for (var i = 0; i < list.length; i++) if (list[i].id === galFullCardRef.id) { idx = i; break; }
+  idx = (idx + dir + list.length) % list.length;
+  galFullFlipped = false;
+  galFullCardRef = list[idx];
+  if (galFullHost === "gallery") galState.card = galFullCardRef;
+  renderGalFull(dir);
+}
+
+function renderGalFull(slide) {
+  if (!galFullOpen || !galFullCardRef) return;
+  var host = $("galFullCard");
+  if (!host) return;
+  var c = galFullCardRef, sm = scaleMetaOf(c);
+  host.className = "gal-full-card" + (slide > 0 ? " gal-slide-next" : slide < 0 ? " gal-slide-prev" : "");
+  host.style.setProperty("--h-main", sm.main);
+  host.innerHTML = holoFace(c, { flipped: galFullFlipped, autoplay: true });
+  var glow = $("galFullGlow");
+  if (glow) glow.style.setProperty("--h-main", sm.main);
+  var nm = $("galFullName");
+  if (nm) nm.innerHTML = esc(cardNameOf(c)) + '<small>' + esc(cardNoOf(c) + ' · ' + (sm.vol || "") + ' · ' + (galFullFlipped ? "反面" : "正面")) + '</small>';
+  var h = host.querySelector(".holo");
+  if (h) bindHolo(h, true);   /* 复用流光：指针驱动的 3D 微倾 + 光泽跟随 */
+}
+
+/* 全屏时锁住底层滚动，避免滑动换卡把页面也带跑 */
+function setGalFullLock(on) {
+  var app = document.getElementById("app");
+  if (app) app.style.overflow = on ? "hidden" : "";
+}
+
+function closeGalFull(skipHostRender) {
+  if (!galFullOpen) return;
+  galFullOpen = false;
+  setGalFullLock(false);
+  /* 把全屏里的翻面/换卡状态同步回宿主视图，关掉后不会对不上 */
+  if (galFullHost === "gallery") {
+    galState.flipped = galFullFlipped;
+  } else {
+    admireFlipped = galFullFlipped;
+    if (galFullCardRef) admireCardRef = galFullCardRef;
+  }
+  var el = $("galFull");
+  if (!el) return;
+  el.classList.add("closing");
+  setTimeout(function () {
+    el.classList.remove("closing");
+    el.classList.add("hidden");
+    if (skipHostRender) return;
+    if (galFullHost === "gallery") { if (galState.mode === "view") renderGallery(); }
+    else { renderAdmire(); }
+  }, 200);
+}
+
+function bindGalFullOnce() {
+  if (galFullBound) return;
+  var el = $("galFull");
+  if (!el) return;
+  galFullBound = true;
+
+  /* 点击：箭头换卡 / 点卡面翻面 / 其余空白关闭 */
+  el.addEventListener("click", function (ev) {
+    if (galFullSwiped) return;
+    var t = ev.target;
+    if (!t || !t.closest) return;
+    if (t.closest(".gal-full-close")) { closeGalFull(); return; }
+    if (t.closest("#galFullPrev")) { galFullSlide(-1); return; }
+    if (t.closest("#galFullNext")) { galFullSlide(1); return; }
+    if (t.closest(".holo")) { toggleGalFullFlip(); return; }
+    closeGalFull();
+  });
+
+  /* 手势：横向滑动换卡，下滑关闭 */
+  var sx = 0, sy = 0, tracking = false;
+  function down(x, y) { sx = x; sy = y; tracking = true; }
+  function up(x, y) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = x - sx, dy = y - sy;
+    if (Math.abs(dy) > 88 && Math.abs(dy) > Math.abs(dx) * 1.3) { closeGalFull(); return; }
+    if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      galFullSwiped = true;
+      setTimeout(function () { galFullSwiped = false; }, 380);
+      galFullSlide(dx < 0 ? 1 : -1);   /* 左滑 = 下一张，与图鉴一致 */
+    }
+  }
+  el.addEventListener("touchstart", function (e) { if (e.touches[0]) down(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  el.addEventListener("touchend", function (e) { if (e.changedTouches[0]) up(e.changedTouches[0].clientX, e.changedTouches[0].clientY); });
+  el.addEventListener("mousedown", function (e) { down(e.clientX, e.clientY); });
+  el.addEventListener("mouseup", function (e) { up(e.clientX, e.clientY); });
 }
 
 /* ---- 游戏内「鉴赏」弹窗：任务卡（card）/ 称号卡（title）两种模式 ---- */
@@ -4985,8 +5221,16 @@ function init() {
     if (!b || !lastCard) return;
     openAdmire(resolveCard(lastCard.id) || lastCard);
   });
-  /* 鉴赏翻页：键盘左右方向键 */
+  /* 卡片图鉴 / 展示模式的键盘操作 */
   document.addEventListener("keydown", function (ev) {
+    /* 全屏展示模式优先：Esc 关闭、方向键换卡、空格或回车翻面 */
+    if (galFullOpen) {
+      if (ev.key === "Escape") { closeGalFull(); }
+      else if (ev.key === "ArrowLeft") { galFullSlide(-1); }
+      else if (ev.key === "ArrowRight") { galFullSlide(1); }
+      else if (ev.key === " " || ev.key === "Enter") { toggleGalFullFlip(); ev.preventDefault(); }
+      return;
+    }
     if (galState.mode !== "view" || document.getElementById("screen-gallery").classList.contains("hidden")) return;
     if (ev.key === "ArrowLeft") { galSlide(-1); }
     else if (ev.key === "ArrowRight") { galSlide(1); }
