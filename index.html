@@ -1679,7 +1679,61 @@ var CARD_ART = {
   H15: function (color, uid) { return artSyncHeart(color, uid); },
   L18: function (color, uid) { return artHugTen(color, uid); },
   M08: function (color, uid) { return artClavicleLetter(color, uid); },
-  H14: function (color, uid) { return artSpiral(color, uid); }
+  H14: function (color, uid) { return artSpiral(color, uid); },
+  L01: function (color, uid) { return artWishStar(color, uid); },
+  L02: function (color, uid) { return artTwoCups(color, uid); },
+  L04: function (color, uid) { return artLaugh(color, uid); },
+  L05: function (color, uid) { return artCuteList(color, uid); },
+  L06: function (color, uid) { return artNickName(color, uid); },
+  L07: function (color, uid) { return artLampThanks(color, uid); },
+  L08: function (color, uid) { return artPalmThirty(color, uid); },
+  L09: function (color, uid) { return artBlankList(color, uid); },
+  L10: function (color, uid) { return artTimeCapsule(color, uid); },
+  L11: function (color, uid) { return artVoiceWave(color, uid); },
+  L12: function (color, uid) { return artMelodyHeart(color, uid); },
+  L13: function (color, uid) { return artGuessFace(color, uid); },
+  L14: function (color, uid) { return artDreamTravel(color, uid); },
+  L15: function (color, uid) { return artSameSky(color, uid); },
+  L16: function (color, uid) { return artMemoryJar(color, uid); },
+  L17: function (color, uid) { return artThreeBowls(color, uid); },
+  L19: function (color, uid) { return artHalfPuzzle(color, uid); },
+  L20: function (color, uid) { return artCalendarDate(color, uid); },
+  M01: function (color, uid) { return artSpotlightHeart(color, uid); },
+  M02: function (color, uid) { return artHeartbeatMark(color, uid); },
+  M03: function (color, uid) { return artWhisperRibbon(color, uid); },
+  M05: function (color, uid) { return artColorFan(color, uid); },
+  M06: function (color, uid) { return artFingerTrail(color, uid); },
+  M07: function (color, uid) { return artMoonHanger(color, uid); },
+  M09: function (color, uid) { return artWineNight(color, uid); },
+  M10: function (color, uid) { return artBarStools(color, uid); },
+  M11: function (color, uid) { return artSharedDream(color, uid); },
+  M12: function (color, uid) { return artSuspendedHeart(color, uid); },
+  M13: function (color, uid) { return artCatEarsPolaroid(color, uid); },
+  M14: function (color, uid) { return artPolaroidArchive(color, uid); },
+  M15: function (color, uid) { return artEarWhisper(color, uid); },
+  M16: function (color, uid) { return artWindRibbon(color, uid); },
+  M17: function (color, uid) { return artDoorLight(color, uid); },
+  M18: function (color, uid) { return artSecretMap(color, uid); },
+  M19: function (color, uid) { return artLipSeal(color, uid); },
+  M20: function (color, uid) { return artSharedLamp(color, uid); },
+  H01: function (color, uid) { return artDreamFigure(color, uid); },
+  H02: function (color, uid) { return artArrowThroughHearts(color, uid); },
+  H03: function (color, uid) { return artCoatHeart(color, uid); },
+  H04: function (color, uid) { return artBlindfoldGift(color, uid); },
+  H05: function (color, uid) { return artKissTrail(color, uid); },
+  H06: function (color, uid) { return artBreathSync(color, uid); },
+  H07: function (color, uid) { return artOvertimeTie(color, uid); },
+  H08: function (color, uid) { return artPerfectNight(color, uid); },
+  H09: function (color, uid) { return artBreathHeart(color, uid); },
+  H10: function (color, uid) { return artFirstPerson(color, uid); },
+  H11: function (color, uid) { return artGuideKiss(color, uid); },
+  H12: function (color, uid) { return artBubbleStar(color, uid); },
+  H13: function (color, uid) { return artThreeFlags(color, uid); },
+  H16: function (color, uid) { return artEdgeTouch(color, uid); },
+  H17: function (color, uid) { return artStrangerSparks(color, uid); },
+  H18: function (color, uid) { return artWallThree(color, uid); },
+  H19: function (color, uid) { return artDayDial(color, uid); },
+  H20: function (color, uid) { return artLotteryJar(color, uid); }
 };
 
 /* L18 拥抱十秒 · 人物互动：炉火门洞里的熊抱 + 10 秒倒计时光环 */
@@ -1900,6 +1954,1660 @@ function artSyncHeart(color, uid) {
     '<g><path d="M 136 206 C 143 209 147.5 213.5 149 218 L 121 218 C 122.5 213.5 127 209 134 206 C 134.7 205.8 135.3 205.8 136 206 Z" fill="url(#' + F + ')"/><circle cx="135" cy="197" r="9" fill="url(#' + F + ')"/><path d="M 126.5 192.5 C 124 187.5 127 182.8 132.2 181.8 C 137.4 180.8 141.6 183.8 142.4 188.2 C 139 186 134.8 185.6 131.2 187.1 C 129.2 188 127.5 189.9 126.5 192.5 Z" fill="#170c11"/></g>' +
     '<path d="M 76 202 C 88 197.5 112 197.5 124 202" fill="none" stroke="#c98fe8" stroke-width="1" opacity=".6" stroke-dasharray="1 4" stroke-linecap="round"/>' +
     '<rect width="200" height="238" filter="url(#' + P + ')"/>' +
+    '</svg>';
+}
+
+/* ===== 批次 2：轻度卷 19 张（按《卡面设计-60张.md》）===== */
+
+/* L01 心愿暗号 · 双人对坐，视线交汇成弧光托起许愿星（圆月窗） */
+function artWishStar(color, uid) {
+  uid = uid || "l01";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#452840"/><stop offset=".6" stop-color="#301b2b"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#583349"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#ffd9a8" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<circle cx="100" cy="66" r="30" fill="#e3a4bd" opacity=".1"/>' +
+    '<g fill="#f4e3ec"><circle cx="36" cy="40" r="1.2"/><circle cx="164" cy="34" r="1.2"/><circle cx="56" cy="72" r=".9" opacity=".7"/><circle cx="146" cy="78" r=".9" opacity=".7"/></g>' +
+    /* 桌 */
+    '<rect x="46" y="172" width="108" height="7" rx="3.5" fill="#170c11"/>' +
+    '<rect x="58" y="179" width="8" height="30" fill="#170c11"/><rect x="134" y="179" width="8" height="30" fill="#170c11"/>' +
+    /* 蜡烛 */
+    '<rect x="94" y="158" width="12" height="14" rx="2" fill="#2a1620" stroke="rgba(232,201,168,.5)" stroke-width="1"/>' +
+    '<ellipse cx="100" cy="152" rx="3" ry="4.6" fill="#ffca7a" filter="url(#' + G + ')"/>' +
+    /* 双偶对坐 */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="52" cy="128" r="10"/><path d="M 52 138 C 44 142 39 150 37 162 L 37 172 L 66 172 L 66 162 C 64 150 60 142 52 138 Z"/>' +
+    '<circle cx="148" cy="128" r="10"/><path d="M 148 138 C 156 142 161 150 163 162 L 163 172 L 134 172 L 134 162 C 136 150 140 142 148 138 Z"/>' +
+    '</g>' +
+    /* 视线弧光交汇 */
+    '<path d="M 60 124 Q 100 104 140 124" fill="none" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="3 4" opacity=".8"/>' +
+    /* 许愿星 */
+    '<g filter="url(#' + G + ')"><path d="M 100 78 L 103.4 92.6 L 118 96 L 103.4 99.4 L 100 114 L 96.6 99.4 L 82 96 L 96.6 92.6 Z" fill="#ffdf9e"/></g>' +
+    '<ellipse cx="100" cy="206" rx="56" ry="6" fill="#0d0609" opacity=".6"/>' +
+    '</svg>';
+}
+
+/* L02 一杯恰好 · 两杯饮品并排，杯套手写名，拉花心（全出血） */
+function artTwoCups(color, uid) {
+  uid = uid || "l02";
+  var S = uid + "s", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3e2432"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.2"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<ellipse cx="100" cy="200" rx="84" ry="10" fill="#170c11" opacity=".8"/>' +
+    /* 杯 A */
+    '<g>' +
+    '<path d="M 46 118 L 54 178 L 86 178 L 94 118 Z" fill="#1c0e15" stroke="rgba(232,201,168,.4)" stroke-width="1.2"/>' +
+    '<ellipse cx="70" cy="118" rx="24" ry="6" fill="#eab7c8" opacity=".9"/>' +
+    '<path d="M 70 118 m -8 0 a 8 4 0 0 0 16 0" fill="none" stroke="#c987a4" stroke-width="1"/>' +
+    '<path d="M 70 114 c 0 -3 4 -3 4 -6 c 0 -2 -2 -3 -2 -3" fill="none" stroke="#c987a4" stroke-width="1.2"/>' +
+    '<rect x="50" y="132" width="40" height="22" rx="3" fill="#f0dcc4" opacity=".92"/>' +
+    '<path d="M 57 140 c 4 -2 8 2 12 0 c 4 -2 8 2 12 0" fill="none" stroke="#8a5a4a" stroke-width="1.1"/>' +
+    '<path d="M 58 147 c 4 -2 7 2 11 0" fill="none" stroke="#8a5a4a" stroke-width="1.1"/>' +
+    '<path d="M 62 100 C 60 92 66 88 64 80 M 78 100 C 76 92 82 88 80 80" fill="none" stroke="#e8d5c8" stroke-width="1.4" opacity=".5" filter="url(#' + B + ')"/>' +
+    '</g>' +
+    /* 杯 B */
+    '<g>' +
+    '<path d="M 106 118 L 114 178 L 146 178 L 154 118 Z" fill="#1c0e15" stroke="rgba(232,201,168,.4)" stroke-width="1.2"/>' +
+    '<ellipse cx="130" cy="118" rx="24" ry="6" fill="#eab7c8" opacity=".9"/>' +
+    '<path d="M 122 116 c 4 -3 12 -3 16 0 c -4 3 -12 3 -16 0 z" fill="#c987a4"/>' +
+    '<path d="M 130 114 l 0 -4 m -3 2 a 3 2 0 0 1 6 0" fill="none" stroke="#c987a4" stroke-width="1.1"/>' +
+    '<rect x="110" y="132" width="40" height="22" rx="3" fill="#f0dcc4" opacity=".92"/>' +
+    '<path d="M 117 140 c 4 -2 8 2 12 0 c 4 -2 8 2 12 0" fill="none" stroke="#8a5a4a" stroke-width="1.1"/>' +
+    '<path d="M 118 147 c 4 -2 7 2 11 0" fill="none" stroke="#8a5a4a" stroke-width="1.1"/>' +
+    '<path d="M 122 100 C 120 92 126 88 124 80 M 138 100 C 136 92 142 88 140 80" fill="none" stroke="#e8d5c8" stroke-width="1.4" opacity=".5" filter="url(#' + B + ')"/>' +
+    '</g>' +
+    /* 中间一颗心（拉花呼应） */
+    '<path d="M 100 96 C 100 96 92 90 92 84.5 C 92 81 94.5 79 97 79 C 98.6 79 100 80.4 100 82 C 100 80.4 101.4 79 103 79 C 105.5 79 108 81 108 84.5 C 108 90 100 96 100 96 Z" fill="' + color + '" opacity=".9"/>' +
+    '<g fill="#ffd7e6"><circle cx="38" cy="66" r="1.1" opacity=".7"/><circle cx="166" cy="58" r="1.1" opacity=".7"/><circle cx="100" cy="46" r="1" opacity=".6"/></g>' +
+    '</svg>';
+}
+
+/* L04 笑不可仰 · 一偶仰头大笑一偶拍手，泪滴星（方窗） */
+function artLaugh(color, uid) {
+  uid = uid || "l04";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#472a38"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3547"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffe3a8" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 方窗 */
+    '<rect x="28" y="26" width="144" height="186" rx="6" fill="#1c0f16" opacity=".55"/>' +
+    '<rect x="28" y="26" width="144" height="186" rx="6" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    /* 沙发 */
+    '<rect x="44" y="176" width="112" height="14" rx="7" fill="#170c11"/>' +
+    /* 仰头大笑者（左，头后仰） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="80" cy="112" r="10" transform="rotate(-18 80 112)"/>' +
+    '<path d="M 80 122 C 72 126 66 134 63 146 C 60 158 59 170 59.5 176 L 100 176 C 99 158 95 140 86 128 C 84 125 82 122 80 122 Z"/>' +
+    '</g>' +
+    '<path d="M 74 102 C 70 98 70 92 74 88" fill="none" stroke="#170c11" stroke-width="5" stroke-linecap="round"/>' +
+    /* 拍手前倾者（右） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="126" cy="116" r="10"/>' +
+    '<path d="M 126 126 C 134 130 139 138 141 150 L 142 176 L 102 176 C 103 158 108 140 118 130 C 121 127 123 125 126 126 Z"/>' +
+    '</g>' +
+    '<path d="M 136 130 C 141 126 146 124 151 124 M 133 136 C 139 134 145 134 150 136" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round"/>' +
+    /* 泪滴星 ×3 */
+    '<g filter="url(#' + G + ')" fill="#ffe9b8">' +
+    '<path d="M 96 84 c 3 4 3 8 0 10 c -3 -2 -3 -6 0 -10 z"/>' +
+    '<path d="M 112 74 c 2.6 3.4 2.6 7 0 8.6 c -2.6 -1.8 -2.6 -5.2 0 -8.6 z"/>' +
+    '<path d="M 124 92 c 2.2 3 2.2 6 0 7.4 c -2.2 -1.6 -2.2 -4.4 0 -7.4 z"/>' +
+    '</g>' +
+    '<g stroke="#ffe9b8" stroke-width="1" opacity=".9" stroke-linecap="round"><path d="M 90 76 l 0 7 M 86.5 79.5 l 7 0"/><path d="M 130 66 l 0 6 M 127 69 l 6 0"/></g>' +
+    '</svg>';
+}
+
+/* L05 可爱清单 · 猫爪勾便签 + 铅笔（全出血书桌） */
+function artCuteList(color, uid) {
+  uid = uid || "l05";
+  var S = uid + "s";
+  function paw(x, y, c) {
+    return '<g transform="translate(' + x + ',' + y + ')" fill="' + c + '">' +
+      '<ellipse cx="0" cy="1.6" rx="3" ry="2.4"/>' +
+      '<circle cx="-2.8" cy="-2" r="1.2"/><circle cx="0" cy="-3" r="1.2"/><circle cx="2.8" cy="-2" r="1.2"/></g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c2534"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="196" width="200" height="42" fill="#1c1016"/>' +
+    /* 便签 */
+    '<g transform="rotate(-4 100 130)">' +
+    '<rect x="52" y="62" width="96" height="128" rx="4" fill="#f6e8dc"/>' +
+    '<rect x="52" y="62" width="96" height="14" fill="#e8c9a8" opacity=".7"/>' +
+    '<circle cx="100" cy="69" r="3" fill="#8a5a4a"/>' +
+    '<g stroke="#8a5a4a" stroke-width="1.3" opacity=".8">' +
+    '<path d="M 66 96 H 134 M 66 118 H 134 M 66 140 H 118"/>' +
+    '</g>' +
+    paw(74, 96, "#d2739d") + paw(74, 118, "#d2739d") + paw(74, 140, "#b8a88a") +
+    '</g>' +
+    /* 铅笔 */
+    '<g transform="rotate(32 146 176)">' +
+    '<rect x="128" y="170" width="52" height="8" rx="2" fill="#e8c9a8"/>' +
+    '<path d="M 180 170 L 192 174 L 180 178 Z" fill="#f0dcc4"/>' +
+    '<path d="M 188.5 172.6 L 192 174 L 188.5 175.4 Z" fill="#5a3a2a"/>' +
+    '<rect x="122" y="170" width="8" height="8" fill="#d2739d"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6"><circle cx="36" cy="70" r="1.1" opacity=".7"/><circle cx="170" cy="60" r="1.1" opacity=".7"/></g>' +
+    '</svg>';
+}
+
+/* L06 备注之名 · 手机框内发光备注名（手机竖屏框） */
+function artNickName(color, uid) {
+  uid = uid || "l06";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33202e"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="' + color + '" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 手机竖屏框 */
+    '<rect x="52" y="26" width="96" height="186" rx="16" fill="#120a0f" stroke="rgba(232,201,168,.5)" stroke-width="1.6"/>' +
+    '<rect x="60" y="40" width="80" height="158" rx="8" fill="#1e1118"/>' +
+    '<circle cx="100" cy="33" r="2" fill="rgba(232,201,168,.6)"/>' +
+    /* 置顶聊天：头像 + 发光备注名 */
+    '<circle cx="76" cy="60" r="8" fill="#3a2030" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<path d="M 72 58 a 4 4.6 0 0 1 8 0" fill="none" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<text x="90" y="60" font-family="' + "Ma Shan Zheng, serif" + '" font-size="13" fill="#f4e7ec" filter="url(#' + G + ')">小柚 ♡</text>' +
+    '<path d="M 132 56 l 0 6 M 129 59 l 6 0" stroke="#c6a2ae" stroke-width="1" opacity=".7"/>' +
+    '<rect x="60" y="72" width="80" height="1" fill="rgba(232,201,168,.25)"/>' +
+    /* 对话气泡 */
+    '<g>' +
+    '<rect x="66" y="84" width="44" height="16" rx="8" fill="#2c1a24"/>' +
+    '<rect x="90" y="106" width="44" height="16" rx="8" fill="' + color + '" opacity=".8"/>' +
+    '<rect x="66" y="128" width="36" height="16" rx="8" fill="#2c1a24"/>' +
+    '<rect x="98" y="150" width="36" height="16" rx="8" fill="' + color + '" opacity=".8"/>' +
+    '<path d="M 76 92 h 22 M 98 114 h 26 M 74 136 h 18 M 106 158 h 18" stroke="#f4e7ec" stroke-width="1.2" opacity=".55" stroke-linecap="round"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6"><circle cx="76" cy="106" r="1.4" filter="url(#' + G + ')"/><circle cx="124" cy="84" r="1.2" opacity=".8"/></g>' +
+    '</svg>';
+}
+
+/* L07 灯下谢谢 · 台灯光锥里对视的双偶（门洞） */
+function artLampThanks(color, uid) {
+  uid = uid || "l07";
+  var S = uid + "s", F = uid + "f", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#563247"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<linearGradient id="' + B + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a8" stop-opacity=".32"/><stop offset="1" stop-color="#ffd9a8" stop-opacity="0"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 门洞 */
+    '<path d="M 30 238 L 30 98 C 30 50 62 26 100 26 C 138 26 170 50 170 98 L 170 238 Z" fill="#1a0e14" opacity=".7"/>' +
+    /* 台灯（右）与光锥 */
+    '<rect x="146" y="128" width="4" height="76" fill="#170c11"/>' +
+    '<path d="M 132 128 L 164 128 L 156 112 L 140 112 Z" fill="#e8c9a8" opacity=".9"/>' +
+    '<path d="M 136 130 L 176 238 L 84 238 Z" fill="url(#' + B + ')"/>' +
+    '<circle cx="148" cy="122" r="5" fill="#ffe9c4" opacity=".95"/>' +
+    /* 对视双偶（轮廓金边） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="76" cy="132" r="10"/>' +
+    '<path d="M 76 142 C 68 146 63 154 61 166 L 60 190 L 94 190 L 93 166 C 91 154 85 146 76 142 Z"/>' +
+    '<circle cx="116" cy="134" r="10"/>' +
+    '<path d="M 116 144 C 108 148 103 156 101 168 L 100 190 L 134 190 L 133 168 C 131 156 125 148 116 144 Z"/>' +
+    '</g>' +
+    '<path d="M 67 138 C 71 141 75 143.5 80 145.5 M 107 140 C 111 143 115 145.5 119 147.5" fill="none" stroke="rgba(232,201,168,.7)" stroke-width="1.1"/>' +
+    /* 视线 */
+    '<path d="M 85 130 Q 96 126 107 132" fill="none" stroke="' + color + '" stroke-width="1.1" stroke-dasharray="2.5 3.5" opacity=".9"/>' +
+    '<ellipse cx="98" cy="206" rx="58" ry="6" fill="#0d0609" opacity=".7"/>' +
+    '</svg>';
+}
+
+/* L08 手心卅秒 · 合握双手 + 30 秒刻度环 + 掌心温度光（圆月窗光环构图） */
+function artPalmThirty(color, uid) {
+  uid = uid || "l08";
+  var S = uid + "s", H = uid + "h", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2233"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<radialGradient id="' + H + '" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffca9e" stop-opacity=".95"/><stop offset=".55" stop-color="#e8896b" stop-opacity=".55"/><stop offset="1" stop-color="#e8896b" stop-opacity="0"/></radialGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffca9e" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<circle cx="100" cy="116" r="72" fill="none" stroke="' + color + '" stroke-width="1" stroke-dasharray="1.6 6" opacity=".5"/>' +
+    /* 60 刻度环 + 高亮 30 */
+    '<g stroke="' + color + '" stroke-width="1.4" opacity=".8">' +
+    '<path d="M 100 44 l 0 8 M 100 180 l 0 8 M 28 116 l 8 0 M 164 116 l 8 0"/>' +
+    '</g>' +
+    '<text x="100" y="38" text-anchor="middle" font-family="monospace" font-size="12" fill="' + color + '">30&#8243;</text>' +
+    /* 掌心温度光 */
+    '<circle cx="100" cy="116" r="40" fill="url(#' + H + ')"/>' +
+    /* 合握双手 */
+    '<g fill="#1c0e15" stroke="#e8c9a8" stroke-width="1.3">' +
+    '<path d="M 74 132 C 70 122 74 110 84 104 C 92 99 102 100 108 106 L 122 120 C 126 125 125 131 120 134 C 112 139 100 141 90 139 C 83 137.5 77 135.5 74 132 Z"/>' +
+    '<path d="M 126 100 C 130 110 126 122 116 128 C 108 133 98 132 92 126 L 78 112 C 74 107 75 101 80 98 C 88 93 100 91 110 93 C 117 94.5 123 96.5 126 100 Z" opacity=".88"/>' +
+    '</g>' +
+    '<path d="M 88 106 c 3 2 6 4.6 8 7.6 M 96 100 c 3 2 6 4.8 8 7.8 M 104 96 c 3 2.2 5.6 5 7.4 8" fill="none" stroke="#ffd7e6" stroke-width="1.1" opacity=".7" stroke-linecap="round"/>' +
+    '<ellipse cx="100" cy="208" rx="56" ry="6" fill="#0d0609" opacity=".6"/>' +
+    '</svg>';
+}
+
+/* L09 未曾同行 · 空白清单 + 并排指纹 + 交叉双笔（全出血书桌） */
+function artBlankList(color, uid) {
+  uid = uid || "l09";
+  var S = uid + "s";
+  function thumb(x, y, r, c, rot) {
+    return '<g transform="rotate(' + rot + ' ' + x + ' ' + y + ')">' +
+      '<ellipse cx="' + x + '" cy="' + y + '" rx="' + r * 0.62 + '" ry="' + r + '" fill="none" stroke="' + c + '" stroke-width="1.1"/>' +
+      '<ellipse cx="' + x + '" cy="' + y + '" rx="' + r * 0.34 + '" ry="' + r * 0.58 + '" fill="none" stroke="' + c + '" stroke-width="1" opacity=".8"/>' +
+      '<path d="M ' + x + ' ' + (y - r * 0.35) + ' v ' + (r * 0.5) + '" stroke="' + c + '" stroke-width=".9" opacity=".7"/>' +
+      '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#382331"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="190" width="200" height="48" fill="#1c1016"/>' +
+    /* 空白清单 */
+    '<g transform="rotate(2 100 130)"><rect x="58" y="58" width="86" height="120" rx="4" fill="#f6e8dc"/>' +
+    '<g stroke="#c9b0a0" stroke-width="1.2">' +
+    '<path d="M 70 88 L 96 88 M 70 112 L 108 112 M 70 136 L 90 136"/>' +
+    '</g>' +
+    '<path d="M 66 84 l 4 4 l 7 -8" fill="none" stroke="' + color + '" stroke-width="1.6"/>' +
+    '</g>' +
+    thumb(96, 152, 8, "#d2739d", -14) +
+    thumb(114, 150, 8, "#8a6ab0", 12) +
+    /* 交叉双笔 */
+    '<g transform="translate(146,166)">' +
+    '<rect x="-6" y="-30" width="7" height="44" rx="2" transform="rotate(24)" fill="#e8c9a8"/>' +
+    '<path d="M -3.4 12 L 0 20 L 3.4 12 Z" transform="rotate(24)" fill="#5a3a2a"/>' +
+    '<rect x="-2" y="-32" width="7" height="44" rx="2" transform="rotate(-22)" fill="#b285cc"/>' +
+    '<path d="M 1.4 10 L 4.8 18 L -1.6 18 Z" transform="rotate(-22)" fill="#5a3a2a"/>' +
+    '</g>' +
+    '<text x="100" y="42" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="15" fill="#c6a2ae">第一件，从空白开始</text>' +
+    '</svg>';
+}
+
+/* L10 五年之约 · 时间胶囊玻璃瓶半埋土中（方窗） */
+function artTimeCapsule(color, uid) {
+  uid = uid || "l10";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a2a33"/><stop offset=".62" stop-color="#33202a"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + uid + 'g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe3df" stop-opacity=".3"/><stop offset="1" stop-color="#cfe3df" stop-opacity=".08"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="#ffd9a8" flood-opacity=".8"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="26" y="24" width="148" height="190" rx="5" fill="#1c0f16" opacity=".5"/>' +
+    '<rect x="26" y="24" width="148" height="190" rx="5" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    /* 黄昏光 */
+    '<circle cx="148" cy="52" r="16" fill="#ffca7a" opacity=".55"/>' +
+    '<circle cx="148" cy="52" r="26" fill="#ffca7a" opacity=".15"/>' +
+    /* 土堆 */
+    '<path d="M 26 190 C 60 176 92 186 122 178 C 150 171 168 180 174 182 L 174 214 L 26 214 Z" fill="#1a0d12"/>' +
+    /* 玻璃瓶 */
+    '<g transform="rotate(-14 100 190)">' +
+    '<rect x="72" y="150" width="56" height="74" rx="14" fill="url(#' + uid + 'g)" stroke="rgba(207,227,223,.55)" stroke-width="1.4"/>' +
+    '<rect x="86" y="138" width="28" height="16" rx="4" fill="rgba(207,227,223,.35)" stroke="rgba(207,227,223,.55)" stroke-width="1.2"/>' +
+    '<rect x="80" y="170" width="18" height="40" rx="7" fill="#f6e8dc" opacity=".92" transform="rotate(8 89 190)"/>' +
+    '<rect x="102" y="172" width="18" height="38" rx="7" fill="#e8d5c8" opacity=".9" transform="rotate(-9 111 191)"/>' +
+    '</g>' +
+    /* 标签旗 */
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 148 148 l 0 -26 l 26 8 l -26 8" fill="' + color + '" opacity=".92"/>' +
+    '<text x="152" y="132" font-family="monospace" font-size="8.5" fill="#241419">5 YRS</text>' +
+    '</g>' +
+    '<g stroke="#8a6ab0" stroke-width="1" opacity=".5"><path d="M 60 206 h 14 M 84 212 h 10"/></g>' +
+    '</svg>';
+}
+
+/* L11 声声唤你 · 声波荡起化作心（拱窗） */
+function artVoiceWave(color, uid) {
+  uid = uid || "l11";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#412640"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ffc9da" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<circle cx="100" cy="64" r="24" fill="#eab7c8" opacity=".9"/>' +
+    '<circle cx="100" cy="64" r="36" fill="#e3a4bd" opacity=".12"/>' +
+    /* 声波弧（自下而上） */
+    '<g fill="none" stroke-linecap="round">' +
+    '<path d="M 76 196 A 30 30 0 0 1 124 196" stroke="' + color + '" stroke-width="2" opacity=".9"/>' +
+    '<path d="M 64 200 A 44 44 0 0 1 136 200" stroke="' + color + '" stroke-width="1.6" opacity=".6"/>' +
+    '<path d="M 52 204 A 58 58 0 0 1 148 204" stroke="' + color + '" stroke-width="1.2" opacity=".38"/>' +
+    '<path d="M 42 208 A 70 70 0 0 1 158 208" stroke="' + color + '" stroke-width="1" opacity=".22"/>' +
+    '</g>' +
+    /* 声波尽头的心 */
+    '<g filter="url(#' + G + ')"><path d="M 100 148 C 100 148 84 137 84 126 C 84 118.5 90 114 96 114 C 98.8 114 100 116 100 118.4 C 100 116 101.2 114 104 114 C 110 114 116 118.5 116 126 C 116 137 100 148 100 148 Z" fill="#f0aec6"/></g>' +
+    '<g fill="#ffd7e6"><circle cx="60" cy="112" r="1.1" opacity=".7"/><circle cx="142" cy="106" r="1.1" opacity=".7"/></g>' +
+    '</svg>';
+}
+
+/* L12 藏在旋律 · 五线谱绕成心，音符化鸟（全出血星空） */
+function artMelodyHeart(color, uid) {
+  uid = uid || "l12";
+  var S = uid + "s", G = uid + "g";
+  function heartPath(sc) {
+    return '<path transform="translate(100,120) scale(' + sc + ') translate(-100,-120)" d="M 100 172 C 100 172 44 136 44 100 C 44 76 62 62 82 62 C 92 62 100 68 100 78 C 100 68 108 62 118 62 C 138 62 156 76 156 100 C 156 136 100 172 100 172 Z" fill="none" stroke="' + color + '" stroke-width="1.1"/>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#392338"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#e8c9ff" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g opacity=".9">' + heartPath(1) + heartPath(0.86) + heartPath(0.72) + heartPath(0.58) + heartPath(0.44) + '</g>' +
+    /* 音符小鸟 ×3 */
+    '<g filter="url(#' + G + ')" fill="#f0e0ff">' +
+    '<g transform="translate(58,74)"><ellipse cx="0" cy="0" rx="4.4" ry="3.2" transform="rotate(-18)"/><path d="M 4 -1 C 7 -6 10 -8 13 -10" fill="none" stroke="#f0e0ff" stroke-width="1.4"/><path d="M 9 -12 l 5 2 l -4 3 z"/></g>' +
+    '<g transform="translate(148,86)"><ellipse cx="0" cy="0" rx="3.8" ry="2.8" transform="rotate(14)"/><path d="M 3.4 -1 C 6 -5 9 -7 12 -9" fill="none" stroke="#f0e0ff" stroke-width="1.3"/><path d="M 8 -11 l 5 1.6 l -3.6 2.8 z"/></g>' +
+    '<g transform="translate(100,40)"><ellipse cx="0" cy="0" rx="3.2" ry="2.4"/><path d="M 2.8 -1 C 5 -4 7.5 -5.5 10 -7" fill="none" stroke="#f0e0ff" stroke-width="1.2"/></g>' +
+    '</g>' +
+    '<g fill="#e8d5f2"><circle cx="34" cy="52" r="1.1"/><circle cx="170" cy="140" r="1.1"/><circle cx="44" cy="170" r="1" opacity=".7"/><circle cx="158" cy="42" r="1" opacity=".7"/></g>' +
+    '</svg>';
+}
+
+/* L13 猜我心事 · 自拍取景框 + 眯眼笑 + 问号气泡（手机框） */
+function artGuessFace(color, uid) {
+  uid = uid || "l13";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33202e"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="' + color + '" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="52" y="24" width="96" height="190" rx="16" fill="#120a0f" stroke="rgba(232,201,168,.5)" stroke-width="1.6"/>' +
+    '<rect x="60" y="38" width="80" height="162" rx="8" fill="#1e1118"/>' +
+    /* 取景框 */
+    '<g stroke="' + color + '" stroke-width="1.6" fill="none" opacity=".9">' +
+    '<path d="M 70 60 h 12 M 70 60 v 12 M 130 60 h -12 M 130 60 v 12 M 70 148 h 12 M 70 148 v -12 M 130 148 h -12 M 130 148 v -12"/>' +
+    '</g>' +
+    '<circle cx="100" cy="104" r="30" fill="none" stroke="' + color + '" stroke-width="1" stroke-dasharray="3 4" opacity=".6"/>' +
+    /* 眯眼笑脸剪影 */
+    '<circle cx="100" cy="104" r="22" fill="#2c1a24" stroke="rgba(232,201,168,.4)" stroke-width="1"/>' +
+    '<path d="M 88 100 q 5 -5 10 0 M 102 100 q 5 -5 10 0" fill="none" stroke="#f4e7ec" stroke-width="1.6" stroke-linecap="round"/>' +
+    '<path d="M 90 112 q 10 8 20 0" fill="none" stroke="#f4e7ec" stroke-width="1.6" stroke-linecap="round"/>' +
+    /* 问号气泡 */
+    '<g filter="url(#' + G + ')">' +
+    '<circle cx="134" cy="72" r="9" fill="#2c1a24" stroke="' + color + '" stroke-width="1.1"/>' +
+    '<text x="134" y="77" text-anchor="middle" font-family="monospace" font-size="11" fill="#f4e7ec">?</text>' +
+    '<circle cx="146" cy="92" r="6.5" fill="#2c1a24" stroke="' + color + '" stroke-width="1"/>' +
+    '<text x="146" y="96" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#f4e7ec">?</text>' +
+    '<circle cx="66" cy="82" r="6" fill="#2c1a24" stroke="' + color + '" stroke-width="1"/>' +
+    '<text x="66" y="86" text-anchor="middle" font-family="monospace" font-size="8" fill="#f4e7ec">?</text>' +
+    '</g>' +
+    '</svg>';
+}
+
+/* L14 闭眼旅行 · 闭眼侧脸 + 三重梦泡（全出血） */
+function artDreamTravel(color, uid) {
+  uid = uid || "l14";
+  var S = uid + "s", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e2242"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.6"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="30" cy="40" r="1.2"/><circle cx="170" cy="34" r="1.2"/><circle cx="46" cy="120" r="1"/><circle cx="160" cy="140" r="1"/></g>' +
+    /* 梦泡：热气球 */
+    '<g>' +
+    '<circle cx="60" cy="66" r="21" fill="#2c1a3c" stroke="' + color + '" stroke-width="1.1" opacity=".92"/>' +
+    '<path d="M 52 60 a 9 11 0 0 1 16 0 a 14 14 0 0 1 -16 0" fill="none" stroke="#e3a4bd" stroke-width="1.2"/>' +
+    '<path d="M 54 84 l 4 -6 M 66 84 l -4 -6" stroke="#c6a2ae" stroke-width="1"/>' +
+    '<rect x="56" y="84" width="8" height="6" rx="1" fill="#8a5a78"/>' +
+    '</g>' +
+    /* 梦泡：海浪 */
+    '<circle cx="140" cy="58" r="18" fill="#2c1a3c" stroke="' + color + '" stroke-width="1" opacity=".9"/>' +
+    '<path d="M 128 62 q 6 -6 12 0 q 6 6 12 0" fill="none" stroke="#8ac6d9" stroke-width="1.4"/>' +
+    /* 梦泡：雪山 */
+    '<circle cx="104" cy="34" r="15" fill="#2c1a3c" stroke="' + color + '" stroke-width="1" opacity=".88"/>' +
+    '<path d="M 95 42 l 6 -9 l 4 5 l 4 -7 l 5 11 z" fill="#d9e3f2" opacity=".85"/>' +
+    /* 泡泡连线 */
+    '<path d="M 74 84 Q 88 96 96 116 M 128 78 Q 116 96 106 114" fill="none" stroke="' + color + '" stroke-width=".9" stroke-dasharray="1.5 4" opacity=".6"/>' +
+    /* 闭眼侧脸 */
+    '<g>' +
+    '<path d="M 100 238 L 100 190 C 82 182 70 168 68 152 C 66 136 74 124 86 120 C 96 117 106 120 112 128 C 110 122 112 116 118 114 C 112 128 114 140 122 150 C 132 162 134 178 128 192 C 122 205 112 214 100 218 Z" fill="#1c0e15"/>' +
+    '<path d="M 92 136 q 6 3 12 0" fill="none" stroke="#e3a4bd" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M 90 132 l -2 -2 M 96 130 l -1 -2.4 M 103 130 l 1 -2.4" stroke="#e3a4bd" stroke-width="1" opacity=".8" stroke-linecap="round"/>' +
+    '<path d="M 106 200 C 116 196 124 188 128 178" fill="none" stroke="' + color + '" stroke-width="1" opacity=".4" filter="url(#' + B + ')"/>' +
+    '</g>' +
+    '</svg>';
+}
+
+/* L15 同一片天 · 双窗双手举手机，云连成一线（双方窗） */
+function artSameSky(color, uid) {
+  uid = uid || "l15";
+  var S = uid + "s", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2436"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + B + '" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffb26b" stop-opacity=".55"/><stop offset=".5" stop-color="#e8a0c0" stop-opacity=".4"/><stop offset="1" stop-color="#8ab6d9" stop-opacity=".55"/></linearGradient>' +
+    '</defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 左窗（黄昏）· 右窗（清晨） */
+    '<rect x="14" y="42" width="72" height="104" rx="5" fill="#241419" stroke="rgba(232,201,168,.4)" stroke-width="1.3"/>' +
+    '<rect x="114" y="42" width="72" height="104" rx="5" fill="#241419" stroke="rgba(232,201,168,.4)" stroke-width="1.3"/>' +
+    '<rect x="17" y="45" width="66" height="98" fill="#5a3040"/>' +
+    '<rect x="117" y="45" width="66" height="98" fill="#41597a"/>' +
+    '<circle cx="34" cy="70" r="11" fill="#ffca7a" opacity=".85"/>' +
+    '<circle cx="166" cy="66" r="9" fill="#e8ecf4" opacity=".85"/>' +
+    '<path d="M 17 118 q 12 -8 24 0 q 12 8 24 0 q 10 -6 19 0" fill="none" stroke="#1c0e15" stroke-width="2" opacity=".8"/>' +
+    '<path d="M 117 122 q 12 -8 24 0 q 12 8 24 0" fill="none" stroke="#1c0e15" stroke-width="2" opacity=".7"/>' +
+    '<rect x="49" y="45" width="3" height="98" fill="rgba(232,201,168,.35)"/>' +
+    '<rect x="149" y="45" width="3" height="98" fill="rgba(232,201,168,.35)"/>' +
+    /* 云带相连（横穿两窗） */
+    '<path d="M 20 96 q 10 -12 26 -8 q 8 -14 26 -10 q 16 4 20 14 q 18 -6 30 4" fill="none" stroke="url(#' + B + ')" stroke-width="7" opacity=".55" filter="url(#' + uid + 'bl)" stroke-linecap="round"/>' +
+    '<defs><filter id="' + uid + 'bl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.6"/></filter></defs>' +
+    /* 双手举手机 */
+    '<g>' +
+    '<rect x="38" y="128" width="18" height="30" rx="4" fill="#120a0f" stroke="rgba(232,201,168,.5)" stroke-width="1.1" transform="rotate(-8 47 143)"/>' +
+    '<path d="M 34 158 C 40 150 46 146 54 144" fill="none" stroke="' + color + '" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<rect x="144" y="128" width="18" height="30" rx="4" fill="#120a0f" stroke="rgba(232,201,168,.5)" stroke-width="1.1" transform="rotate(8 153 143)"/>' +
+    '<path d="M 166 158 C 160 150 154 146 146 144" fill="none" stroke="' + color + '" stroke-width="3.4" stroke-linecap="round"/>' +
+    '</g>' +
+    '<text x="100" y="180" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">同一片天，两个时区</text>' +
+    '</svg>';
+}
+
+/* L16 感动存档 · 玻璃罐存心（书架） */
+function artMemoryJar(color, uid) {
+  uid = uid || "l16";
+  var S = uid + "s", G = uid + "g", J = uid + "j";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#36222e"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + J + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe3df" stop-opacity=".26"/><stop offset="1" stop-color="#cfe3df" stop-opacity=".06"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="' + color + '" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 书架 */
+    '<rect x="0" y="206" width="200" height="32" fill="#1c1016"/>' +
+    '<g fill="#22141c"><rect x="18" y="158" width="12" height="48" rx="2"/><rect x="34" y="150" width="12" height="56" rx="2"/><rect x="52" y="164" width="12" height="42" rx="2"/><rect x="132" y="156" width="12" height="50" rx="2"/><rect x="148" y="148" width="12" height="58" rx="2"/><rect x="164" y="162" width="12" height="44" rx="2"/></g>' +
+    /* 玻璃罐 */
+    '<rect x="70" y="96" width="62" height="104" rx="18" fill="url(#' + J + ')" stroke="rgba(207,227,223,.55)" stroke-width="1.4"/>' +
+    '<rect x="82" y="84" width="38" height="16" rx="4" fill="rgba(207,227,223,.3)" stroke="rgba(207,227,223,.5)" stroke-width="1.2"/>' +
+    /* 罐中的星 */
+    '<g fill="' + color + '" opacity=".9">' +
+    '<path d="M 90 182 l 2.4 5 5.4 .6 -4 3.6 1 5.3 -4.8 -2.6 -4.8 2.6 1 -5.3 -4 -3.6 5.4 -.6 z"/>' +
+    '<path d="M 112 170 l 2 4.2 4.6 .5 -3.4 3 .9 4.5 -4.1 -2.2 -4.1 2.2 .9 -4.5 -3.4 -3 4.6 -.5 z" opacity=".8"/>' +
+    '<path d="M 92 152 l 1.7 3.6 3.9 .4 -2.9 2.6 .8 3.9 -3.5 -1.9 -3.5 1.9 .8 -3.9 -2.9 -2.6 3.9 -.4 z" opacity=".7"/>' +
+    '</g>' +
+    /* 正放入的心 */
+    '<g filter="url(#' + G + ')"><path d="M 101 116 C 101 116 87 106 87 96 C 87 89.5 92 85.5 97 85.5 C 99.4 85.5 101 87.3 101 89.4 C 101 87.3 102.6 85.5 105 85.5 C 110 85.5 115 89.5 115 96 C 115 106 101 116 101 116 Z" fill="#f0aec6" transform="translate(0,-6) rotate(8 101 100)"/></g>' +
+    /* 罐口光 */
+    '<ellipse cx="101" cy="94" rx="18" ry="4" fill="' + color + '" opacity=".25"/>' +
+    '</svg>';
+}
+
+/* L17 三样爱吃 · 三碗插旗配对（餐桌） */
+function artThreeBowls(color, uid) {
+  uid = uid || "l17";
+  var S = uid + "s";
+  function bowl(x, flag, c) {
+    return '<g transform="translate(' + x + ',0)">' +
+      '<path d="M -26 148 A 26 26 0 0 0 26 148 Z" fill="#1c0e15" stroke="rgba(232,201,168,.35)" stroke-width="1.1"/>' +
+      '<ellipse cx="0" cy="148" rx="26" ry="5" fill="#2c1a24" stroke="rgba(232,201,168,.35)" stroke-width="1"/>' +
+      '<path d="M 0 122 l 0 -24" stroke="#c6a2ae" stroke-width="1.4"/>' +
+      '<path d="M 0 98 l 16 6 l -16 6 z" fill="' + c + '"/>' +
+      (flag === "dot" ? '<circle cx="6" cy="104" r="2.6" fill="#241419"/>' : flag === "tri" ? '<path d="M 3 108 l 6 0 l -3 -6 z" fill="#241419"/>' : '<rect x="3.4" y="100" width="5.2" height="5.2" fill="#241419"/>') +
+      '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c2530"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="172" width="200" height="66" fill="#1c1016"/>' +
+    '<path d="M 0 176 h 200" stroke="rgba(232,201,168,.25)" stroke-width="1"/>' +
+    bowl(52, "dot", "#e8c9a8") + bowl(100, "tri", "#b285cc") + bowl(148, "dot", "#e8c9a8") +
+    /* 配对高亮：两碗旗上连线 */
+    '<path d="M 52 92 Q 100 70 148 92" fill="none" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="3 4" opacity=".9"/>' +
+    '<path d="M 100 74 l 0 -10 m -4 4 l 4 -4 l 4 4" stroke="' + color + '" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
+    /* 筷子 */
+    '<g transform="translate(100,186) rotate(18)"><rect x="-22" y="-2" width="46" height="3" rx="1.5" fill="#8a5a4a"/><rect x="-22" y="3" width="46" height="3" rx="1.5" fill="#8a5a4a"/></g>' +
+    '<g fill="#ffd7e6"><circle cx="30" cy="70" r="1.1" opacity=".7"/><circle cx="172" cy="64" r="1.1" opacity=".7"/></g>' +
+    '</svg>';
+}
+
+/* L19 只有你懂 · 两个半符号气泡拼合（对话界面） */
+function artHalfPuzzle(color, uid) {
+  uid = uid || "l19";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31202c"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffd7e6" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 左气泡（含左半花） */
+    '<g>' +
+    '<rect x="18" y="78" width="76" height="70" rx="16" fill="#2c1a24" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    '<path d="M 34 148 l 0 12 l 12 -12 z" fill="#2c1a24"/>' +
+    '<g transform="translate(56,113)" stroke="' + color + '" stroke-width="2" fill="none">' +
+    '<path d="M 0 -22 C -14 -22 -20 -10 -16 0 C -12 10 -2 14 0 22"/>' +
+    '<circle cx="-9" cy="-8" r="3.4"/><circle cx="-11" cy="6" r="3.4"/>' +
+    '</g></g>' +
+    /* 右气泡（含右半花） */
+    '<g>' +
+    '<rect x="106" y="86" width="76" height="70" rx="16" fill="#2c1a24" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    '<path d="M 166 156 l 0 12 l -12 -12 z" fill="#2c1a24"/>' +
+    '<g transform="translate(144,121)" stroke="' + color + '" stroke-width="2" fill="none">' +
+    '<path d="M 0 -22 C 14 -22 20 -10 16 0 C 12 10 2 14 0 22"/>' +
+    '<circle cx="9" cy="-8" r="3.4"/><circle cx="11" cy="6" r="3.4"/>' +
+    '</g></g>' +
+    /* 拼合发光 */
+    '<ellipse cx="100" cy="117" rx="8" ry="26" fill="#ffd7e6" opacity=".16" filter="url(#' + G + ')"/>' +
+    '<path d="M 100 88 l 0 58" stroke="#ffd7e6" stroke-width="1" opacity=".55" stroke-dasharray="2 5"/>' +
+    '<text x="100" y="206" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">只有我们读得懂</text>' +
+    '</svg>';
+}
+
+/* L20 约会之约 · 圈红日历 + 迷你牵手偶（方窗） */
+function artCalendarDate(color, uid) {
+  uid = uid || "l20";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2530"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ff8fae" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="26" y="24" width="148" height="190" rx="5" fill="#1c0f16" opacity=".5"/>' +
+    '<rect x="26" y="24" width="148" height="190" rx="5" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    /* 日历 */
+    '<g transform="rotate(-3 100 128)">' +
+    '<rect x="46" y="66" width="108" height="124" rx="8" fill="#f6e8dc"/>' +
+    '<rect x="46" y="66" width="108" height="26" rx="8" fill="#d2739d" opacity=".85"/>' +
+    '<rect x="70" y="58" width="8" height="16" rx="3" fill="#8a5a4a"/><rect x="122" y="58" width="8" height="16" rx="3" fill="#8a5a4a"/>' +
+    '<g stroke="#c9b0a0" stroke-width="1">' +
+    '<path d="M 46 112 h 108 M 46 134 h 108 M 46 156 h 108 M 73 92 v 20 M 100 92 v 20 M 127 92 v 20 M 73 112 v 22 M 100 112 v 22 M 127 112 v 22 M 73 134 v 22 M 100 134 v 22 M 127 134 v 22"/>' +
+    '</g>' +
+    /* 圈红的某日 + 心 */
+    '<g filter="url(#' + G + ')">' +
+    '<ellipse cx="113" cy="167" rx="13" ry="10.5" fill="none" stroke="#ff6d95" stroke-width="2.2"/>' +
+    '<path d="M 113 172 C 113 172 108 168.6 108 165.4 C 108 163.2 109.8 161.8 111.5 161.8 C 112.4 161.8 113 162.5 113 163.3 C 113 162.5 113.6 161.8 114.5 161.8 C 116.2 161.8 118 163.2 118 165.4 C 118 168.6 113 172 113 172 Z" fill="#ff6d95"/>' +
+    '</g>' +
+    '</g>' +
+    /* 迷你牵手偶 */
+    '<g transform="translate(148,150) scale(.9)">' +
+    '<circle cx="-8" cy="0" r="5" fill="#1c0e15" stroke="#e3a4bd" stroke-width="1"/>' +
+    '<path d="M -8 5 C -12 7 -14 11 -14.5 17 L -2 17 C -2.5 11 -5 7 -8 5 Z" fill="#1c0e15" stroke="#e3a4bd" stroke-width=".9"/>' +
+    '<circle cx="8" cy="2" r="5" fill="#1c0e15" stroke="#e3a4bd" stroke-width="1"/>' +
+    '<path d="M 8 7 C 12 9 14 13 14.5 19 L 2 19 C 2.5 13 5 9 8 7 Z" fill="#1c0e15" stroke="#e3a4bd" stroke-width=".9"/>' +
+    '<path d="M -3.4 12 Q 0 14 3.4 12.6" fill="none" stroke="#e3a4bd" stroke-width="1.6" stroke-linecap="round"/>' +
+    '</g>' +
+    '</svg>';
+}
+
+/* ===== 批次 3：中度卷 18 张（按《卡面设计-60张.md》）===== */
+
+/* M01 最爱之处 · 聚光灯落在侧影心口（舞台全出血） */
+function artSpotlightHeart(color, uid) {
+  uid = uid || "m01";
+  var S = uid + "s", C = uid + "c", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e1118"/><stop offset="1" stop-color="#120a0f"/></linearGradient>' +
+    '<linearGradient id="' + C + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9c4" stop-opacity=".38"/><stop offset="1" stop-color="#ffe9c4" stop-opacity=".05"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffdf9e" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 聚光灯锥 */
+    '<path d="M 96 0 L 168 238 L 30 238 Z" fill="url(#' + C + ')"/>' +
+    '<ellipse cx="98" cy="212" rx="72" ry="12" fill="#ffe9c4" opacity=".1"/>' +
+    /* 人体侧影（暗） */
+    '<path d="M 92 238 L 92 196 C 78 188 70 174 70 158 C 70 140 82 128 98 128 C 108 128 116 133 121 141 C 116 136 112 130 112 124 C 112 118 116 113 122 112 C 118 122 120 132 128 140 C 136 149 139 160 137 172 L 128 238 Z" fill="#0d0609"/>' +
+    '<circle cx="104" cy="108" r="11" fill="#0d0609"/>' +
+    /* 心口亮点 */
+    '<circle cx="96" cy="164" r="5" fill="#ffdf9e" filter="url(#' + G + ')"/>' +
+    '<circle cx="96" cy="164" r="9" fill="none" stroke="#ffdf9e" stroke-width=".8" opacity=".6"/>' +
+    '</svg>';
+}
+
+/* M02 怦然时刻 · 心电图纸上被红圈圈出的波峰（全出血） */
+function artHeartbeatMark(color, uid) {
+  uid = uid || "m02";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="#ff6d95" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 心电图纸条（米白，微倾斜） */
+    '<g transform="rotate(-4 100 120)">' +
+    '<rect x="6" y="88" width="192" height="66" rx="4" fill="#f3ead9"/>' +
+    '<g stroke="#d9c8ae" stroke-width=".7">' +
+    '<path d="M 20 88 v 66 M 44 88 v 66 M 68 88 v 66 M 92 88 v 66 M 116 88 v 66 M 140 88 v 66 M 164 88 v 66 M 188 88 v 66"/>' +
+    '<path d="M 6 99 H 198 M 6 110 H 198 M 6 121 H 198 M 6 132 H 198 M 6 143 H 198"/>' +
+    '</g>' +
+    /* 心电波 */
+    '<path d="M 10 121 H 44 L 54 121 L 60 104 L 68 138 L 74 121 H 96 L 104 121 L 112 82 L 122 152 L 130 121 H 156 L 164 121 L 172 108 L 180 132 L 188 121 H 196" fill="none" stroke="#e35d75" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>' +
+    /* 红圈圈出最高波峰 */
+    '<ellipse cx="117" cy="114" rx="17" ry="24" fill="none" stroke="' + color + '" stroke-width="2.2" filter="url(#' + G + ')"/>' +
+    '<text x="152" y="146" font-family="monospace" font-size="8" fill="#8a5a4a">23:47</text>' +
+    '</g>' +
+    '<text x="100" y="196" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">就是这一秒</text>' +
+    '</svg>';
+}
+
+/* M03 耳语一句 · 拢唇丝带飘入耳畔（拱窗） */
+function artWhisperRibbon(color, uid) {
+  uid = uid || "m03";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#412635"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#59334a"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffd7e6" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 耳语者（左，拢唇） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="66" cy="118" r="10"/>' +
+    '<path d="M 66 128 C 58 132 53 140 51 152 L 50 176 L 84 176 L 83 152 C 81 140 75 132 66 128 Z"/>' +
+    '</g>' +
+    '<path d="M 72 122 C 78 122 82 124 85 127" fill="none" stroke="' + color + '" stroke-width="3.2" stroke-linecap="round"/>' +
+    '<circle cx="76" cy="124" r="2.2" fill="#170c11"/>' +
+    /* 丝带语 */
+    '<path d="M 86 126 C 100 118 108 128 120 122 C 130 117 136 122 140 128" fill="none" stroke="#ffd7e6" stroke-width="2" filter="url(#' + G + ')" stroke-linecap="round"/>' +
+    '<path d="M 92 132 C 102 126 110 134 122 130" fill="none" stroke="#ffd7e6" stroke-width="1.2" opacity=".7" stroke-linecap="round"/>' +
+    /* 聆听者（右，耳畔） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="148" cy="112" r="10"/>' +
+    '<path d="M 148 122 C 140 126 135 134 133 146 L 132 176 L 166 176 L 165 146 C 163 134 157 126 148 122 Z"/>' +
+    '</g>' +
+    '<path d="M 141 114 a 5 6 0 0 1 8 1.5" fill="none" stroke="#e8c9a8" stroke-width="1.2"/>' +
+    /* 丝带终点光 */
+    '<circle cx="141" cy="116" r="2.4" fill="#fff" filter="url(#' + G + ')"/>' +
+    '<ellipse cx="100" cy="206" rx="58" ry="6" fill="#0d0609" opacity=".6"/>' +
+    '</svg>';
+}
+
+/* M05 贴身猜色 · 扇形色卡，两手各点一张（全出血） */
+function artColorFan(color, uid) {
+  uid = uid || "m05";
+  var S = uid + "s", G = uid + "g";
+  var cards = "";
+  var cols = ["#e3a4bd", "#b285cc", "#7ab0c9", "#8ac6a0", "#e8c9a8"];
+  for (var i = 0; i < 5; i++) {
+    var ang = -56 + i * 28;
+    cards += '<g transform="rotate(' + ang + ' 100 168)">' +
+      '<rect x="92" y="84" width="16" height="66" rx="3" fill="' + cols[i] + '" stroke="rgba(232,201,168,.4)" stroke-width="1"/>' +
+      '<rect x="92" y="84" width="16" height="12" rx="3" fill="#241419" opacity=".25"/>' +
+      '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33202c"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#ffd7e6" flood-opacity=".85"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    cards +
+    /* 左手点玫瑰色卡，右手点紫卡 */
+    '<path d="M 36 216 C 48 196 62 182 78 172" fill="none" stroke="#e8c9a8" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<circle cx="82" cy="168" r="3" fill="#e8c9a8" filter="url(#' + G + ')"/>' +
+    '<path d="M 164 216 C 152 196 138 182 124 174" fill="none" stroke="#b285cc" stroke-width="3.4" stroke-linecap="round"/>' +
+    '<circle cx="121" cy="170" r="3" fill="#b285cc" filter="url(#' + G + ')"/>' +
+    /* 中间 VS 心 */
+    '<path d="M 100 118 C 100 118 94 113.6 94 109.8 C 94 107.2 96 105.6 98 105.6 C 99.2 105.6 100 106.5 100 107.6 C 100 106.5 100.8 105.6 102 105.6 C 104 105.6 106 107.2 106 109.8 C 106 113.6 100 118 100 118 Z" fill="#ffd7e6" opacity=".9"/>' +
+    '<ellipse cx="100" cy="222" rx="66" ry="6" fill="#0d0609" opacity=".6"/>' +
+    '</svg>';
+}
+
+/* M06 指尖描摹 · 手臂上发光轨迹（特写全出血） */
+function artFingerTrail(color, uid) {
+  uid = uid || "m06";
+  var S = uid + "s", G = uid + "g", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#180d12"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ffd7e6" flood-opacity="1"/></filter>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="4"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 手臂体块 */
+    '<path d="M -10 190 C 30 176 70 168 110 160 C 140 154 170 150 210 148 L 210 238 L -10 238 Z" fill="#170c11"/>' +
+    '<path d="M -10 184 C 30 170 70 162 110 154" fill="none" stroke="rgba(232,201,168,.4)" stroke-width="1.2"/>' +
+    /* 指尖 */
+    '<g transform="translate(36,96) rotate(18)">' +
+    '<ellipse cx="0" cy="0" rx="7" ry="10" fill="#1c0e15" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<ellipse cx="0" cy="-7" rx="4" ry="3.4" fill="#1c0e15" stroke="' + color + '" stroke-width="1"/>' +
+    '</g>' +
+    /* 发光轨迹 */
+    '<path d="M 44 106 C 64 128 84 138 106 132 C 126 127 138 116 152 122 C 162 126 166 134 164 142" fill="none" stroke="#ffd7e6" stroke-width="2.4" filter="url(#' + G + ')" stroke-linecap="round"/>' +
+    '<path d="M 44 106 C 64 128 84 138 106 132 C 126 127 138 116 152 122" fill="none" stroke="#ffd7e6" stroke-width="7" opacity=".16" filter="url(#' + B + ')"/>' +
+    /* 轨迹末端小星 */
+    '<path d="M 164 142 l 2.2 4.6 5 .6 -3.6 3.4 .9 5 -4.5 -2.4 -4.5 2.4 .9 -5 -3.6 -3.4 5 -.6 z" fill="#ffe9f0" filter="url(#' + G + ')"/>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="76" cy="122" r="1"/><circle cx="118" cy="134" r="1"/></g>' +
+    '</svg>';
+}
+
+/* M07 慵懒着装 · 月光里的衬衫衣架（圆月窗） */
+function artMoonHanger(color, uid) {
+  uid = uid || "m07";
+  var S = uid + "s", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31203a"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.4"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<circle cx="100" cy="96" r="58" fill="#cfd8ea" opacity=".1"/>' +
+    '<circle cx="100" cy="96" r="42" fill="#cfd8ea" opacity=".08"/>' +
+    /* 衣架钩 */
+    '<path d="M 100 52 C 100 44 108 42 111 47 M 100 52 L 100 60" fill="none" stroke="#cfd8ea" stroke-width="1.6" opacity=".85"/>' +
+    '<rect x="58" y="60" width="84" height="4" rx="2" fill="#cfd8ea" opacity=".85"/>' +
+    /* 衬衫剪影 */
+    '<path d="M 76 66 L 60 78 C 56 82 54 88 55 94 L 60 96 L 64 90 L 62 150 C 62 156 66 160 72 160 L 128 160 C 134 160 138 156 138 150 L 136 90 L 140 96 L 145 94 C 146 88 144 82 140 78 L 124 66 C 118 74 110 78 100 78 C 90 78 82 74 76 66 Z" fill="#1c0e15" stroke="rgba(207,216,234,.5)" stroke-width="1.2"/>' +
+    '<path d="M 100 78 L 100 158" stroke="rgba(207,216,234,.35)" stroke-width="1"/>' +
+    '<path d="M 84 72 L 78 156 M 116 72 L 122 156" fill="none" stroke="rgba(207,216,234,.22)" stroke-width="1"/>' +
+    /* 飘着的丝巾 */
+    '<path d="M 40 140 C 48 132 56 136 52 144 C 49 150 54 156 62 154" fill="none" stroke="#b285cc" stroke-width="3" opacity=".8" stroke-linecap="round"/>' +
+    /* 银雾 */
+    '<ellipse cx="100" cy="180" rx="64" ry="12" fill="#cfd8ea" opacity=".1" filter="url(#' + B + ')"/>' +
+    '<g fill="#e8ecf4"><circle cx="40" cy="50" r="1.1" opacity=".8"/><circle cx="164" cy="60" r="1.1" opacity=".8"/><circle cx="152" cy="180" r="1" opacity=".6"/></g>' +
+    '</svg>';
+}
+
+/* M09 私密之夜 · 吊灯交杯酒与城景（方窗） */
+function artWineNight(color, uid) {
+  uid = uid || "m09";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffca7a" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 窗框 */
+    '<rect x="24" y="22" width="152" height="192" rx="5" fill="#140a0f" opacity=".6"/>' +
+    '<rect x="24" y="22" width="152" height="192" rx="5" fill="none" stroke="rgba(232,201,168,.35)" stroke-width="1.2"/>' +
+    /* 城市灯火（窗下远处） */
+    '<g fill="#ffca7a" opacity=".5">' +
+    '<rect x="40" y="176" width="4" height="5"/><rect x="52" y="168" width="4" height="13"/><rect x="146" y="172" width="4" height="9"/><rect x="160" y="164" width="4" height="17"/><rect x="100" y="180" width="4" height="4"/>' +
+    '</g>' +
+    /* 吊灯 */
+    '<path d="M 100 22 L 100 54" stroke="#c6a2ae" stroke-width="1.2"/>' +
+    '<path d="M 84 68 L 116 68 L 108 54 L 92 54 Z" fill="#3a2030" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<circle cx="100" cy="72" r="5" fill="#ffe9c4" filter="url(#' + G + ')"/>' +
+    '<path d="M 76 84 L 124 238 L 76 238 Z" fill="#ffca7a" opacity=".07"/>' +
+    /* 桌面与交杯酒 */
+    '<rect x="40" y="168" width="120" height="8" rx="3" fill="#170c11"/>' +
+    '<g transform="translate(88,140) rotate(-12)"><path d="M -8 0 C -8 12 -4 18 0 18 L 2 18 L 2 26 L -6 26 L -6 29 L 10 29 L 10 26 L 4 26 L 4 18 L 6 18 C 10 18 14 12 14 0 Z" fill="#1c0e15" stroke="#ffd7e6" stroke-width="1.1"/><path d="M -6 3 C -2 6 6 6 12 3 L 12 8 C 8 11 -2 11 -6 8 Z" fill="#d2739d" opacity=".9"/></g>' +
+    '<g transform="translate(116,140) rotate(12)"><path d="M -8 0 C -8 12 -4 18 0 18 L 2 18 L 2 26 L -6 26 L -6 29 L 10 29 L 10 26 L 4 26 L 4 18 L 6 18 C 10 18 14 12 14 0 Z" fill="#1c0e15" stroke="#ffd7e6" stroke-width="1.1"/><path d="M -6 3 C -2 6 6 6 12 3 L 12 8 C 8 11 -2 11 -6 8 Z" fill="#d2739d" opacity=".9"/></g>' +
+    /* 花瓣 */
+    '<g fill="#e88cab" opacity=".85"><ellipse cx="66" cy="164" rx="3.4" ry="1.8" transform="rotate(-20 66 164)"/><ellipse cx="140" cy="170" rx="3" ry="1.6" transform="rotate(24 140 170)"/></g>' +
+    '</svg>';
+}
+
+/* M10 陌生搭讪 · 酒吧双凳初识（全出血） */
+function artBarStools(color, uid) {
+  uid = uid || "m10";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a24"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#54324a"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffca7a" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 吧台 */
+    '<rect x="0" y="176" width="200" height="16" fill="#170c11"/>' +
+    '<path d="M 0 176 h 200" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    /* 霓虹点 */
+    '<g fill="#7ab0c9" opacity=".7"><circle cx="28" cy="52" r="1.4"/><circle cx="172" cy="44" r="1.4"/></g>' +
+    '<g fill="#e88cab" opacity=".7"><circle cx="48" cy="38" r="1.2"/><circle cx="152" cy="60" r="1.2"/></g>' +
+    /* 吊灯 ×2 */
+    '<path d="M 62 0 L 62 34 M 138 0 L 138 34" stroke="#c6a2ae" stroke-width="1"/>' +
+    '<circle cx="62" cy="40" r="4.5" fill="#ffe9c4" filter="url(#' + G + ')"/>' +
+    '<circle cx="138" cy="40" r="4.5" fill="#ffe9c4" filter="url(#' + G + ')"/>' +
+    /* 双高脚凳 */
+    '<g fill="#170c11" stroke="rgba(232,201,168,.3)" stroke-width="1">' +
+    '<rect x="46" y="160" width="34" height="8" rx="4"/><path d="M 52 168 L 48 200 M 74 168 L 78 200"/>' +
+    '<rect x="120" y="160" width="34" height="8" rx="4"/><path d="M 126 168 L 122 200 M 148 168 L 152 200"/>' +
+    '</g>' +
+    /* 两坐偶（朝向彼此） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="63" cy="112" r="10"/>' +
+    '<path d="M 63 122 C 55 126 50 134 48 146 L 46 160 L 80 160 L 78 146 C 76 134 71 126 63 122 Z"/>' +
+    '<circle cx="137" cy="112" r="10"/>' +
+    '<path d="M 137 122 C 145 126 150 134 152 146 L 154 160 L 120 160 L 122 146 C 124 134 129 126 137 122 Z"/>' +
+    '</g>' +
+    '<path d="M 71 116 Q 100 124 129 116" fill="none" stroke="' + color + '" stroke-width="1.1" stroke-dasharray="2.5 3.5" opacity=".85"/>' +
+    /* 两杯咖啡 */
+    '<g fill="#1c0e15" stroke="rgba(232,201,168,.45)" stroke-width="1">' +
+    '<rect x="92" y="164" width="7" height="10" rx="1"/><rect x="102" y="164" width="7" height="10" rx="1"/>' +
+    '</g>' +
+    '<path d="M 94 162 c 0 -2 3 -2 3 -4 M 104 162 c 0 -2 3 -2 3 -4" fill="none" stroke="#e8d5c8" stroke-width="1" opacity=".7"/>' +
+    '</svg>';
+}
+
+/* M11 同梦闭眼 · 双闭眼侧脸，梦线汇成星（全出血） */
+function artSharedDream(color, uid) {
+  uid = uid || "m11";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#231735"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c3560"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#e8c9ff" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="34" cy="60" r="1.1"/><circle cx="166" cy="54" r="1.1"/><circle cx="100" cy="30" r="1" opacity=".8"/></g>' +
+    /* 两个闭眼侧脸（左右相对，微低） */
+    '<g fill="url(#' + F + ')">' +
+    '<path d="M 58 214 C 54 196 56 178 64 164 C 70 154 78 148 88 146 L 92 146 C 84 154 80 166 80 178 C 80 192 84 204 92 214 Z"/>' +
+    '<circle cx="88" cy="160" r="14"/>' +
+    '<path d="M 142 214 C 146 196 144 178 136 164 C 130 154 122 148 112 146 L 108 146 C 116 154 120 166 120 178 C 120 192 116 204 108 214 Z"/>' +
+    '<circle cx="112" cy="160" r="14"/>' +
+    '</g>' +
+    /* 闭眼弧 */
+    '<path d="M 80 158 q 6 4 12 1 M 108 158 q -6 4 -12 1" fill="none" stroke="#e3a4bd" stroke-width="1.4" stroke-linecap="round"/>' +
+    /* 梦线汇星 */
+    '<path d="M 84 142 C 78 118 84 96 100 82" fill="none" stroke="' + color + '" stroke-width="1.1" stroke-dasharray="2 4" opacity=".8"/>' +
+    '<path d="M 116 142 C 122 118 116 96 100 82" fill="none" stroke="' + color + '" stroke-width="1.1" stroke-dasharray="2 4" opacity=".8"/>' +
+    '<g filter="url(#' + G + ')"><path d="M 100 74 L 103 84.5 L 113.5 87.5 L 103 90.5 L 100 101 L 97 90.5 L 86.5 87.5 L 97 84.5 Z" fill="#e8c9ff"/></g>' +
+    '</svg>';
+}
+
+/* M12 未说出口 · 两唇间悬着的心（特写全出血） */
+function artSuspendedHeart(color, uid) {
+  uid = uid || "m12";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><radialGradient id="' + S + '" cx=".5" cy=".45" r=".7"><stop offset="0" stop-color="#38202c"/><stop offset="1" stop-color="#180d12"/></radialGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8fae" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 上唇与下唇（剪影，微张） */
+    '<path d="M 30 96 C 52 82 78 76 100 76 C 122 76 148 82 170 96 C 148 88 122 84 100 84 C 78 84 52 88 30 96 Z" fill="#2c1420"/>' +
+    '<path d="M 30 96 C 52 104 78 108 100 108 C 122 108 148 104 170 96" fill="none" stroke="' + color + '" stroke-width="1.4" opacity=".85"/>' +
+    '<path d="M 34 182 C 56 170 78 166 100 166 C 122 166 144 170 166 182 C 144 174 122 170 100 170 C 78 170 56 174 34 182 Z" fill="#2c1420"/>' +
+    '<path d="M 34 182 C 56 174 78 170 100 170 C 122 170 144 174 166 182" fill="none" stroke="' + color + '" stroke-width="1.2" opacity=".7"/>' +
+    /* 悬着的心 */
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 100 146 C 100 146 80 132 80 117 C 80 107.5 87.5 101 95.5 101 C 98.4 101 100 103.2 100 106 C 100 103.2 101.6 101 104.5 101 C 112.5 101 120 107.5 120 117 C 120 132 100 146 100 146 Z" fill="#ff8fae"/>' +
+    '<path d="M 90 112 C 89.4 108 91.6 104.6 95 103.4" fill="none" stroke="#ffd3e0" stroke-width="1.6" opacity=".9" stroke-linecap="round"/>' +
+    '</g>' +
+    /* 呼吸微光 */
+    '<circle cx="100" cy="124" r="26" fill="none" stroke="#ff8fae" stroke-width=".8" opacity=".35"/>' +
+    '<circle cx="100" cy="124" r="38" fill="none" stroke="#ff8fae" stroke-width=".6" opacity=".18"/>' +
+    '</svg>';
+}
+
+/* M13 最可爱模样 · 拍立得里的猫耳发饰剪影（拍立得框） */
+function artCatEarsPolaroid(color, uid) {
+  uid = uid || "m13";
+  var S = uid + "s", G = uid + "g";
+  function aperture(x, y, r) {
+    var blades = "";
+    for (var a = 0; a < 6; a++) {
+      var a1 = a * 60 * Math.PI / 180, a2 = (a * 60 + 44) * Math.PI / 180;
+      blades += '<path d="M ' + (x + r * Math.cos(a1)).toFixed(1) + ' ' + (y + r * Math.sin(a1)).toFixed(1) + ' A ' + r + ' ' + r + ' 0 0 1 ' + (x + r * Math.cos(a2)).toFixed(1) + ' ' + (y + r * Math.sin(a2)).toFixed(1) + '" fill="none"/>';
+    }
+    return '<g transform="translate(' + x + ',' + y + ')">' + blades + '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1f28"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="' + color + '" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 拍立得 */
+    '<g transform="rotate(-5 100 126)">' +
+    '<rect x="42" y="40" width="116" height="150" fill="#f6f2ea"/>' +
+    '<rect x="52" y="50" width="96" height="106" fill="#1c1016"/>' +
+    /* 猫耳发饰剪影 */
+    '<circle cx="100" cy="112" r="26" fill="#2c1a24"/>' +
+    '<path d="M 78 96 L 72 72 L 92 84 Z" fill="#2c1a24"/>' +
+    '<path d="M 122 96 L 128 72 L 108 84 Z" fill="#2c1a24"/>' +
+    '<path d="M 80 92 L 77 79 L 88 86 Z" fill="' + color + '"/>' +
+    '<path d="M 120 92 L 123 79 L 112 86 Z" fill="' + color + '"/>' +
+    /* 蝴蝶结 */
+    '<path d="M 100 86 l -9 -5 l 0 10 z M 100 86 l 9 -5 l 0 10 z" fill="' + color + '" filter="url(#' + G + ')"/>' +
+    '<circle cx="100" cy="86" r="2.4" fill="#ffd7e6"/>' +
+    /* 眯眼笑 */
+    '<path d="M 90 112 q 4.5 -4 9 0 M 101 112 q 4.5 -4 9 0" fill="none" stroke="#f4e7ec" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M 92 122 q 8 6 16 0" fill="none" stroke="#f4e7ec" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<text x="100" y="176" text-anchor="middle" font-family="monospace" font-size="9" fill="#8a7a8a">click ♡ 21:04</text>' +
+    '</g>' +
+    /* 快门光圈 */
+    '<g stroke="' + color + '" stroke-width="1" opacity=".55" fill="none">' + aperture(166, 196, 15) + aperture(166, 196, 9) + '</g>' +
+    '</svg>';
+}
+
+/* M14 暧昧档案 · 斜放的拍立得双影 + 咖啡渍（全出血） */
+function artPolaroidArchive(color, uid) {
+  uid = uid || "m14";
+  var S = uid + "s";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33222a"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="196" width="200" height="42" fill="#1c1016"/>' +
+    /* 拍立得（斜放） */
+    '<g transform="rotate(-7 100 122)">' +
+    '<rect x="40" y="40" width="120" height="152" fill="#f3ead9"/>' +
+    '<rect x="50" y="50" width="100" height="112" fill="#241419"/>' +
+    /* 照片内容：两个靠近的影子 */
+    '<circle cx="82" cy="102" r="16" fill="#3a2030"/>' +
+    '<path d="M 82 118 C 70 124 63 136 61 152 L 61 162 L 103 162 L 101 136 C 99 126 92 118 82 118 Z" fill="#3a2030"/>' +
+    '<circle cx="116" cy="106" r="15" fill="#43254a"/>' +
+    '<path d="M 116 121 C 127 127 133 138 135 152 L 136 162 L 95 162 C 96 140 104 126 116 121 Z" fill="#43254a" opacity=".95"/>' +
+    '<path d="M 50 150 h 100" stroke="#e8c9a8" stroke-width="1" opacity=".35"/>' +
+    '<text x="100" y="182" text-anchor="middle" font-family="monospace" font-size="9" fill="#8a7a8a">that night</text>' +
+    /* 咖啡渍 */
+    '<circle cx="132" cy="46" r="9" fill="none" stroke="#8a5a3a" stroke-width="2" opacity=".5"/>' +
+    '<circle cx="134" cy="44" r="3.6" fill="none" stroke="#8a5a3a" stroke-width="1.2" opacity=".45"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="30" cy="60" r="1.1"/><circle cx="176" cy="76" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* M15 咬耳轻问 · 耳畔星与问号丝带（拱窗特写） */
+function artEarWhisper(color, uid) {
+  uid = uid || "m15";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2430"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ffd7e6" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 侧脸轮廓（面向右）：鼻唇下颌与耳 */
+    '<path d="M 60 238 L 60 150 C 60 118 76 96 102 88 C 122 82 142 88 152 102 L 160 114 L 172 118 L 162 128 C 168 132 170 138 166 144 C 160 152 150 152 142 148 C 138 158 134 172 134 190 L 134 238 Z" fill="#1c0e15"/>' +
+    '<path d="M 60 150 C 60 118 76 96 102 88" fill="none" stroke="rgba(232,201,168,.5)" stroke-width="1.3"/>' +
+    /* 耳廓 */
+    '<path d="M 116 132 C 112 124 118 114 128 114 C 138 114 144 122 142 132 C 140 141 132 146 124 144 C 120 143 117 139 116 134 Z" fill="none" stroke="#e8c9a8" stroke-width="1.5"/>' +
+    '<path d="M 122 132 C 121 127 124 122 129 122" fill="none" stroke="#e8c9a8" stroke-width="1.1" opacity=".7"/>' +
+    /* 耳畔星 */
+    '<g filter="url(#' + G + ')"><path d="M 146 120 L 148.6 126.4 L 155 129 L 148.6 131.6 L 146 138 L 143.4 131.6 L 137 129 L 143.4 126.4 Z" fill="#ffd7e6"/></g>' +
+    /* 问号丝带（从唇边卷向耳畔） */
+    '<path d="M 96 152 C 108 148 116 140 124 142" fill="none" stroke="' + color + '" stroke-width="1.6" opacity=".9" stroke-linecap="round"/>' +
+    '<path d="M 112 156 C 118 152 124 150 128 150" fill="none" stroke="' + color + '" stroke-width="1.2" opacity=".6" stroke-linecap="round"/>' +
+    '<circle cx="130" cy="149" r="1.8" fill="' + color + '"/>' +
+    '<g fill="#ffd7e6" opacity=".7"><circle cx="88" cy="120" r="1.1"/><circle cx="156" cy="88" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* M16 颈后一阵风 · 风的丝带拂起发丝（特写全出血） */
+function artWindRibbon(color, uid) {
+  uid = uid || "m16";
+  var S = uid + "s", B = uid + "b";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1e2a"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.6"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 颈肩剪影（局部，面向左） */
+    '<path d="M 118 238 L 118 168 C 118 148 108 136 92 130 C 76 124 60 128 50 140 C 42 150 40 164 44 176 L 44 238 Z" fill="#170c11"/>' +
+    '<path d="M 92 130 C 108 136 118 148 118 168" fill="none" stroke="rgba(232,201,168,.45)" stroke-width="1.2"/>' +
+    '<circle cx="80" cy="108" r="18" fill="#170c11"/>' +
+    '<path d="M 66 96 C 74 86 90 84 100 92 C 92 90 80 92 72 100 Z" fill="#0d0609"/>' +
+    /* 发丝 */
+    '<g fill="none" stroke="#c6a2ae" stroke-width="1.4" opacity=".9" stroke-linecap="round">' +
+    '<path d="M 96 118 C 88 128 86 140 88 152"/>' +
+    '<path d="M 104 120 C 98 130 96 142 99 154"/>' +
+    '<path d="M 110 124 C 106 132 105 142 108 152"/>' +
+    '</g>' +
+    /* 风的丝带 */
+    '<path d="M 16 84 C 44 74 68 84 88 76 C 104 70 118 76 126 88" fill="none" stroke="' + color + '" stroke-width="7" opacity=".35" filter="url(#' + B + ')" stroke-linecap="round"/>' +
+    '<path d="M 16 84 C 44 74 68 84 88 76 C 104 70 118 76 126 88" fill="none" stroke="' + color + '" stroke-width="2.2" stroke-linecap="round"/>' +
+    '<path d="M 118 92 C 128 88 138 90 144 96" fill="none" stroke="' + color + '" stroke-width="1.4" opacity=".7" stroke-linecap="round"/>' +
+    /* 散成光点 */
+    '<g fill="#ffd7e6"><circle cx="150" cy="100" r="2" opacity=".9"/><circle cx="158" cy="92" r="1.4" opacity=".7"/><circle cx="162" cy="106" r="1.1" opacity=".5"/></g>' +
+    '</svg>';
+}
+
+/* M17 性感时刻 · 半开的门与门缝里的身影（门洞） */
+function artDoorLight(color, uid) {
+  uid = uid || "m17";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241722"/><stop offset="1" stop-color="#160d11"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffd9a8" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 门框 */
+    '<rect x="30" y="20" width="140" height="218" fill="#1c1016"/>' +
+    '<rect x="30" y="20" width="140" height="218" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.4"/>' +
+    /* 门缝光 */
+    '<path d="M 96 30 L 96 238 L 146 238 L 146 30 Z" fill="#241419"/>' +
+    '<path d="M 96 30 L 96 238 L 146 238 L 146 30 Z" fill="none"/>' +
+    '<path d="M 96 30 L 96 238 L 146 238 L 146 30 Z" fill="#0d0609"/>' +
+    '<path d="M 100 30 L 100 238 L 146 238 L 146 30 Z" fill="#ffdf9e" opacity=".18"/>' +
+    /* 半开的门板（左侧） */
+    '<path d="M 34 26 L 96 34 L 96 238 L 34 238 Z" fill="#221319" stroke="rgba(232,201,168,.35)" stroke-width="1.2"/>' +
+    '<circle cx="90" cy="140" r="2.6" fill="#e8c9a8"/>' +
+    /* 门缝里的身影 */
+    '<g opacity=".9">' +
+    '<circle cx="126" cy="106" r="13" fill="#0d0609"/>' +
+    '<path d="M 126 119 C 112 126 104 140 101 158 L 98 200 L 146 200 L 146 150 C 143 136 136 125 126 119 Z" fill="#0d0609"/>' +
+    '<path d="M 126 119 C 116 125 108 136 104 150" fill="none" stroke="' + color + '" stroke-width="1.2" opacity=".8"/>' +
+    '</g>' +
+    /* 门缝光晕 */
+    '<path d="M 146 30 L 146 238 L 176 238 Z" fill="#ffdf9e" opacity=".06"/>' +
+    '<path d="M 100 30 L 100 238 L 90 238 Z" fill="#ffdf9e" opacity=".05"/>' +
+    '</svg>';
+}
+
+/* M18 秘密约会地 · 地图图钉虚线路径尽头小帐篷（全出血） */
+function artSecretMap(color, uid) {
+  uid = uid || "m18";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33222a"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="' + color + '" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 地图纸 */
+    '<g transform="rotate(-3 100 122)">' +
+    '<rect x="24" y="34" width="152" height="172" rx="4" fill="#e8dcc4" opacity=".96"/>' +
+    /* 等高线 */
+    '<g fill="none" stroke="#b8a486" stroke-width="1">' +
+    '<path d="M 40 84 C 70 70 96 78 124 66 C 144 58 160 62 168 58" opacity=".7"/>' +
+    '<path d="M 36 116 C 66 104 92 112 120 100 C 142 92 158 96 166 92" opacity=".6"/>' +
+    '<path d="M 44 156 C 74 144 100 152 128 140 C 148 132 162 136 168 132" opacity=".5"/>' +
+    '</g>' +
+    /* 两枚图钉 */
+    '<g filter="url(#' + G + ')">' +
+    '<circle cx="56" cy="98" r="6" fill="#d2739d"/><path d="M 56 104 L 56 114" stroke="#8a5a4a" stroke-width="1.6"/>' +
+    '<circle cx="146" cy="136" r="6" fill="#7ab0c9"/><path d="M 146 142 L 146 152" stroke="#8a5a4a" stroke-width="1.6"/>' +
+    '</g>' +
+    /* 虚线路径 */
+    '<path d="M 62 106 C 84 122 108 118 128 130 L 140 136" fill="none" stroke="#8a5a4a" stroke-width="1.6" stroke-dasharray="5 5"/>' +
+    /* 帐篷 */
+    '<path d="M 140 176 L 156 148 L 172 176 Z" fill="#241419"/>' +
+    '<path d="M 156 148 L 156 176" stroke="#e8dcc4" stroke-width="1"/>' +
+    '<path d="M 150 176 L 156 160 L 162 176 Z" fill="#d2739d"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="30" cy="52" r="1.1"/><circle cx="176" cy="210" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* M19 唇上特写 · 唇印火漆信（全出血） */
+function artLipSeal(color, uid) {
+  uid = uid || "m19";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#31202a"/><stop offset="1" stop-color="#241419"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#ff8fae" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 信纸 */
+    '<g transform="rotate(-3 100 126)">' +
+    '<rect x="38" y="46" width="124" height="160" rx="3" fill="#f3ead9"/>' +
+    '<g stroke="#c9b0a0" stroke-width="1">' +
+    '<path d="M 54 70 H 146 M 54 88 H 146 M 54 106 H 134"/>' +
+    '</g>' +
+    /* 火漆唇印 */
+    '<g transform="translate(100,152)" filter="url(#' + G + ')">' +
+    '<circle cx="0" cy="0" r="30" fill="#d2739d" opacity=".92"/>' +
+    '<path d="M -22 -4 C -14 -13 -4 -15 0 -10 C 4 -15 14 -13 22 -4 C 14 8 6 12 0 12 C -6 12 -14 8 -22 -4 Z" fill="#a84a6e"/>' +
+    '<path d="M -22 -4 C -14 -13 -4 -15 0 -10" fill="none" stroke="#7c3352" stroke-width="1.2"/>' +
+    '<path d="M 0 -10 C 4 -15 14 -13 22 -4" fill="none" stroke="#7c3352" stroke-width="1.2"/>' +
+    '<path d="M -12 2 C -6 7 6 7 12 2" fill="none" stroke="#7c3352" stroke-width="1.1" opacity=".85"/>' +
+    '<path d="M -10 -6 C -5 -9 2 -9 8 -6" fill="none" stroke="#ffb8cd" stroke-width="1.4" opacity=".9"/>' +
+    '</g>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="32" cy="54" r="1.1"/><circle cx="172" cy="64" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* M20 独家仪式 · 双手共护一盏灯（门洞夜阳台） */
+function artSharedLamp(color, uid) {
+  uid = uid || "m20";
+  var S = uid + "s", FL = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241a2e"/><stop offset="1" stop-color="#170d13"/></linearGradient>' +
+    '<linearGradient id="' + FL + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3d6"/><stop offset="1" stop-color="#ffca7a"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="3.4" flood-color="#ffca7a" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 星夜 */
+    '<g fill="#e8e2f2"><circle cx="36" cy="44" r="1.2"/><circle cx="164" cy="38" r="1.2"/><circle cx="56" cy="80" r="1" opacity=".8"/><circle cx="148" cy="90" r="1" opacity=".8"/><circle cx="100" cy="26" r="1" opacity=".7"/></g>' +
+    '<circle cx="100" cy="120" r="66" fill="#ffca7a" opacity=".07"/>' +
+    '<circle cx="100" cy="120" r="46" fill="#ffca7a" opacity=".09"/>' +
+    /* 双手（左右掌心向上，托向中央） */
+    '<g fill="#1c0e15" stroke="rgba(232,201,168,.6)" stroke-width="1.2">' +
+    '<path d="M 12 178 C 26 168 44 160 60 156 C 68 154 74 156 76 161 C 78 166 74 171 66 173 C 50 177 32 182 18 188 Z"/>' +
+    '<path d="M 188 178 C 174 168 156 160 140 156 C 132 154 126 156 124 161 C 122 166 126 171 134 173 C 150 177 168 182 182 188 Z"/>' +
+    '</g>' +
+    /* 灯 */
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 100 108 C 106 116 108 124 104 130 C 102 133 98 133 96 130 C 92 124 94 116 100 108 Z" fill="url(#' + FL + ')"/>' +
+    '</g>' +
+    '<rect x="90" y="130" width="20" height="22" rx="4" fill="none" stroke="rgba(232,201,168,.7)" stroke-width="1.4"/>' +
+    '<path d="M 86 130 L 114 130" stroke="rgba(232,201,168,.7)" stroke-width="1.4"/>' +
+    '<rect x="94" y="152" width="12" height="5" rx="2" fill="rgba(232,201,168,.5)"/>' +
+    /* 灯下两偶剪影依偎 */
+    '<g fill="#170c11">' +
+    '<circle cx="86" cy="176" r="9"/><path d="M 86 184 C 80 187 76 192 74 198 L 73 208 L 99 208 L 98 198 C 96 192 92 187 86 184 Z"/>' +
+    '<circle cx="114" cy="178" r="9"/><path d="M 114 186 C 108 189 104 194 102 200 L 101 208 L 127 208 L 126 200 C 124 194 120 189 114 186 Z"/>' +
+    '</g>' +
+    '<path d="M 94 180 Q 100 176 106 180" fill="none" stroke="#e8c9a8" stroke-width="1.2" opacity=".7"/>' +
+    '</svg>';
+}
+
+/* ===== 批次 4：高度卷 18 张（按《卡面设计-60张.md》）===== */
+
+/* H01 梦里是你 · 云朵被窝中的睡颜，梦泡里是对方身影（全出血） */
+function artDreamFigure(color, uid) {
+  uid = uid || "h01";
+  var S = uid + "s", F = uid + "f", B = uid + "b", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#221834"/><stop offset="1" stop-color="#170d13"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#443055"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.6"/></filter>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#b8a0e8" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="30" cy="42" r="1.1"/><circle cx="172" cy="50" r="1.1"/><circle cx="100" cy="24" r="1" opacity=".7"/></g>' +
+    /* 云朵被窝 */
+    '<g fill="#3a2a4c" opacity=".95">' +
+    '<ellipse cx="66" cy="196" rx="44" ry="20"/>' +
+    '<ellipse cx="126" cy="202" rx="52" ry="24"/>' +
+    '<circle cx="58" cy="182" r="14"/><circle cx="90" cy="176" r="16"/><circle cx="132" cy="180" r="15"/><circle cx="164" cy="190" r="13"/>' +
+    '</g>' +
+    /* 睡颜（侧躺，闭眼） */
+    '<circle cx="98" cy="168" r="17" fill="url(#' + F + ')"/>' +
+    '<path d="M 90 166 q 5 4 10 1" fill="none" stroke="#c6a2ae" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M 88 176 q 8 4 16 0" fill="none" stroke="#c6a2ae" stroke-width="1" opacity=".6" stroke-linecap="round"/>' +
+    /* 梦泡里的身影 */
+    '<circle cx="132" cy="92" r="30" fill="#2c1e3e" stroke="' + color + '" stroke-width="1.1" opacity=".95"/>' +
+    '<g fill="' + color + '">' +
+    '<circle cx="132" cy="84" r="7"/>' +
+    '<path d="M 132 91 C 125 94 121 101 120 109 L 144 109 C 143 101 139 94 132 91 Z"/>' +
+    '</g>' +
+    '<path d="M 106 148 Q 116 130 126 118" fill="none" stroke="' + color + '" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>' +
+    '<circle cx="122" cy="60" r="1.6" fill="#e8d5f2" opacity=".8" filter="url(#' + B + ')"/>' +
+    '</svg>';
+}
+
+/* H02 直白渴望 · 箭穿双心，箭羽轻颤（全出血） */
+function artArrowThroughHearts(color, uid) {
+  uid = uid || "h02";
+  var S = uid + "s", G = uid + "g";
+  function heart(x, y, sc, op) {
+    return '<path transform="translate(' + x + ',' + y + ') scale(' + sc + ')" d="M 0 34 C 0 34 -34 12 -34 -12 C -34 -28 -22 -38 -10 -38 C -3 -38 0 -33 0 -27 C 0 -33 3 -38 10 -38 C 22 -38 34 -28 34 -12 C 34 12 0 34 0 34 Z" fill="' + color + '" opacity="' + op + '"/>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><radialGradient id="' + S + '" cx=".5" cy=".46" r=".68"><stop offset="0" stop-color="#3c1f30"/><stop offset="1" stop-color="#1c0d13"/></radialGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ff8fae" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g transform="translate(100,116) rotate(-14)">' + heart(6, -6, 0.92, 0.55) + heart(-6, 6, 1, 0.95) + '</g>' +
+    '<path d="M 100 116 m -6 -6" stroke="#ffd3e0" stroke-width="1.4" opacity=".8" fill="none"/>' +
+    /* 箭 */
+    '<g transform="rotate(-14 100 116)" filter="url(#' + G + ')">' +
+    '<path d="M 30 116 L 176 116" stroke="#ffd7e6" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<path d="M 176 116 L 158 108 L 164 116 L 158 124 Z" fill="#ffd7e6"/>' +
+    '<path d="M 30 116 L 44 108 M 30 116 L 44 124 M 30 116 L 46 112 M 30 116 L 46 120" stroke="#ff8fae" stroke-width="2" stroke-linecap="round"/>' +
+    '</g>' +
+    /* 颤动线 */
+    '<g fill="none" stroke="' + color + '" stroke-width="1" opacity=".65" stroke-linecap="round">' +
+    '<path d="M 148 96 q 3 -4 1 -8 M 156 100 q 3 -3 2 -7 M 152 88 q 1 -4 -1 -7"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="40" cy="60" r="1.1"/><circle cx="168" cy="180" r="1.1"/><circle cx="52" cy="186" r="1" opacity=".5"/></g>' +
+    '</svg>';
+}
+
+/* H03 外衣与真心 · 椅背外衣下发光的心（门洞） */
+function artCoatHeart(color, uid) {
+  uid = uid || "h03";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1a24"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c2c3e"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="3.4" flood-color="#ff8fae" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<path d="M 30 238 L 30 100 C 30 52 62 28 100 28 C 138 28 170 52 170 100 L 170 238 Z" fill="#1a0e14" opacity=".7"/>' +
+    /* 地面 */
+    '<ellipse cx="100" cy="212" rx="64" ry="8" fill="#0d0609" opacity=".7"/>' +
+    /* 椅 */
+    '<g fill="#170c11" stroke="rgba(232,201,168,.35)" stroke-width="1.1">' +
+    '<rect x="72" y="128" width="56" height="10" rx="3"/>' +
+    '<rect x="76" y="138" width="7" height="66" rx="2"/><rect x="117" y="138" width="7" height="66" rx="2"/>' +
+    '<rect x="72" y="118" width="56" height="14" rx="5"/>' +
+    '</g>' +
+    /* 搭在椅背的外衣 */
+    '<path d="M 66 116 C 60 132 58 152 60 170 C 61 178 66 182 72 180 C 70 164 72 148 78 136 C 84 142 96 146 108 144 C 104 132 100 122 92 114 C 84 106 72 108 66 116 Z" fill="url(#' + F + ')"/>' +
+    '<path d="M 108 144 C 118 150 124 160 126 172" fill="none" stroke="url(#' + F + ')" stroke-width="14" stroke-linecap="round"/>' +
+    '<path d="M 66 118 C 62 132 60 150 61 166" fill="none" stroke="' + color + '" stroke-width="1" opacity=".55"/>' +
+    /* 衣下阴影里发光的心 */
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 96 172 C 96 172 82 162 82 151 C 82 143 88 138 94 138 C 97 138 96 141 96 143.6 C 96 141 98 138 101 138 C 108 138 112 144 110 152 C 108 162 104 168 96 172 Z" fill="#ff8fae"/>' +
+    '</g>' +
+    '<circle cx="96" cy="154" r="16" fill="#ff8fae" opacity=".12"/>' +
+    '</svg>';
+}
+
+/* H04 闭眼惊喜 · 蒙眼丝带蝴蝶结 + 礼盒（全出血特写） */
+function artBlindfoldGift(color, uid) {
+  uid = uid || "h04";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><radialGradient id="' + S + '" cx=".5" cy=".42" r=".66"><stop offset="0" stop-color="#3a2030"/><stop offset="1" stop-color="#1c0d13"/></radialGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ff8fae" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 蒙眼丝带（横贯） */
+    '<path d="M 8 96 C 44 88 76 92 100 98 C 128 105 156 100 192 90" fill="none" stroke="#d2739d" stroke-width="16" opacity=".95" stroke-linecap="round"/>' +
+    '<path d="M 8 96 C 44 88 76 92 100 98 C 128 105 156 100 192 90" fill="none" stroke="#ffb8cd" stroke-width="3" opacity=".6" stroke-linecap="round"/>' +
+    /* 蝴蝶结 */
+    '<g transform="translate(100,98)" filter="url(#' + G + ')">' +
+    '<path d="M 0 0 L -26 -12 C -34 -14 -38 -6 -32 -2 C -24 3 -10 4 0 0 Z" fill="#e35d75"/>' +
+    '<path d="M 0 0 L 26 -12 C 34 -14 38 -6 32 -2 C 24 3 10 4 0 0 Z" fill="#e35d75"/>' +
+    '<circle cx="0" cy="0" r="5.5" fill="#ff8fae"/>' +
+    '<path d="M -8 4 C -12 14 -14 22 -12 30" fill="none" stroke="#d2739d" stroke-width="5" stroke-linecap="round"/>' +
+    '<path d="M 8 4 C 12 13 13 21 11 29" fill="none" stroke="#d2739d" stroke-width="5" stroke-linecap="round"/>' +
+    '</g>' +
+    /* 红绳垂到礼盒 */
+    '<path d="M 100 130 C 100 146 104 158 116 164" fill="none" stroke="#ff6d95" stroke-width="1.6"/>' +
+    /* 礼盒 */
+    '<g transform="translate(126,182)">' +
+    '<rect x="-26" y="-4" width="52" height="40" rx="4" fill="#2c1a24" stroke="#ff8fae" stroke-width="1.3"/>' +
+    '<rect x="-30" y="-14" width="60" height="14" rx="3" fill="#3a2030" stroke="#ff8fae" stroke-width="1.3"/>' +
+    '<path d="M 0 -14 L 0 36 M -30 -7 L 30 -7" stroke="#ff8fae" stroke-width="1.6"/>' +
+    '<path d="M 0 -18 c 0 0 -6 -4 -6 -8 a 5 5 0 0 1 10 0 c 0 4 -4 8 -4 8 z" fill="#ffd7e6"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="34" cy="52" r="1.1"/><circle cx="170" cy="44" r="1.1"/><circle cx="176" cy="180" r="1"/></g>' +
+    '</svg>';
+}
+
+/* H05 锁骨到耳后 · 唇印足迹到耳廓（全出血） */
+function artKissTrail(color, uid) {
+  uid = uid || "h05";
+  var S = uid + "s", G = uid + "g";
+  function kiss(x, y, sc, op) {
+    return '<g transform="translate(' + x + ',' + y + ') scale(' + sc + ')" opacity="' + op + '" filter="url(#' + G + ')">' +
+      '<path d="M -13 -2 C -9 -8 -2 -9 0 -5 C 2 -9 9 -8 13 -2 C 9 5 2 8 0 8 C -2 8 -9 5 -13 -2 Z" fill="#ff8fae"/>' +
+      '<path d="M -13 -2 C -9 -8 -2 -9 0 -5" fill="none" stroke="#7c3352" stroke-width="1"/>' +
+      '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#1c0d12"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.2" flood-color="#ff8fae" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 颈肩曲线 */
+    '<path d="M 0 238 L 0 206 C 26 198 48 184 66 162 C 80 146 92 132 104 122 C 116 112 132 110 144 118 L 160 130 C 170 138 182 142 196 144 L 200 146 L 200 238 Z" fill="#170c11"/>' +
+    '<path d="M 0 206 C 26 198 48 184 66 162 C 80 146 92 132 104 122 C 116 112 132 110 144 118" fill="none" stroke="rgba(232,201,168,.4)" stroke-width="1.2"/>' +
+    /* 唇印足迹（大→小弧线） */
+    kiss(44, 196, 1.25, 0.95) +
+    kiss(72, 168, 1.05, 0.9) +
+    kiss(96, 144, 0.88, 0.85) +
+    kiss(116, 122, 0.72, 0.8) +
+    kiss(132, 104, 0.58, 0.75) +
+    /* 路径虚线 */
+    '<path d="M 44 196 C 66 168 88 148 116 122 C 124 114 130 108 136 102" fill="none" stroke="' + color + '" stroke-width="1" stroke-dasharray="2 5" opacity=".7"/>' +
+    /* 终点耳廓 */
+    '<path d="M 138 96 C 136 88 142 80 152 80 C 162 80 168 88 166 97 C 164 106 156 110 148 108 C 143 107 139 102 138 98 Z" fill="none" stroke="#e8c9a8" stroke-width="1.6"/>' +
+    '<path d="M 144 96 C 143 91 147 86 152 86" fill="none" stroke="#e8c9a8" stroke-width="1.1" opacity=".7"/>' +
+    '</svg>';
+}
+
+/* H06 同频愉悦 · 双呼吸波同步重叠（全出血） */
+function artBreathSync(color, uid) {
+  uid = uid || "h06";
+  var S = uid + "s", B = uid + "b", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241732"/><stop offset="1" stop-color="#180d13"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.6"/></filter>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#c98fe8" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="36" cy="46" r="1.1"/><circle cx="164" cy="40" r="1.1"/><circle cx="100" cy="30" r="1" opacity=".7"/></g>' +
+    /* 波 A（左起，相位先异后同） */
+    '<path d="M 12 120 Q 30 96 48 120 T 84 120 Q 100 140 116 120 T 152 120 Q 168 104 188 118" fill="none" stroke="#8a6ab0" stroke-width="2" opacity=".55"/>' +
+    /* 波 B（右起） */
+    '<path d="M 12 122 Q 32 142 52 122 T 92 122 Q 108 104 124 122 T 160 122 Q 176 138 188 122" fill="none" stroke="#6a8ad0" stroke-width="2" opacity=".55"/>' +
+    /* 中段同步重合波（加粗发光） */
+    '<path d="M 68 121 Q 84 104 100 121 Q 116 138 132 121" fill="none" stroke="#c98fe8" stroke-width="3.4" filter="url(#' + G + ')" stroke-linecap="round"/>' +
+    '<path d="M 68 121 Q 84 104 100 121 Q 116 138 132 121" fill="none" stroke="#e8c9ff" stroke-width="10" opacity=".16" filter="url(#' + B + ')" stroke-linecap="round"/>' +
+    /* 交汇亮点 */
+    '<circle cx="100" cy="121" r="3.4" fill="#f0e0ff" filter="url(#' + G + ')"/>' +
+    '<circle cx="100" cy="121" r="9" fill="none" stroke="#c98fe8" stroke-width=".8" opacity=".5"/>' +
+    '<circle cx="100" cy="121" r="15" fill="none" stroke="#c98fe8" stroke-width=".6" opacity=".3"/>' +
+    '<text x="100" y="196" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">呼吸，慢慢重叠</text>' +
+    '</svg>';
+}
+
+/* H07 私密加班 · 眼镜与松开的领带，台灯长影（方窗） */
+function artOvertimeTie(color, uid) {
+  uid = uid || "h07";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1e26"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ffca7a" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="24" y="24" width="152" height="190" rx="5" fill="#140a0f" opacity=".55"/>' +
+    '<rect x="24" y="24" width="152" height="190" rx="5" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    /* 桌面 */
+    '<rect x="24" y="164" width="152" height="12" fill="#170c11"/>' +
+    '<rect x="24" y="176" width="152" height="38" fill="#120a0f"/>' +
+    /* 文件堆 */
+    '<g fill="#22141c"><rect x="40" y="152" width="40" height="12" rx="1.5" transform="rotate(-3 60 158)"/><rect x="44" y="144" width="40" height="12" rx="1.5" transform="rotate(2 64 150)"/></g>' +
+    /* 台灯 */
+    '<rect x="152" y="112" width="4" height="52" fill="#170c11"/>' +
+    '<path d="M 138 112 L 172 112 L 164 96 L 146 96 Z" fill="#e8c9a8" opacity=".9"/>' +
+    '<circle cx="156" cy="106" r="4.6" fill="#ffe9c4" filter="url(#' + G + ')"/>' +
+    '<path d="M 144 116 L 178 238 L 96 238 Z" fill="#ffca7a" opacity=".08"/>' +
+    /* 眼镜 */
+    '<g transform="translate(84,142)" fill="none" stroke="' + color + '" stroke-width="1.6">' +
+    '<circle cx="-9" cy="0" r="7"/><circle cx="11" cy="0" r="7"/>' +
+    '<path d="M -2 0 H 4 M -16 -2 L -22 -6 M 18 -2 L 24 -5"/>' +
+    '</g>' +
+    /* 松开的领带 */
+    '<g transform="rotate(22 118 160)">' +
+    '<path d="M 112 140 L 124 140 L 127 148 L 118 152 L 109 148 Z" fill="' + color + '"/>' +
+    '<path d="M 118 152 C 112 168 110 184 113 200 L 125 198 C 124 182 126 166 124 152 Z" fill="' + color + '" opacity=".92"/>' +
+    '</g>' +
+    '<text x="100" y="226" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">加班结束了，现在下班</text>' +
+    '</svg>';
+}
+
+/* H08 完美之夜 · 微缩卧室舞台：床幔灯串花瓣音符（全出血） */
+function artPerfectNight(color, uid) {
+  uid = uid || "h08";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1c38"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffca7a" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 床幔 */
+    '<path d="M 8 16 Q 100 44 192 16 L 192 4 L 8 4 Z" fill="#3a2030"/>' +
+    '<path d="M 8 16 Q 100 44 192 16" fill="none" stroke="rgba(232,201,168,.4)" stroke-width="1.2"/>' +
+    '<path d="M 40 18 C 38 34 42 46 40 58 M 100 26 C 98 40 102 52 100 62 M 160 18 C 162 34 158 46 160 58" fill="none" stroke="#3a2030" stroke-width="8" opacity=".8"/>' +
+    /* 灯串 */
+    '<path d="M 8 76 Q 100 96 192 76" fill="none" stroke="rgba(232,201,168,.5)" stroke-width="1"/>' +
+    '<g fill="#ffe9c4">' +
+    '<circle cx="34" cy="82" r="3" filter="url(#' + G + ')"/><circle cx="70" cy="88" r="2.6" filter="url(#' + G + ')"/><circle cx="106" cy="90" r="3" filter="url(#' + G + ')"/><circle cx="142" cy="88" r="2.6" filter="url(#' + G + ')"/><circle cx="172" cy="82" r="3" filter="url(#' + G + ')"/>' +
+    '</g>' +
+    /* 床 */
+    '<rect x="26" y="164" width="148" height="46" rx="8" fill="#1c0e15" stroke="rgba(232,201,168,.3)" stroke-width="1.1"/>' +
+    '<rect x="34" y="150" width="44" height="18" rx="8" fill="#2c1a24"/>' +
+    '<path d="M 90 164 Q 100 152 110 164" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    /* 悬浮花瓣与音符 */
+    '<g fill="#e88cab" opacity=".9">' +
+    '<ellipse cx="52" cy="112" rx="3.4" ry="1.8" transform="rotate(-22 52 112)"/>' +
+    '<ellipse cx="148" cy="122" rx="3" ry="1.6" transform="rotate(18 148 122)"/>' +
+    '<ellipse cx="100" cy="134" rx="2.6" ry="1.4" transform="rotate(-40 100 134)"/>' +
+    '</g>' +
+    '<g fill="#c6a2ae">' +
+    '<g transform="translate(76,120)"><ellipse cx="0" cy="0" rx="3.4" ry="2.5" transform="rotate(-16)"/><path d="M 3 -1 L 3 -10 M 3 -10 q 4 0 5 3" fill="none" stroke="#c6a2ae" stroke-width="1.2"/></g>' +
+    '<g transform="translate(128,108)"><ellipse cx="0" cy="0" rx="3" ry="2.2" transform="rotate(12)"/><path d="M 2.6 -1 L 2.6 -9 M 2.6 -9 q 3.6 0 4.6 2.6" fill="none" stroke="#c6a2ae" stroke-width="1.1"/></g>' +
+    '</g>' +
+    '</svg>';
+}
+
+/* H09 气息私语 · 白雾凝心（拱窗特写） */
+function artBreathHeart(color, uid) {
+  uid = uid || "h09";
+  var S = uid + "s", B = uid + "b", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262038"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="3"/></filter>' +
+    '<filter id="' + G + '" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#cfe3f2" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 冷色拱窗 */
+    '<path d="M 34 238 L 34 100 C 34 52 64 28 100 28 C 136 28 166 52 166 100 L 166 238 Z" fill="#1c1426" opacity=".8"/>' +
+    '<circle cx="100" cy="72" r="26" fill="#8ab6d9" opacity=".14"/>' +
+    /* 唇间呼出的白雾（层层凝成心） */
+    '<path d="M 84 200 C 78 186 80 174 90 166" fill="none" stroke="#cfe3f2" stroke-width="10" opacity=".16" filter="url(#' + B + ')" stroke-linecap="round"/>' +
+    '<path d="M 88 192 C 84 182 86 172 94 164" fill="none" stroke="#cfe3f2" stroke-width="7" opacity=".22" filter="url(#' + B + ')" stroke-linecap="round"/>' +
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 100 152 C 100 152 80 138 80 123 C 80 113 88 107 96 107 C 98.6 107 100 109 100 111.6 C 100 109 101.4 107 104 107 C 112 107 120 113 120 123 C 120 138 100 152 100 152 Z" fill="#cfe3f2" opacity=".92"/>' +
+    '<path d="M 90 118 C 89.4 114 91.6 110.6 95 109.4" fill="none" stroke="#ffffff" stroke-width="1.5" opacity=".9" stroke-linecap="round"/>' +
+    '</g>' +
+    /* 雾散点 */
+    '<g fill="#cfe3f2" opacity=".5"><circle cx="70" cy="150" r="1.6"/><circle cx="132" cy="142" r="1.4"/><circle cx="120" cy="176" r="1.2"/></g>' +
+    '<g fill="#e8ecf4"><circle cx="40" cy="120" r="1.1"/><circle cx="162" cy="116" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* H10 你的视角 · 第一人称取景框：拖鞋与手入镜（相机取景框） */
+function artFirstPerson(color, uid) {
+  uid = uid || "h10";
+  var S = uid + "s";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1e28"/><stop offset="1" stop-color="#1a0e14"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 地板透视线 */
+    '<path d="M 0 238 L 74 96 L 126 96 L 200 238" fill="#1c1016" opacity=".9"/>' +
+    '<path d="M 40 200 H 160 M 20 172 H 180 M 60 130 H 140" stroke="rgba(232,201,168,.14)" stroke-width="1"/>' +
+    /* 取景框 */
+    '<g stroke="' + color + '" fill="none" opacity=".95">' +
+    '<rect x="34" y="34" width="132" height="170" stroke-width="1.4"/>' +
+    '<path d="M 34 52 v -18 h 18 M 166 34 h -18 M 166 34 v 18 M 34 186 v 18 h 18 M 166 186 v 18 h -18" stroke-width="2.6"/>' +
+    '</g>' +
+    '<circle cx="100" cy="119" r="40" fill="none" stroke="' + color + '" stroke-width=".8" stroke-dasharray="3 5" opacity=".5"/>' +
+    /* 拖鞋一双 */
+    '<g fill="#2c1a24" stroke="rgba(232,201,168,.45)" stroke-width="1.1">' +
+    '<path d="M 66 172 C 62 160 70 150 82 150 C 90 150 94 156 92 164 C 90 172 80 178 72 176 C 68 175 67 174 66 172 Z"/>' +
+    '<path d="M 100 178 C 96 166 104 156 116 156 C 124 156 128 162 126 170 C 124 178 114 184 106 182 C 102 181 101 180 100 178 Z" opacity=".9"/>' +
+    '</g>' +
+    '<path d="M 74 162 q 8 -4 14 -2 M 108 168 q 8 -4 14 -2" fill="none" stroke="' + color + '" stroke-width="1" opacity=".7"/>' +
+    /* 手入镜 */
+    '<g transform="translate(146,190) rotate(-16)">' +
+    '<path d="M -10 34 C -10 22 -6 12 2 6 L 8 2 C 11 0 15 1 16 4 C 17 7 15 10 12 12 C 8 15 5 20 4 26 L 2 36 Z" fill="#1c0e15" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<path d="M 2 6 C 6 8 9 12 10 16" fill="none" stroke="' + color + '" stroke-width="1" opacity=".7"/>' +
+    '</g>' +
+    /* 对焦框锁定手 */
+    '<g stroke="#ffd7e6" stroke-width="1.4" fill="none" opacity=".9">' +
+    '<path d="M 132 168 h 12 M 132 168 v 12 M 160 168 h -12 M 160 168 v 12 M 132 196 h 12 M 132 196 v -12 M 160 196 h -12 M 160 196 v -12"/>' +
+    '</g>' +
+    '<text x="100" y="222" text-anchor="middle" font-family="monospace" font-size="9" fill="#c6a2ae">AF · lock</text>' +
+    '</svg>';
+}
+
+/* H11 吻你所指 · 指引之手与唇印标记（全出血） */
+function artGuideKiss(color, uid) {
+  uid = uid || "h11";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1a26"/><stop offset="1" stop-color="#180d12"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ff8fae" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 指引之手（从下方伸入，食指向上） */
+    '<g transform="translate(84,196)">' +
+    '<path d="M -34 46 C -30 30 -22 18 -10 10 L -2 4 C 2 1 8 2 9 6 C 10 10 7 14 3 17 C -2 22 -6 30 -8 40 L -10 52 Z" fill="#1c0e15" stroke="' + color + '" stroke-width="1.3"/>' +
+    '<path d="M -4 8 C 0 6 5 5 8 6" fill="none" stroke="' + color + '" stroke-width="1" opacity=".7"/>' +
+    '<path d="M -2 2 C 1 -1 4 -3 7 -4" fill="none" stroke="' + color + '" stroke-width="8" stroke-linecap="round"/>' +
+    '</g>' +
+    /* 方向虚线 */
+    '<path d="M 96 186 C 104 164 112 146 122 128" fill="none" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="3 5" opacity=".85"/>' +
+    '<path d="M 116 134 l 6 -8 l -2 10 z" fill="' + color + '"/>' +
+    /* 目标唇印标记（圆圈+唇印） */
+    '<g filter="url(#' + G + ')">' +
+    '<circle cx="130" cy="112" r="24" fill="none" stroke="' + color + '" stroke-width="1.4" stroke-dasharray="4 4"/>' +
+    '<g transform="translate(130,112)">' +
+    '<path d="M -16 -3 C -11 -9 -3 -10 0 -6 C 3 -10 11 -9 16 -3 C 11 4 3 7 0 7 C -3 7 -11 4 -16 -3 Z" fill="#ff8fae"/>' +
+    '<path d="M -16 -3 C -11 -9 -3 -10 0 -6" fill="none" stroke="#7c3352" stroke-width="1.1"/>' +
+    '<path d="M -9 1 C -4 4 4 4 9 1" fill="none" stroke="#7c3352" stroke-width="1" opacity=".85"/>' +
+    '</g></g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="52" cy="70" r="1.1"/><circle cx="168" cy="60" r="1.1"/><circle cx="166" cy="196" r="1"/></g>' +
+    '</svg>';
+}
+
+/* H12 最大幻想 · 泡中星与两只欲触之手（全出血） */
+function artBubbleStar(color, uid) {
+  uid = uid || "h12";
+  var S = uid + "s", B = uid + "b", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b1c38"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="2.4"/></filter>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#e8c9ff" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<g fill="#e8d5f2"><circle cx="28" cy="52" r="1.1"/><circle cx="174" cy="60" r="1.1"/><circle cx="60" cy="26" r="1" opacity=".7"/><circle cx="150" cy="30" r="1" opacity=".7"/></g>' +
+    '<ellipse cx="100" cy="108" rx="66" ry="20" fill="#c98fe8" opacity=".07" filter="url(#' + B + ')"/>' +
+    /* 泡 */
+    '<circle cx="100" cy="108" r="42" fill="#c98fe8" opacity=".08"/>' +
+    '<circle cx="100" cy="108" r="42" fill="none" stroke="#c98fe8" stroke-width="1.6" opacity=".85"/>' +
+    '<path d="M 68 84 A 42 42 0 0 1 108 66" fill="none" stroke="#f0e0ff" stroke-width="2" opacity=".8" stroke-linecap="round"/>' +
+    /* 泡中星 */
+    '<g filter="url(#' + G + ')"><path d="M 100 126 L 104.5 111.5 L 119 107 L 104.5 102.5 L 100 88 L 95.5 102.5 L 81 107 L 95.5 111.5 Z" fill="#e8c9ff"/></g>' +
+    /* 欲触之手 */
+    '<path d="M 20 190 C 30 174 44 160 62 150" fill="none" stroke="#1c0e15" stroke-width="16" stroke-linecap="round"/>' +
+    '<path d="M 62 150 L 76 143" fill="none" stroke="#1c0e15" stroke-width="10" stroke-linecap="round"/>' +
+    '<path d="M 62 150 L 76 143" fill="none" stroke="' + color + '" stroke-width="1.4" opacity=".8"/>' +
+    '<path d="M 180 190 C 170 174 156 160 138 150" fill="none" stroke="#1c0e15" stroke-width="16" stroke-linecap="round"/>' +
+    '<path d="M 138 150 L 124 143" fill="none" stroke="#1c0e15" stroke-width="10" stroke-linecap="round"/>' +
+    '<path d="M 138 150 L 124 143" fill="none" stroke="' + color + '" stroke-width="1.4" opacity=".8"/>' +
+    '<text x="100" y="222" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">还未触碰的，最亮</text>' +
+    '</svg>';
+}
+
+/* H13 三个形容 · 三面空旗与悬停的笔（全出血书桌） */
+function artThreeFlags(color, uid) {
+  uid = uid || "h13";
+  var S = uid + "s";
+  function flag(x, c) {
+    return '<g transform="translate(' + x + ',0)">' +
+      '<path d="M 0 150 L 0 112" stroke="#c6a2ae" stroke-width="1.6"/>' +
+      '<path d="M 0 112 L 30 120 L 0 128 Z" fill="' + c + '" stroke="rgba(232,201,168,.4)" stroke-width="1"/>' +
+      '<rect x="-3" y="146" width="6" height="10" rx="1.5" fill="#1c1016"/>' +
+      '</g>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33222a"/><stop offset="1" stop-color="#241419"/></linearGradient></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="176" width="200" height="62" fill="#1c1016"/>' +
+    '<path d="M 0 180 h 200" stroke="rgba(232,201,168,.25)" stroke-width="1"/>' +
+    flag(52, "#3a2030") + flag(100, "#3a2030") + flag(148, "#3a2030") +
+    /* 悬停的笔（第一面旗上方） */
+    '<g transform="rotate(38 76 84)">' +
+    '<rect x="64" y="78" width="48" height="8" rx="2" fill="#e8c9a8"/>' +
+    '<path d="M 112 78 L 122 82 L 112 86 Z" fill="#f0dcc4"/>' +
+    '<path d="M 119.5 80.6 L 122 82 L 119.5 83.4 Z" fill="#5a3a2a"/>' +
+    '</g>' +
+    /* 将落的墨滴 */
+    '<circle cx="88" cy="106" r="2.2" fill="' + color + '" opacity=".9"/>' +
+    '<circle cx="88" cy="114" r="1.2" fill="' + color + '" opacity=".5"/>' +
+    '<text x="100" y="224" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">三个词，只给你</text>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="28" cy="60" r="1.1"/><circle cx="174" cy="52" r="1.1"/></g>' +
+    '</svg>';
+}
+
+/* H16 危险边缘 · 悬崖边指尖将触，崖下花瓣（全出血） */
+function artEdgeTouch(color, uid) {
+  uid = uid || "h16";
+  var S = uid + "s", B = uid + "b", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e1a26"/><stop offset="1" stop-color="#180d12"/></linearGradient>' +
+    '<filter id="' + B + '"><feGaussianBlur stdDeviation="3"/></filter>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#ffd7e6" flood-opacity="1"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 花瓣深渊 */
+    '<path d="M 0 200 C 40 190 80 196 120 190 C 154 185 180 192 200 188 L 200 238 L 0 238 Z" fill="#170c11"/>' +
+    '<g fill="#d2739d" opacity=".8">' +
+    '<ellipse cx="34" cy="212" rx="4" ry="2" transform="rotate(-18 34 212)"/>' +
+    '<ellipse cx="66" cy="220" rx="3.4" ry="1.8" transform="rotate(14 66 220)"/>' +
+    '<ellipse cx="100" cy="214" rx="3.8" ry="2" transform="rotate(-30 100 214)"/>' +
+    '<ellipse cx="134" cy="222" rx="3.2" ry="1.7" transform="rotate(20 134 222)"/>' +
+    '<ellipse cx="166" cy="212" rx="3.6" ry="1.9" transform="rotate(-14 166 212)"/>' +
+    '</g>' +
+    '<ellipse cx="100" cy="216" rx="70" ry="12" fill="#e88cab" opacity=".08" filter="url(#' + B + ')"/>' +
+    /* 两侧手臂 */
+    '<path d="M -8 148 C 24 148 52 152 74 160" fill="none" stroke="#1c0e15" stroke-width="18" stroke-linecap="round"/>' +
+    '<path d="M -8 148 C 24 148 52 152 74 160" fill="none" stroke="rgba(232,201,168,.35)" stroke-width="1.2"/>' +
+    '<path d="M 208 148 C 176 148 148 152 126 160" fill="none" stroke="#1c0e15" stroke-width="18" stroke-linecap="round"/>' +
+    '<path d="M 208 148 C 176 148 148 152 126 160" fill="none" stroke="rgba(232,201,168,.35)" stroke-width="1.2"/>' +
+    /* 两只手（指尖相对，仅一线之隔） */
+    '<g fill="#1c0e15" stroke="' + color + '" stroke-width="1.2">' +
+    '<path d="M 74 160 C 80 158 86 158 91 160 L 91 168 C 86 171 80 171 75 169 C 73 166 73 162 74 160 Z"/>' +
+    '<path d="M 126 160 C 120 158 114 158 109 160 L 109 168 C 114 171 120 171 125 169 C 127 166 127 162 126 160 Z"/>' +
+    '</g>' +
+    /* 之间的光 */
+    '<g filter="url(#' + G + ')"><path d="M 97 156 L 103 156 L 101 172 L 99 172 Z" fill="#fff" opacity=".95"/></g>' +
+    '<circle cx="100" cy="163" r="12" fill="none" stroke="' + color + '" stroke-width=".8" opacity=".6"/>' +
+    '<circle cx="100" cy="163" r="20" fill="none" stroke="' + color + '" stroke-width=".6" opacity=".3"/>' +
+    '<text x="100" y="112" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="15" fill="#c6a2ae">差一线，就够到</text>' +
+    '</svg>';
+}
+
+/* H17 陌生撩拨 · 双头像气泡靠近，省略号燃成火花（手机框） */
+function artStrangerSparks(color, uid) {
+  uid = uid || "h17";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#221722"/><stop offset="1" stop-color="#160d11"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#ff9d6b" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="46" y="22" width="108" height="194" rx="14" fill="#120a0f" stroke="rgba(232,201,168,.5)" stroke-width="1.6"/>' +
+    '<rect x="54" y="36" width="92" height="166" rx="8" fill="#1e1118"/>' +
+    /* 双头像 */
+    '<g>' +
+    '<circle cx="80" cy="72" r="15" fill="#2c1a24" stroke="' + color + '" stroke-width="1.3"/>' +
+    '<path d="M 74 68 a 6 7 0 0 1 12 0" fill="none" stroke="' + color + '" stroke-width="1.3"/>' +
+    '<circle cx="120" cy="72" r="15" fill="#2c1a24" stroke="#8ab6d9" stroke-width="1.3"/>' +
+    '<path d="M 114 68 a 6 7 0 0 1 12 0" fill="none" stroke="#8ab6d9" stroke-width="1.3"/>' +
+    '</g>' +
+    /* 靠近的气泡 */
+    '<rect x="60" y="104" width="34" height="20" rx="10" fill="#2c1a24" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    '<rect x="106" y="104" width="34" height="20" rx="10" fill="#2c1a24" stroke="rgba(232,201,168,.3)" stroke-width="1"/>' +
+    /* 省略号火花 */
+    '<g fill="#c6a2ae"><circle cx="71" cy="114" r="2"/><circle cx="78" cy="114" r="2"/></g>' +
+    '<g fill="#ff9d6b">' +
+    '<circle cx="112" cy="114" r="2" filter="url(#' + G + ')"/>' +
+    '<circle cx="119" cy="114" r="2" filter="url(#' + G + ')"/>' +
+    '</g>' +
+    '<g filter="url(#' + G + ')">' +
+    '<path d="M 132 112 c 2 -3 6 -3 8 -1 c 2 -3 6 -3 8 0 c 1 2 -1 4 -3 5 c 1 2 0 4 -2 5" fill="none" stroke="#ff9d6b" stroke-width="1.6"/>' +
+    '<path d="M 136 120 l -1 4 l 3 -2 z" fill="#ffca7a"/>' +
+    '</g>' +
+    /* 打字中的点 */
+    '<g fill="' + color + '"><circle cx="86" cy="148" r="1.8"/><circle cx="95" cy="148" r="1.8" opacity=".7"/><circle cx="104" cy="148" r="1.8" opacity=".4"/></g>' +
+    '<text x="100" y="188" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">陌生人，先破功就输了</text>' +
+    '</svg>';
+}
+
+/* H18 近墙三秒 · 墙边相拥与放大的影子（门洞） */
+function artWallThree(color, uid) {
+  uid = uid || "h18";
+  var S = uid + "s", F = uid + "f", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#180d12"/></linearGradient>' +
+    '<linearGradient id="' + F + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#54324a"/><stop offset="1" stop-color="#1c0e15"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffca7a" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    /* 走廊墙 */
+    '<rect x="20" y="20" width="160" height="218" fill="#1c1016" opacity=".7"/>' +
+    '<path d="M 20 20 L 20 238 M 180 20 L 180 238" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    /* 墙上放大的影子（暖光投影） */
+    '<g fill="#0d0609" opacity=".55" transform="translate(148,90) scale(1.35) translate(-108,-40)">' +
+    '<circle cx="92" cy="132" r="11"/>' +
+    '<path d="M 92 142 C 84 146 79 154 77 166 L 76 182 L 108 182 L 107 166 C 105 154 100 146 92 142 Z"/>' +
+    '<circle cx="116" cy="134" r="11"/>' +
+    '<path d="M 116 144 C 108 148 103 156 101 168 L 100 182 L 132 182 L 131 168 C 129 156 124 148 116 144 Z"/>' +
+    '</g>' +
+    /* 壁灯光 */
+    '<circle cx="44" cy="72" r="6" fill="#ffe9c4" filter="url(#' + G + ')"/>' +
+    '<path d="M 44 78 L 44 130" stroke="#170c11" stroke-width="3"/>' +
+    '<path d="M 44 84 L 150 238 L 84 238 Z" fill="#ffca7a" opacity=".06"/>' +
+    /* 相拥剪影（靠墙） */
+    '<g fill="url(#' + F + ')">' +
+    '<circle cx="88" cy="140" r="10.5"/>' +
+    '<path d="M 88 150 C 79 154 73 163 71 176 L 70 194 L 106 194 L 105 176 C 103 163 97 154 88 150 Z"/>' +
+    '<circle cx="112" cy="144" r="10.5"/>' +
+    '<path d="M 112 154 C 104 158 99 166 97 178 L 96 194 L 128 194 L 127 178 C 125 166 120 158 112 154 Z"/>' +
+    '</g>' +
+    /* 环臂 */
+    '<path d="M 96 158 C 104 154 112 154 118 158" fill="none" stroke="#e88cab" stroke-width="3.4" stroke-linecap="round"/>' +
+    /* 三秒光弧 */
+    '<path d="M 60 116 A 52 52 0 0 1 140 110" fill="none" stroke="' + color + '" stroke-width="2" stroke-dasharray="40 90" stroke-linecap="round" opacity=".9"/>' +
+    '<text x="100" y="222" text-anchor="middle" font-family="monospace" font-size="12" fill="' + color + '" opacity=".9">3&#8243;</text>' +
+    '</svg>';
+}
+
+/* H19 廿四小时 · 一日表盘，时针指向心格（圆月窗表盘） */
+function artDayDial(color, uid) {
+  uid = uid || "h19";
+  var S = uid + "s", G = uid + "g";
+  var marks = "";
+  for (var a = 0; a < 12; a++) {
+    var ang = a * 30 * Math.PI / 180;
+    var x1 = 100 + 58 * Math.sin(ang), y1 = 116 - 58 * Math.cos(ang);
+    var x2 = 100 + 66 * Math.sin(ang), y2 = 116 - 66 * Math.cos(ang);
+    marks += '<path d="M ' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' L ' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '" stroke="' + (a % 3 === 0 ? "#f4e7ec" : "#c6a2ae") + '" stroke-width="' + (a % 3 === 0 ? 1.8 : 1) + '" opacity=".8"/>';
+  }
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2036"/><stop offset="1" stop-color="#1a0e14"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.8" flood-color="#ff8fae" flood-opacity=".95"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<circle cx="100" cy="116" r="80" fill="none" stroke="rgba(232,201,168,.3)" stroke-width="1.2"/>' +
+    marks +
+    /* 12 格图标中的四个主刻度 */
+    '<g fill="none" stroke="#e8c9a8" stroke-width="1.4">' +
+    '<path d="M 100 52 c 3 4 -2 6 -2 9 m -2 -11 a 4 4 0 0 1 6 2"/>' +  /* 0点 咖啡杯 */
+    '<path d="M 152 116 l 0 9 m -3 -4 l 6 0" opacity=".9"/>' +          /* 3点 */
+    '<path d="M 100 186 l 3.4 5 6 -1 -3.4 5 1 6 -5.4 -3 -5.4 3 1 -6 -3.4 -5 6 1 z" fill="#ff8fae" stroke="none" filter="url(#' + G + ')"/>' + /* 6点 心 */
+    '<path d="M 46 116 a 7 7 0 1 1 3 6" opacity=".9"/>' +               /* 9点 */
+    '</g>' +
+    /* 时针分针（指向心格） */
+    '<path d="M 100 116 L 100 74" stroke="#f4e7ec" stroke-width="2.4" stroke-linecap="round"/>' +
+    '<path d="M 100 116 L 128 128" stroke="#f4e7ec" stroke-width="1.8" stroke-linecap="round"/>' +
+    '<circle cx="100" cy="116" r="4" fill="' + color + '"/>' +
+    /* 心格高亮 */
+    '<circle cx="100" cy="176" r="16" fill="none" stroke="' + color + '" stroke-width="1.2" stroke-dasharray="3 3" opacity=".9"/>' +
+    '<text x="100" y="226" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="14" fill="#c6a2ae">二十四小时，都排满你</text>' +
+    '</svg>';
+}
+
+/* H20 冒险清单 · 签筒斜倒三签散落，拈签手与红绳（全出血） */
+function artLotteryJar(color, uid) {
+  uid = uid || "h20";
+  var S = uid + "s", G = uid + "g";
+  return '<svg viewBox="0 0 200 238" preserveAspectRatio="xMidYMid slice">' +
+    '<defs><linearGradient id="' + S + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a24"/><stop offset="1" stop-color="#180d12"/></linearGradient>' +
+    '<filter id="' + G + '" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="#ffd7e6" flood-opacity=".9"/></filter></defs>' +
+    '<rect width="200" height="238" fill="url(#' + S + ')"/>' +
+    '<rect x="0" y="196" width="200" height="42" fill="#1c1016"/>' +
+    '<path d="M 0 200 h 200" stroke="rgba(232,201,168,.25)" stroke-width="1"/>' +
+    /* 签筒（斜倒） */
+    '<g transform="rotate(-24 76 160)">' +
+    '<rect x="48" y="128" width="56" height="72" rx="12" fill="#3a2030" stroke="rgba(232,201,168,.45)" stroke-width="1.3"/>' +
+    '<rect x="56" y="120" width="40" height="12" rx="5" fill="#2c1a24" stroke="rgba(232,201,168,.45)" stroke-width="1.2"/>' +
+    '<path d="M 60 140 h 32 M 60 154 h 32 M 60 168 h 32" stroke="rgba(232,201,168,.2)" stroke-width="1"/>' +
+    '</g>' +
+    /* 散落的三签 */
+    '<g>' +
+    '<g transform="rotate(-40 118 176)"><rect x="112" y="130" width="10" height="88" rx="4" fill="#f6e8dc"/><path d="M 112 130 h 10 l -5 -10 z" fill="' + color + '"/></g>' +
+    '<g transform="rotate(-8 146 184)"><rect x="140" y="140" width="10" height="82" rx="4" fill="#f6e8dc"/><path d="M 140 140 h 10 l -5 -10 z" fill="#8ab6d9"/></g>' +
+    '<g transform="rotate(20 166 190)"><rect x="160" y="148" width="10" height="76" rx="4" fill="#f6e8dc"/><path d="M 160 148 h 10 l -5 -10 z" fill="#b285cc"/></g>' +
+    '</g>' +
+    /* 红绳系签尾 */
+    '<path d="M 120 214 c 3 3 8 3 11 0" fill="none" stroke="#ff6d95" stroke-width="1.6"/>' +
+    /* 拈签的手 */
+    '<g transform="translate(158,120) rotate(30)">' +
+    '<path d="M -26 44 C -22 30 -14 18 -2 10 L 4 6 C 8 3 13 4 14 8 C 15 12 12 16 8 18 C 0 23 -6 32 -8 44 L -9 54 Z" fill="#1c0e15" stroke="' + color + '" stroke-width="1.2"/>' +
+    '<circle cx="6" cy="10" r="2.6" fill="#1c0e15" stroke="' + color + '" stroke-width="1"/>' +
+    '</g>' +
+    '<g fill="#ffd7e6" opacity=".6"><circle cx="36" cy="66" r="1.1"/><circle cx="170" cy="60" r="1.1"/></g>' +
     '</svg>';
 }
 
