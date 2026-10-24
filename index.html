@@ -139,15 +139,14 @@ html, body {
 .card-empty { color: var(--text-dim); font-size: 14px; text-align: center; }
 .card { width: 100%; text-align: left; animation: cardIn .4s ease; }
 @keyframes cardIn { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: none; } }
-.card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
-.card-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); }
+.card-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding-bottom: 10px; flex-wrap: wrap; border-bottom: 1px solid rgba(10,5,8,.45); box-shadow: 0 1px 0 rgba(255,240,246,.05); }
+.card-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 11px; background: rgba(178,133,204,.15); color: var(--accent-3); box-shadow: inset 0 1px 0 rgba(255,240,246,.1), inset 0 -1px 2px rgba(0,0,0,.3); }
 .card-type { font-size: 14px; font-weight: 700; color: var(--accent-3); }
 .card-body { font-size: 19px; line-height: 1.7; }
-.card-name-line { font-family: var(--font-brush); font-weight: 400; font-size: 24px; letter-spacing: .14em; text-align: center; margin: 12px 0 8px; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent-2)), 0 2px 4px rgba(0,0,0,.4); }
-.card-foot { margin-top: 12px; font-size: 12px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.card-name-line { font-family: var(--font-brush); font-weight: 400; font-size: 24px; letter-spacing: .14em; text-align: center; margin: 12px 0 8px; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent-2)), 0 -1px 1px rgba(0,0,0,.72), 0 1px 0 rgba(255,240,246,.1); }
+.card-foot { margin-top: 12px; padding-top: 10px; font-size: 12px; color: var(--text-dim); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; border-top: 1px solid rgba(10,5,8,.4); box-shadow: inset 0 1px 0 rgba(255,240,246,.05); }
 .admire-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; color: var(--h-main, var(--accent)); background: rgba(255,255,255,.04); border: 1px solid var(--panel-border); border-radius: 999px; padding: 4px 10px; cursor: pointer; min-height: 26px; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: border-color .2s, transform .12s; }
 .admire-btn:active { transform: scale(.94); }
-.admire-box { max-width: 620px; }
 .tag { padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
 .tag-scale { background: rgba(227,164,189,.12); color: var(--accent); }
 .tag-remote { background: rgba(178,133,204,.12); color: var(--accent-3); }
@@ -279,6 +278,32 @@ html, body {
   .setup-card { padding: 14px; gap: 10px; }
 }
 
+/* 网格在中低视高下压缩间距，保证一页一屏 */
+@media (max-height: 880px) {
+  .gal-grid { gap: 7px; padding-inline: 10px; }
+  .gal-cell .holo-name { font-size: 11px; }
+}
+
+/* ---------- 游戏屏矮屏：整屏一屏装下，不滚动 ---------- */
+@media (max-height: 700px) {
+  #screen-game { gap: 8px; }
+  .game-footer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; flex-wrap: nowrap; }
+  .game-footer .btn { padding: 8px 4px; font-size: 12px; }
+  .temp-panel { padding: 8px 12px 7px; }
+  .temp-value { font-size: 30px; }
+  .temp-title { font-size: 14px; margin-top: 2px; }
+  .temp-next { font-size: 11px; margin-top: 2px; }
+  .th-progress { margin-top: 4px; }
+  .boiling-tag { margin-top: 5px; padding: 3px 10px; font-size: 11px; }
+  .card-area { padding: 10px; min-height: 0; }
+  .card-head { margin-bottom: 6px; padding-bottom: 6px; }
+  .card-icon { width: 32px; height: 32px; }
+  .card-body { font-size: 16px; line-height: 1.55; }
+  .card-name-line { font-size: 20px; margin: 8px 0 5px; }
+  .card-foot { margin-top: 8px; padding-top: 8px; font-size: 11px; }
+  .next-preview { padding: 7px 10px; font-size: 12px; }
+}
+
 /* ---------- 站内卡片库（可编辑 / 留意见） ---------- */
 .lib-head { position: sticky; top: 0; z-index: 6; background: var(--bg); padding: 4px 0 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--panel-border); margin-bottom: 4px; }
 .lib-title { font-size: 19px; font-weight: 800; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
@@ -306,15 +331,51 @@ html, body {
 .lib-card-actions { display: flex; gap: 8px; }
 .lib-card-actions .btn { flex: 1; padding: 9px; font-size: 13px; }
 .lib-add { margin: 0 0 4px; }
+/* 卡库折叠行：一卡一行，点开展开编辑器 */
+.lib-chips { display: flex; gap: 6px; align-items: center; }
+.lib-chip { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--panel-border); background: var(--panel); color: var(--text-dim); font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all .18s; }
+.lib-chip.active { background: var(--accent); color: #33141f; border-color: transparent; }
+.lib-chip.lib-chip-add { margin-left: auto; color: var(--accent); }
+.lib-row { display: flex; align-items: center; gap: 8px; padding: 9px 10px; border: 1px solid var(--panel-border); border-radius: 10px; background: var(--panel); cursor: pointer; user-select: none; transition: border-color .18s; }
+.lib-row.open { border-color: var(--accent); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.lib-row .lib-id { flex: 0 0 auto; }
+.lib-row .lib-type { flex: 0 0 auto; font-size: 11px; }
+.lib-preview { flex: 1 1 auto; min-width: 0; font-size: 12px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lib-temp { flex: 0 0 auto; font-size: 11px; color: var(--accent); font-weight: 700; font-variant-numeric: tabular-nums; }
+.lib-badge { flex: 0 0 auto; font-size: 10px; padding: 1px 6px; border-radius: 999px; font-weight: 700; }
+.lib-badge.del { background: rgba(233,95,120,.15); color: #e95f78; }
+.lib-badge.mod { background: rgba(227,164,189,.14); color: var(--accent); }
+.lib-badge.cus { background: rgba(178,133,204,.15); color: var(--accent-3); }
+.lib-row.lib-deleted { opacity: .45; }
+/* 卡编辑器：底部弹出层，列表保持一屏不滚动 */
+.lib-editor-mask { position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,.55); animation: fadeIn .2s ease; }
+.lib-editor { position: fixed; left: 50%; bottom: 0; z-index: 41; width: min(100%, 460px); max-height: 82dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; transform: translateX(-50%); background: var(--bg-2); border: 1px solid var(--panel-border); border-bottom: none; border-radius: 18px 18px 0 0; padding: 14px 14px max(14px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 10px; animation: sheetUp .28s var(--ease) both; box-shadow: 0 -12px 40px rgba(0,0,0,.5); }
+@keyframes sheetUp { from { transform: translate(-50%, 40px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+.lib-editor .lib-card { border: none; background: transparent; padding: 0; }
+/* 通用分页条 */
+.pg-row { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 6px 0 2px; }
+.pg-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--panel-border); background: var(--panel); color: var(--text); font-size: 17px; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: transform .12s; }
+.pg-btn:active { transform: scale(.9); }
+.pg-btn.disabled { opacity: .3; pointer-events: none; }
+.pg-info { font-size: 12px; color: var(--text-dim); letter-spacing: .08em; min-width: 90px; text-align: center; }
+.pg-info b { color: var(--text); font-variant-numeric: tabular-nums; }
 /* ================= 卡面图鉴 · 全息收藏卡 =================
    流光原理参考 simeydotme/pokemon-cards-css（纯 CSS 渐变+混合模式，零依赖）：
    光泽层/彩虹层位置由 --mx/--my 驱动，卡体 3D 姿态由 --rx/--ry 驱动 */
 .holo {
   --mx: 50%; --my: 50%; --rx: 0deg; --ry: 0deg;
   position: relative; width: 100%; aspect-ratio: 63 / 88; border-radius: 14px;
-  background: linear-gradient(135deg, #2c1822 0%, #1a0f14 100%);
-  border: 1px solid var(--h-line, rgba(227,164,189,.4));
-  box-shadow: 0 14px 34px rgba(20,8,14,.55), inset 0 0 0 1px rgba(255,234,238,.05);
+  /* 卡坯三层：纸纹颗粒 / 致密卡身 / 金属箔斜边（左上受光→右下落影） */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E") padding-box,
+    linear-gradient(155deg, #33202b 0%, #221318 46%, #160c11 100%) padding-box,
+    linear-gradient(158deg, rgba(255,238,243,.42) 0%, var(--h-line, rgba(227,164,189,.55)) 18%, rgba(88,52,68,.9) 46%, rgba(16,8,12,.95) 62%, rgba(232,201,168,.4) 82%, var(--h-line, rgba(227,164,189,.5)) 100%) border-box;
+  border: 2px solid transparent;
+  box-shadow:
+    0 24px 54px rgba(8,2,6,.72),
+    0 6px 16px rgba(8,2,6,.55),
+    inset 0 1px 0 rgba(255,240,246,.16),
+    inset 0 -2px 5px rgba(0,0,0,.6);
   transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .18s ease-out;
   overflow: hidden; user-select: none; -webkit-user-select: none;
@@ -345,26 +406,84 @@ html, body {
   0%,100% { background: radial-gradient(circle at 30% 35%, rgba(255,240,246,.3) 0%, rgba(255,240,246,.08) 24%, transparent 52%); }
   50% { background: radial-gradient(circle at 68% 60%, rgba(255,240,246,.34) 0%, rgba(255,240,246,.1) 26%, transparent 54%); }
 }
-.holo-inner { position: absolute; inset: 7px; border-radius: 9px; border: 1px solid var(--h-soft, rgba(227,164,189,.22)); display: flex; flex-direction: column; overflow: hidden; }
+/* 内板：冲压凹陷感——上内影吃进卡身，下缘一线反光 */
+.holo-inner {
+  position: absolute; inset: 9px; border-radius: 9px;
+  border: 1px solid rgba(10,5,8,.6);
+  background: linear-gradient(172deg, rgba(255,240,246,.035) 0%, rgba(0,0,0,.13) 32%, rgba(0,0,0,.2) 100%);
+  box-shadow:
+    inset 0 2px 10px rgba(0,0,0,.6),
+    inset 0 -1px 0 rgba(255,240,246,.07),
+    0 1px 0 rgba(255,240,246,.08);
+  display: flex; flex-direction: column; overflow: hidden;
+}
 /* 金线双框工艺 */
 .holo-inner::before { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(232,201,168,.2); border-radius: 7px; pointer-events: none; z-index: 3; }
-.holo-orn { position: absolute; z-index: 3; pointer-events: none; opacity: .75; }
-.holo-orn.tl { top: 5px; left: 5px; } .holo-orn.tr { top: 5px; right: 5px; transform: rotate(90deg); }
-.holo-orn.bl { bottom: 5px; left: 5px; transform: rotate(-90deg); } .holo-orn.br { bottom: 5px; right: 5px; transform: rotate(180deg); }
-.holo-type-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px 0; position: relative; z-index: 2; }
+/* 纸纹颗粒罩在最上层，把各分带统一进同一张纸的质感里 */
+.holo-inner::after {
+  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none; border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: .06; mix-blend-mode: overlay;
+}
+.holo-orn { --ox: calc((var(--mx) - 50%) * .015); --oy: calc((var(--my) - 50%) * .01); position: absolute; z-index: 3; pointer-events: none; opacity: .75; transition: transform .18s ease-out; }
+.holo-orn.tl { top: 5px; left: 5px; transform: translate3d(var(--ox), var(--oy), 0); }
+.holo-orn.tr { top: 5px; right: 5px; transform: translate3d(var(--ox), var(--oy), 0) rotate(90deg); }
+.holo-orn.bl { bottom: 5px; left: 5px; transform: translate3d(var(--ox), var(--oy), 0) rotate(-90deg); }
+.holo-orn.br { bottom: 5px; right: 5px; transform: translate3d(var(--ox), var(--oy), 0) rotate(180deg); }
+/* 顶带：类型行 + 刻槽下缘，纵向分带的第一层 */
+.holo-type-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 11px 6px; position: relative; z-index: 2; border-bottom: 1px solid rgba(10,5,8,.5); box-shadow: 0 1px 0 rgba(255,240,246,.05); }
 .holo-type { font-size: 10px; letter-spacing: .28em; color: var(--h-main, var(--accent)); font-weight: 700; }
 .holo-en { font-size: 8px; letter-spacing: .22em; color: var(--text-dim); }
-.holo-name { text-align: center; margin-top: 10px; font-family: var(--font-brush); position: relative; z-index: 2; }
+/* 铭牌带：微微凸起的牌匾，随视差前移 = 离观者最近的一层 */
+.holo-name {
+  text-align: center; margin: 8px 11px 0; padding: 6px 8px 7px; border-radius: 7px;
+  font-family: var(--font-brush); position: relative; z-index: 2;
+  background: linear-gradient(178deg, rgba(255,240,246,.055) 0%, rgba(0,0,0,.18) 100%);
+  border: 1px solid rgba(10,5,8,.5);
+  box-shadow: 0 1px 0 rgba(255,240,246,.07), inset 0 1px 0 rgba(255,240,246,.09), inset 0 -1px 2px rgba(0,0,0,.35);
+  transform: translate3d(calc((var(--mx) - 50%) * .03), calc((var(--my) - 50%) * .02), 0);
+  transition: transform .18s ease-out;
+}
 .holo-name small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--text-dim); margin-bottom: 4px; font-family: var(--font-body); }
-.holo-name b { font-size: 24px; font-weight: 400; letter-spacing: .16em; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent)), 0 2px 4px rgba(0,0,0,.45); }
-.holo-art { flex: 1; min-height: 0; margin: 9px 11px 7px; border-radius: 9px; overflow: hidden; position: relative; z-index: 2; border: 1px solid var(--h-soft, rgba(227,164,189,.18)); }
+/* 活版压印：上暗下亮，字像敲进铭牌里 */
+.holo-name b { font-size: 24px; font-weight: 400; letter-spacing: .16em; color: var(--text); text-shadow: 0 0 16px var(--h-main, var(--accent)), 0 -1px 1px rgba(0,0,0,.72), 0 1px 0 rgba(255,240,246,.1); }
+/* 插画深窗：四壁内影 + 内容层反向视差，视线像探进窗洞 */
+.holo-art {
+  flex: 1; min-height: 0; margin: 8px 11px 7px; border-radius: 9px; overflow: hidden; position: relative; z-index: 2;
+  border: 1px solid rgba(8,4,7,.65); background: #170d12;
+  box-shadow:
+    inset 0 4px 14px rgba(0,0,0,.62),
+    inset 0 -2px 6px rgba(0,0,0,.4),
+    inset 0 -1px 0 rgba(255,240,246,.08),
+    0 1px 0 rgba(255,240,246,.06);
+}
+/* 窗内视差层：放大 8% 保证位移不露边，位移方向与指针相反 = 内容沉在窗底 */
+.holo-art-deep { width: 100%; height: 100%; transform: translate3d(calc((var(--mx) - 50%) * -.05), calc((var(--my) - 50%) * -.05), 0) scale(1.08); transition: transform .18s ease-out; will-change: transform; }
+.holo-art-deep svg { display: block; width: 100%; height: 100%; }
+/* 窗洞内壁的受光/落影 */
+.holo-art::after { content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; box-shadow: inset 0 10px 18px -8px rgba(0,0,0,.55), inset 0 -8px 14px -8px rgba(0,0,0,.45), inset 0 -1px 0 rgba(255,240,246,.1); background: linear-gradient(115deg, rgba(255,240,246,.055), transparent 32%); }
 .holo-art svg { display: block; width: 100%; height: 100%; }
 .gal-cell .holo-art { margin: 4px 6px; border-radius: 7px; }
 .holo-rose { flex: 1; display: flex; align-items: center; justify-content: center; opacity: .85; position: relative; z-index: 2; }
+/* 称号符号也挂视差层，但不放大、不撑满（无窗洞边缘可露） */
+.holo-rose .holo-art-deep { width: auto; height: auto; transform: translate3d(calc((var(--mx) - 50%) * -.04), calc((var(--my) - 50%) * -.04), 0); }
 .gal-name { font-family: var(--font-brush); font-weight: 400; }
 .temp-title { font-family: var(--font-brush); font-weight: 400; letter-spacing: 3px; }
-.holo-desc { padding: 0 13px; font-size: 11px; line-height: 1.65; color: var(--text-dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.holo-temp-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 13px 10px; }
+/* 描述带：微亮的纸面条带，上下刻槽与插画窗、数据带分界 */
+.holo-desc {
+  padding: 7px 13px 6px; font-size: 11px; line-height: 1.65; color: var(--text-dim);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  border-top: 1px solid rgba(10,5,8,.5); box-shadow: inset 0 1px 0 rgba(255,240,246,.05);
+  background: linear-gradient(180deg, rgba(255,240,246,.03), rgba(0,0,0,.08));
+}
+/* 底带：箔印数据条，横向拉丝纹 + 刻槽上缘 */
+.holo-temp-row {
+  display: flex; align-items: center; justify-content: space-between; padding: 9px 13px 10px;
+  border-top: 1px solid rgba(10,5,8,.6); box-shadow: inset 0 1px 0 rgba(255,240,246,.06);
+  background:
+    repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,240,246,.02) 2px 3px),
+    linear-gradient(90deg, rgba(255,240,246,.025), transparent 32%, transparent 68%, rgba(255,240,246,.03));
+}
 .holo-temp { font-size: 12px; font-weight: 800; color: var(--h-main, var(--accent)); letter-spacing: .1em; }
 .holo-remote { font-size: 9px; color: var(--accent-3); border: 1px solid rgba(178,133,204,.4); border-radius: 999px; padding: 2px 8px; }
 /* 卡背 */
@@ -384,12 +503,12 @@ html, body {
 .gal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .gal-cell { cursor: pointer; transition: transform .2s; }
 .gal-cell:active { transform: scale(.96); }
-.gal-cell .holo { border-radius: 10px; }
+.gal-cell .holo { border-radius: 10px; border-width: 1px; }
 .gal-cell .holo-inner { inset: 4px; }
 .gal-cell .holo-name b { font-size: 13px; }
-.gal-cell .holo-name { margin-top: 6px; }
+.gal-cell .holo-name { margin: 4px 6px 0; padding: 3px 4px; border-radius: 5px; }
 .gal-cell .holo-desc, .gal-cell .holo-en, .gal-cell .holo-remote { display: none; }
-.gal-cell .holo-type-row { padding: 6px 8px 0; }
+.gal-cell .holo-type-row { padding: 6px 8px 4px; }
 .gal-cell .holo-temp-row { padding: 6px 8px 7px; }
 .gal-cell .holo-temp { font-size: 10px; }
 .gal-cell .holo-rose svg { width: 40px; height: 40px; }
@@ -401,7 +520,7 @@ html, body {
 .gal-quote { font-size: 15px; color: var(--text-dim); letter-spacing: .12em; }
 .gal-name { font-size: 34px; font-weight: 700; letter-spacing: .16em; font-family: var(--font-display); line-height: 1.2; }
 .gal-cat { font-size: 11px; letter-spacing: .2em; color: var(--h-main, var(--accent)); display: inline-flex; align-items: center; gap: 6px; }
-.gal-desc { font-size: 14px; line-height: 1.8; color: var(--text); }
+.gal-desc { font-size: 14px; line-height: 1.8; color: var(--text); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .gal-skill { border-left: 2px solid var(--h-main, var(--accent)); padding: 2px 0 2px 12px; }
 .gal-skill small { display: block; font-size: 10px; letter-spacing: .26em; color: var(--text-dim); margin-bottom: 4px; }
 .gal-skill b { font-size: 17px; letter-spacing: .14em; }
@@ -409,7 +528,7 @@ html, body {
 .gal-btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
 .gal-btns .btn { font-size: 13px; padding: 10px 12px; }
 .gal-no { font-size: 11px; letter-spacing: .3em; color: var(--text-dim); margin-top: 4px; }
-.gal-stage { flex: 0 0 auto; width: min(76vw, 400px); align-self: center; order: -1; cursor: zoom-in; touch-action: pan-y; }
+.gal-stage { flex: 0 0 auto; width: min(76vw, 400px, max(190px, calc((100dvh - 360px) * 0.7159))); align-self: center; order: -1; cursor: zoom-in; touch-action: pan-y; }
 .gal-stage .holo { cursor: zoom-in; }
 .gal-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 6; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(232,201,168,.45); background: rgba(20,10,16,.55); color: #e8c9a8; font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; touch-action: manipulation; -webkit-appearance: none; appearance: none; transition: background .2s, transform .12s; }
 .gal-nav:active { transform: translateY(-50%) scale(.92); }
@@ -423,10 +542,11 @@ html, body {
 .gal-swipe-hint { text-align: center; font-size: 10px; letter-spacing: .2em; color: var(--text-dim); opacity: .8; margin-top: 6px; }
 .gal-back-row span.on { color: var(--h-main, var(--accent)); font-weight: 800; }
 @media (max-width: 620px) {
-  .gal-stage { width: min(96vw, 430px); }
-  .gal-view { gap: 12px; margin-inline: -16px; }
-  .gal-name { font-size: 30px; }
-  .gal-desc { font-size: 13px; }
+  .gal-stage { width: min(96vw, 430px, max(190px, calc((100dvh - 360px) * 0.7159))); }
+  .gal-view { gap: 10px; margin-inline: -16px; }
+  .gal-name { font-size: 26px; }
+  .gal-desc { font-size: 13px; line-height: 1.6; }
+  .gal-info { gap: 6px; }
 }
 
 /* ================= 全屏卡面展示模式 =================
@@ -488,6 +608,21 @@ html, body {
 .gal-full-name { font-size: 17px; letter-spacing: .18em; font-family: var(--font-display); color: #f6e9ee; text-shadow: 0 2px 20px rgba(0, 0, 0, .7); }
 .gal-full-name small { display: block; margin-top: 5px; font-size: 10px; letter-spacing: .26em; color: rgba(230,205,214,.66); font-family: var(--font-body); }
 .gal-full-hint { margin-top: 8px; font-size: 10px; letter-spacing: .2em; color: rgba(230,205,214,.5); }
+/* 称号卡的补充说明（风味文案 / 解锁进度），仅称号模式显示 */
+.gal-full-desc { margin-top: 6px; font-size: 11px; line-height: 1.7; letter-spacing: .06em; color: rgba(230,205,214,.6); max-width: 34em; }
+/* 「保存此刻」按钮：meta 区整体 pointer-events:none，单独放开它 */
+.gal-full-save {
+  pointer-events: auto; margin-top: 10px;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 16px; border-radius: 999px;
+  font-size: 11px; letter-spacing: .2em; color: rgba(232,201,168,.85);
+  background: rgba(20,10,16,.42); border: 1px solid rgba(232,201,168,.3);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  cursor: pointer; touch-action: manipulation;
+  -webkit-appearance: none; appearance: none;
+  transition: background .2s, transform .12s;
+}
+.gal-full-save:active { transform: scale(.94); }
 .gal-full-close {
   position: absolute; top: max(14px, env(safe-area-inset-top)); right: 14px; z-index: 4;
   width: 42px; height: 42px; border-radius: 50%;
@@ -508,7 +643,15 @@ html, body {
 
 /* 游戏内任务卡 × 收藏卡质感 */
 .card.glowing { position: relative; }
-.card-frame { position: relative; border-radius: 16px; padding: 20px 18px; background: linear-gradient(150deg, rgba(227,164,189,.10) 0%, rgba(255,234,238,.03) 45%, rgba(178,133,204,.08) 100%); border: 1px solid var(--panel-border); overflow: hidden; }
+.card-frame {
+  position: relative; border-radius: 16px; padding: 20px 18px; overflow: hidden;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E") padding-box,
+    linear-gradient(150deg, rgba(227,164,189,.12) 0%, rgba(255,234,238,.035) 45%, rgba(178,133,204,.09) 100%) padding-box,
+    linear-gradient(158deg, rgba(255,238,243,.3) 0%, var(--h-main, var(--accent-2)) 26%, rgba(60,34,46,.9) 58%, rgba(232,201,168,.32) 100%) border-box;
+  border: 2px solid transparent;
+  box-shadow: 0 18px 44px rgba(8,2,6,.6), 0 5px 14px rgba(8,2,6,.45), inset 0 1px 0 rgba(255,240,246,.12), inset 0 -2px 4px rgba(0,0,0,.4);
+}
 .card-frame::before { content: ""; position: absolute; inset: 5px; border: 1px solid rgba(232,201,168,.16); border-radius: 10px; pointer-events: none; z-index: 1; }
 .card-frame::after { content: ""; position: absolute; left: -60%; top: 0; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,242,247,.14), transparent); animation: frameSheen 4.5s ease-in-out infinite; pointer-events: none; }
 @keyframes frameSheen { 0%, 55% { left: -60%; } 90%, 100% { left: 130%; } }
@@ -539,7 +682,7 @@ html, body {
    spacer 走正常流，.dc-3d 的高度＝真卡高度，无需 JS 测量，位置与落定后逐像素对齐。 */
 .dc-spacer { transform: rotateY(180deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .dc-spacer .card, .dc-spacer .card-frame { animation: none; }
-.dc-back { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; transform: rotateY(0deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1px solid rgba(232,201,168,.30); background: radial-gradient(120% 78% at 50% -8%, rgba(227,164,189,.14) 0%, rgba(227,164,189,0) 58%), linear-gradient(150deg, rgba(227,164,189,.20) 0%, rgba(58,34,46,.97) 42%, rgba(178,133,204,.18) 100%), #241419; box-shadow: 0 16px 40px rgba(0,0,0,.55), inset 0 0 46px rgba(227,164,189,.10); }
+.dc-back { position: absolute; inset: 0; border-radius: 16px; overflow: hidden; transform: rotateY(0deg); backface-visibility: hidden; -webkit-backface-visibility: hidden; border: 1px solid rgba(232,201,168,.30); background: radial-gradient(120% 78% at 50% -8%, rgba(227,164,189,.14) 0%, rgba(227,164,189,0) 58%), linear-gradient(150deg, rgba(227,164,189,.20) 0%, rgba(58,34,46,.97) 42%, rgba(178,133,204,.18) 100%), #241419; box-shadow: 0 16px 40px rgba(0,0,0,.55), inset 0 0 46px rgba(227,164,189,.10), inset 0 1px 0 rgba(255,240,246,.14), inset 0 -3px 8px rgba(0,0,0,.5); }
 /* 顶部斜向高光：给卡背一点「压印纸面」的厚度，免得平得像块色板 */
 .dc-gloss { position: absolute; inset: 0; z-index: 1; background: linear-gradient(118deg, rgba(255,242,247,.09) 0%, rgba(255,242,247,.02) 26%, transparent 46%); pointer-events: none; }
 /* 四角小菱：与内框呼应，把版面撑住 */
@@ -757,6 +900,7 @@ html, body {
     </div>
     <div class="game-footer">
       <button id="btnAudio" class="btn btn-text"><span data-ico="speaker"></span> 音效</button>
+      <button id="btnMusic" class="btn btn-text"><span data-ico="noteoff"></span> 音乐</button>
       <button id="btnEnd" class="btn btn-text">结束本局</button>
       <button id="btnSafeWord" class="btn btn-safe"><span data-ico="shield"></span> 安全词</button>
     </div>
@@ -801,7 +945,7 @@ html, body {
       </div>
     </div>
     <div id="libWrap"></div>
-    <p class="lib-hint">改动只存在本机浏览器，不会破坏原游戏。<br/>「恢复默认」还原单卡，「重置默认」清空全部编辑，「我的意见」可写下你的修改建议。</p>
+    <p class="lib-hint">点卡片行展开编辑 · 改动只存在本机浏览器</p>
   </section>
 
   <!-- ============ 卡面图鉴 ============ -->
@@ -816,16 +960,7 @@ html, body {
     <div id="galWrap"></div>
   </section>
 
-  <!-- ============ 卡面鉴赏弹窗（游戏内右下角「鉴赏」唤起） ============ -->
-  <div id="modalAdmire" class="modal hidden">
-    <div class="modal-box admire-box">
-      <h3 class="modal-title"><span data-ico="crystal"></span> 卡面鉴赏</h3>
-      <div id="admireBody"></div>
-      <button id="btnAdmireClose" class="btn btn-text">关闭</button>
-    </div>
-  </div>
-
-  <!-- ============ 全屏卡面展示（点鉴赏视图的大卡面进入） ============ -->
+  <!-- ============ 全屏卡面展示（游戏内「鉴赏」/ 称号卡 / 图鉴大卡面进入） ============ -->
   <div id="galFull" class="gal-full hidden">
     <div class="gal-full-glow" id="galFullGlow"></div>
     <div class="gal-full-card" id="galFullCard"></div>
@@ -834,6 +969,8 @@ html, body {
     <button class="gal-full-close" id="galFullClose" type="button" aria-label="关闭">✕</button>
     <div class="gal-full-meta">
       <div class="gal-full-name" id="galFullName"></div>
+      <div class="gal-full-desc" id="galFullDesc"></div>
+      <button class="gal-full-save" id="galFullSave" type="button">保存此刻</button>
       <div class="gal-full-hint" id="galFullHint">点击卡面翻面 · 左右滑动换卡 · 点击空白关闭</div>
     </div>
   </div>
@@ -1123,26 +1260,65 @@ function resolveCard(id) {
 }
 
 /* 渲染卡片库：按 场景 × 尺度 分组 */
+/* 卡库：折叠行 + 尺度筛选 + 分页，一屏内完成浏览，点开单行即编辑 */
+var libOpen = null, libPage = 0, libScale = "all";
+function libPageSize() { return window.innerHeight >= 720 ? 9 : 6; }
+function libList() {
+  var cards = [];
+  CARDS.forEach(function (c) { if (c.scene === libScene) cards.push(c); });
+  lib.customs.forEach(function (c) { if (c.scene === libScene) cards.push(c); });
+  if (libScale !== "all") cards = cards.filter(function (c) { return c.scale === libScale; });
+  return cards;
+}
 function renderLibrary() {
   var wrap = $("libWrap");
   if (!wrap) return;
-  var scene = libScene;
-  var scales = ["light", "medium", "high"];
-  var html = "";
-  scales.forEach(function (sc) {
-    var scaleLabel = (SCALE_META[sc] || {}).label || sc;
-    var cards = [];
-    CARDS.forEach(function (c) { if (c.scene === scene && c.scale === sc) cards.push(c); });
-    lib.customs.forEach(function (c) { if (c.scene === scene && c.scale === sc) cards.push(c); });
-    if (!cards.length) return;
-    html += '<div class="lib-section">';
-    html += '<div class="lib-section-title lib-' + sc + '">' + scaleLabel +
-            '<span class="lib-scale-tag">' + cards.length + ' 张</span></div>';
-    cards.forEach(function (c) { html += libCardHTML(c); });
-    html += '<div class="lib-add"><button class="btn btn-ghost" data-act="add" data-add="' + scene + '|' + sc + '">' + ico("plus", 14) + ' 新增' + scaleLabel + '卡</button></div>';
-    html += '</div>';
+  var list = libList();
+  var size = libPageSize();
+  var pages = Math.max(1, Math.ceil(list.length / size));
+  if (libPage >= pages) libPage = pages - 1;
+  var slice = list.slice(libPage * size, libPage * size + size);
+  var html = '<div class="lib-chips">';
+  [["all","全部"],["light","轻度"],["medium","中度"],["high","高度"]].forEach(function (p) {
+    html += '<span class="lib-chip' + (libScale === p[0] ? " active" : "") + '" data-act="chip" data-scale="' + p[0] + '">' + p[1] + '</span>';
   });
+  var addScale = libScale === "all" ? "light" : libScale;
+  html += '<span class="lib-chip lib-chip-add" data-act="add" data-add="' + libScene + '|' + addScale + '">' + ico("plus", 12) + ' 新增</span>';
+  html += '</div><div class="lib-section" style="margin-top:8px">';
+  slice.forEach(function (c) { html += libRowHTML(c); });
+  html += '</div>';
+  html += '<div class="pg-row">' +
+    '<button class="pg-btn' + (libPage <= 0 ? " disabled" : "") + '" data-act="pgPrev" aria-label="上一页">‹</button>' +
+    '<span class="pg-info"><b>' + (libPage + 1) + ' / ' + pages + '</b> · 共 ' + list.length + ' 张</span>' +
+    '<button class="pg-btn' + (libPage >= pages - 1 ? " disabled" : "") + '" data-act="pgNext" aria-label="下一页">›</button></div>';
+  /* 行被点开：编辑器以底部弹层呈现，不挤占列表空间 */
+  if (libOpen) {
+    var oc = null;
+    for (var k = 0; k < list.length; k++) if (list[k].id === libOpen) oc = list[k];
+    if (oc) {
+      html += '<div class="lib-editor-mask" data-act="closeEditor"></div>' +
+              '<div class="lib-editor">' + libCardHTML(oc) +
+              '<button class="btn btn-primary" data-act="closeEditor">完成</button></div>';
+    } else libOpen = null;
+  }
   wrap.innerHTML = html;
+}
+function libRowHTML(c) {
+  var e = getLibEdit(c.id);
+  var rc = resolveCard(c.id) || c;
+  var deleted = !!(e && e.deleted);
+  var modified = !!(e && !e.deleted && (e.content != null || e.temp || e.note));
+  var badges = "";
+  if (deleted) badges += '<span class="lib-badge del">已删</span>';
+  if (modified) badges += '<span class="lib-badge mod">改</span>';
+  if (c.custom) badges += '<span class="lib-badge cus">自定义</span>';
+  return '<div class="lib-row' + (libOpen === c.id ? " open" : "") + (deleted ? " lib-deleted" : "") + '" data-rowid="' + c.id + '">' +
+    '<span class="lib-id">#' + c.id + '</span>' +
+    '<span class="lib-type">' + ((TYPE_META[rc.type] && TYPE_META[rc.type].icon) ? ico(TYPE_META[rc.type].icon, 11) + " " : "") + esc(rc.type) + '</span>' +
+    '<span class="lib-preview">' + esc(rc.content || "") + '</span>' +
+    badges +
+    '<span class="lib-temp">' + rc.temp[0] + '~' + rc.temp[1] + '℃</span>' +
+  '</div>';
 }
 
 function libCardHTML(c) {
@@ -1203,9 +1379,34 @@ function onLibInput(ev) {
 }
 
 function onLibClick(ev) {
-  var b = ev.target.closest ? ev.target.closest("button") : null;
-  if (!b || !b.dataset || !b.dataset.act) return;
-  var act = b.dataset.act;
+  var actEl = ev.target.closest ? ev.target.closest("[data-act]") : null;
+  /* 点折叠行本体：弹出该卡编辑器 */
+  if (!actEl) {
+    var row = ev.target.closest ? ev.target.closest(".lib-row") : null;
+    if (row) {
+      sfxTap();
+      libOpen = (libOpen === row.getAttribute("data-rowid")) ? null : row.getAttribute("data-rowid");
+      renderLibrary();
+    }
+    return;
+  }
+  var act = actEl.dataset.act;
+  if (act === "closeEditor") {
+    sfxBack();
+    libOpen = null; renderLibrary(); return;
+  }
+  if (act === "chip") {
+    sfxTap();
+    libScale = actEl.dataset.scale; libPage = 0; libOpen = null;
+    renderLibrary(); return;
+  }
+  if (act === "pgPrev" || act === "pgNext") {
+    sfxSwipe();
+    libPage += (act === "pgNext" ? 1 : -1); libOpen = null;
+    renderLibrary(); return;
+  }
+  var b = actEl;
+  sfxConfirm();
   if (act === "restore") {
     var id = b.dataset.id;
     var e = lib.edits[id];
@@ -1238,7 +1439,9 @@ function addCard(scene, scale) {
 }
 
 function setLibScene(scene) {
+  sfxTap();
   libScene = scene;
+  libPage = 0; libOpen = null;
   var tabs = document.querySelectorAll(".lib-tab");
   for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle("active", tabs[i].getAttribute("data-scene") === scene);
   renderLibrary();
@@ -1246,6 +1449,7 @@ function setLibScene(scene) {
 
 function openLibrary() {
   loadLib();
+  libPage = 0; libOpen = null;
   renderLibrary();
   showScreen("library");
 }
@@ -1339,6 +1543,8 @@ var ICONS = {
   target:  '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
   speaker: '<path d="M4 9.5v5h3.6L12 18V6L7.6 9.5z"/><path d="M15.5 9.5a4.2 4.2 0 010 5"/>',
   muted:   '<path d="M4 9.5v5h3.6L12 18V6L7.6 9.5z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
+  note:    '<path d="M9 17.5V6l10-2v11"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/>',
+  noteoff: '<path d="M9 17.5V6l10-2v11"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15" r="2.5"/><path d="M4 4l16 16"/>',
   crystal: '<circle cx="12" cy="13.5" r="6.5"/><path d="M12 7V4.5M9.5 3h5"/><path d="M10.2 16.5l1.4-2.8 2.2 1-1.4 2.8z"/>',
   download:'<path d="M12 3.5V14M8 10.5l4 4 4-4"/><path d="M4.5 17v1.5a2 2 0 002 2h11a2 2 0 002-2V17"/>',
   upload:  '<path d="M12 15V4.5M8 8.5l4-4 4 4"/><path d="M4.5 17v1.5a2 2 0 002 2h11a2 2 0 002-2V17"/>',
@@ -1418,13 +1624,20 @@ function playerLabel(i) { return playerSymbol(i) + " " + playerName(i); }
 
 /* ================= 音频（Web Audio 实时合成，无外部文件） ================= */
 var AudioCtx = null, masterGain = null, musicGain = null, sfxGain = null;
+var MASTER_VOL = 0.8;
 var audioOn = true;
+var musicOn = false;             /* 氛围音乐：默认关，游戏屏 footer 可开 */
 var musicTimer = null;
 var padOsc = [], padGain = null, padFilter = null;
 var padLfo = null, padLfoGain = null;
 var chordIdx = 0;
 /* 暧昧纯音乐：Am - F - C - G 慢速流动和弦垫 */
 var CHORDS = [ [57,60,64], [53,57,60], [60,64,67], [55,59,62] ];
+var _noiseBufs = {};             /* 噪声缓冲按时长缓存，不每次现场生成 */
+try {
+  audioOn = localStorage.getItem("wj_audio") !== "0";
+  musicOn = localStorage.getItem("wj_music") === "1";
+} catch (e) {}
 function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
 function initAudio() {
@@ -1433,9 +1646,10 @@ function initAudio() {
     var AC = window.AudioContext || window.webkitAudioContext;
     AudioCtx = new AC();
     if (AudioCtx.state === "suspended") AudioCtx.resume();
-    masterGain = AudioCtx.createGain(); masterGain.gain.value = audioOn ? 0.7 : 0; masterGain.connect(AudioCtx.destination);
-    musicGain  = AudioCtx.createGain(); musicGain.gain.value  = 0.07; musicGain.connect(masterGain);
-    sfxGain    = AudioCtx.createGain(); sfxGain.gain.value    = 0.12; sfxGain.connect(masterGain);
+    masterGain = AudioCtx.createGain(); masterGain.gain.value = audioOn ? MASTER_VOL : 0; masterGain.connect(AudioCtx.destination);
+    musicGain  = AudioCtx.createGain(); musicGain.gain.value  = 0.10; musicGain.connect(masterGain);
+    sfxGain    = AudioCtx.createGain(); sfxGain.gain.value    = 0.9;  sfxGain.connect(masterGain);
+    if (musicOn) startMusic();
   } catch(e) { AudioCtx = null; }
 }
 
@@ -1450,14 +1664,34 @@ function tone(freq, t, dur, type, vol, dest) {
   o.start(t); o.stop(t + dur + 0.05);
 }
 
-function noiseBurst(t, dur, vol, freq) {
+/* 频率滑音：tone() 只能定频，上行/下行扫频走这里 */
+function sweep(f0, f1, t, dur, type, vol) {
   if (!AudioCtx) return;
+  var o = AudioCtx.createOscillator(), g = AudioCtx.createGain();
+  o.type = type || "sine";
+  o.frequency.setValueAtTime(f0, t);
+  o.frequency.exponentialRampToValueAtTime(Math.max(f1, 1), t + dur);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(vol, t + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(sfxGain);
+  o.start(t); o.stop(t + dur + 0.05);
+}
+
+function noiseBuf(dur) {
+  var key = Math.round(dur * 25);
+  if (_noiseBufs[key]) return _noiseBufs[key];
   var len = Math.max(1, Math.floor(AudioCtx.sampleRate * dur));
   var buf = AudioCtx.createBuffer(1, len, AudioCtx.sampleRate);
   var d = buf.getChannelData(0);
   for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-  var src = AudioCtx.createBufferSource(); src.buffer = buf;
-  var f = AudioCtx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = freq || 1400; f.Q.value = 0.8;
+  _noiseBufs[key] = buf;
+  return buf;
+}
+function noiseBurst(t, dur, vol, freq, q) {
+  if (!AudioCtx) return;
+  var src = AudioCtx.createBufferSource(); src.buffer = noiseBuf(dur);
+  var f = AudioCtx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = freq || 1400; f.Q.value = q || 0.8;
   var g = AudioCtx.createGain();
   g.gain.setValueAtTime(vol, t);
   g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
@@ -1465,46 +1699,129 @@ function noiseBurst(t, dur, vol, freq) {
   src.start(t); src.stop(t + dur);
 }
 
-/* —— 音效 —— */
-function sfxDice() {
+/* —— 通用 UI 反馈（自带 ensureAudio：未开局前的点击也是合法手势，可建上下文） —— */
+function sfxTap() {          /* 轻确认：打开面板 / 主要操作 */
+  ensureAudio();
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
-  for (var i = 0; i < 5; i++) tone(380 + Math.random() * 120, t + i * 0.12, 0.06, "sine", 0.05);
+  tone(660, t, 0.07, "triangle", 0.10);
+  noiseBurst(t, 0.03, 0.05, 2600, 1.2);
 }
-function sfxSettle() {
+function sfxBack() {         /* 返回 / 关闭 */
+  ensureAudio();
+  if (!AudioCtx || !audioOn) return;
+  tone(430, AudioCtx.currentTime, 0.11, "triangle", 0.08);
+}
+function sfxConfirm() {      /* 柔和确认：弹窗内选项落定 */
+  ensureAudio();
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
-  tone(880, t, 0.5, "sine", 0.16);
-  tone(1320, t + 0.04, 0.4, "sine", 0.09);
+  tone(523, t, 0.10, "triangle", 0.09);
+  tone(659, t + 0.05, 0.13, "triangle", 0.07);
 }
-function sfxDraw() {
+function sfxSwipe() {        /* 翻页 / 滑动换卡 */
+  ensureAudio();
+  if (!AudioCtx || !audioOn) return;
+  noiseBurst(AudioCtx.currentTime, 0.09, 0.09, 1050, 0.9);
+}
+function sfxFlip() {         /* 卡面翻面：纸张抖开的短噪声 + 一点厚度 */
+  ensureAudio();
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
-  tone(523, t, 0.18, "sine", 0.15);
-  tone(784, t + 0.08, 0.22, "sine", 0.11);
+  noiseBurst(t, 0.15, 0.14, 1500, 0.7);
+  tone(320, t + 0.02, 0.08, "sine", 0.05);
 }
+
+/* —— 骰子 —— */
+function sfxDice() {         /* 起手摇骰：三连晃动 */
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  for (var i = 0; i < 3; i++) noiseBurst(t + i * 0.07, 0.05, 0.14 - i * 0.03, 1300 + i * 300, 1.1);
+}
+function sfxDiceTick() {     /* 滚动中每翻一面的轻磕，跟随动画节奏 */
+  if (!AudioCtx || !audioOn) return;
+  noiseBurst(AudioCtx.currentTime, 0.028, 0.07 + Math.random() * 0.04, 1000 + Math.random() * 900, 1.3);
+}
+function sfxSettle() {       /* 落定分出胜负：明亮上行 + 落桌轻磕 */
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  noiseBurst(t, 0.05, 0.1, 900, 1);
+  tone(880, t, 0.5, "triangle", 0.16);
+  tone(1320, t + 0.04, 0.4, "triangle", 0.09);
+  tone(1760, t + 0.08, 0.32, "sine", 0.045);
+}
+function sfxTie() {          /* 平局：下行两音，与胜负区分 */
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  tone(520, t, 0.22, "triangle", 0.10);
+  tone(440, t + 0.11, 0.3, "triangle", 0.08);
+}
+
+/* —— 游戏动作 —— */
 function sfxTemp() {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
-  [523, 659, 784, 1047].forEach(function(f, i) { tone(f, t + i * 0.07, 0.3, "sine", 0.1); });
+  [523, 659, 784, 1047].forEach(function(f, i) { tone(f, t + i * 0.07, 0.3, "triangle", 0.1); });
+  tone(1568, t + 0.3, 0.4, "sine", 0.04);
+}
+/* 温度数字滚动伴随：升幅越大，滑音落点越高 */
+function sfxTempRise(gain) {
+  if (!AudioCtx || !audioOn) return;
+  sweep(280, 300 + Math.min(Math.max(gain, 10), 400) * 0.9, AudioCtx.currentTime, 0.55, "sine", 0.05);
 }
 function sfxSkip() {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
-  tone(392, t, 0.25, "sine", 0.11);
-  tone(294, t + 0.06, 0.3, "sine", 0.09);
+  tone(392, t, 0.25, "triangle", 0.11);
+  tone(294, t + 0.06, 0.3, "triangle", 0.09);
 }
 function sfxSafe() {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
   tone(330, t, 0.5, "sine", 0.13);
+  tone(415, t + 0.08, 0.42, "sine", 0.07);
 }
-/* 抽卡过场：蓄力（滑音 + 极轻摩擦），只用正弦，音量走 sfxGain */
+/* 沸腾开启：低音上涌 + 气泡破裂，全游戏最高潮的标志音 */
+function sfxBoil() {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  sweep(160, 480, t, 0.5, "sine", 0.12);
+  noiseBurst(t + 0.05, 0.18, 0.09, 700, 2);
+  noiseBurst(t + 0.22, 0.14, 0.08, 900, 2);
+  noiseBurst(t + 0.36, 0.10, 0.07, 1200, 2);
+  tone(880, t + 0.5, 0.3, "triangle", 0.09);
+  tone(1108, t + 0.6, 0.35, "triangle", 0.07);
+}
+/* 开场动画：两声心跳 + 暖光泛音 */
+function sfxStart() {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  tone(120, t, 0.14, "sine", 0.22);
+  tone(120, t + 0.2, 0.18, "sine", 0.18);
+  tone(784, t + 0.5, 0.5, "sine", 0.07);
+  tone(1047, t + 0.62, 0.6, "sine", 0.05);
+}
+/* 结算报告：Am9 收束和弦落版 */
+function sfxEnd() {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  [220, 261.6, 329.6, 493.9].forEach(function(f, i) { tone(f, t + i * 0.06, 1.1, "sine", 0.09); });
+  tone(1046.5, t + 0.3, 0.8, "sine", 0.04);
+}
+/* 远程接通：链路建立起来的明亮确认 */
+function sfxConnect() {
+  if (!AudioCtx || !audioOn) return;
+  var t = AudioCtx.currentTime;
+  tone(659, t, 0.12, "triangle", 0.10);
+  tone(880, t + 0.08, 0.16, "triangle", 0.08);
+  tone(1318, t + 0.16, 0.3, "sine", 0.05);
+}
+/* 抽卡过场：蓄力（滑音 + 摩擦噪声层） */
 function sfxDrawCharge() {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
   var o = AudioCtx.createOscillator(), g = AudioCtx.createGain();
-  o.type = "sine";
+  o.type = "triangle";
   o.frequency.setValueAtTime(260, t);
   o.frequency.exponentialRampToValueAtTime(520, t + 0.42);
   g.gain.setValueAtTime(0.0001, t);
@@ -1512,21 +1829,21 @@ function sfxDrawCharge() {
   g.gain.exponentialRampToValueAtTime(0.0001, t + 0.46);
   o.connect(g); g.connect(sfxGain);
   o.start(t); o.stop(t + 0.5);
-  noiseBurst(t + 0.02, 0.32, 0.016, 2200);
+  noiseBurst(t + 0.02, 0.32, 0.05, 2200);
 }
 /* 揭晓落定：音高随强度递增；收敛档（-1）走下行，主动压低期待 */
 function sfxDrawReveal(level) {
   if (!AudioCtx || !audioOn) return;
   var t = AudioCtx.currentTime;
   if (level < 0) {
-    tone(392, t, 0.32, "sine", 0.10);
-    tone(294, t + 0.10, 0.42, "sine", 0.08);
+    tone(392, t, 0.32, "triangle", 0.10);
+    tone(294, t + 0.10, 0.42, "triangle", 0.08);
     return;
   }
   var base = [523, 587, 659, 784][Math.min(level, 3)];
-  tone(base, t, 0.30, "sine", 0.15);
-  tone(base * 1.5, t + 0.07, 0.34, "sine", 0.10);
-  if (level >= 2) tone(base * 2, t + 0.14, 0.44, "sine", 0.075);
+  tone(base, t, 0.30, "triangle", 0.15);
+  tone(base * 1.5, t + 0.07, 0.34, "triangle", 0.10);
+  if (level >= 2) tone(base * 2, t + 0.14, 0.44, "triangle", 0.075);
   if (level >= 3) { tone(base * 2.5, t + 0.21, 0.50, "sine", 0.06); tone(base * 3, t + 0.28, 0.50, "sine", 0.045); }
 }
 
@@ -1592,15 +1909,31 @@ function stopMusic() {
     padGain.gain.linearRampToValueAtTime(0.0001, now + 0.8);
   }
 }
-function toggleAudio() {
-  audioOn = !audioOn;
-  if (masterGain) masterGain.gain.value = audioOn ? 0.7 : 0;
-  if (audioOn) { initAudio(); }
+function refreshAudioBtn() {
   var b = document.getElementById("btnAudio");
   if (b) b.innerHTML = (audioOn ? ico("speaker", 16) : ico("muted", 16)) + " " + (audioOn ? "音效" : "静音");
 }
+function refreshMusicBtn() {
+  var b = document.getElementById("btnMusic");
+  if (b) b.innerHTML = ico(musicOn ? "note" : "noteoff", 16) + " " + (musicOn ? "音乐开" : "音乐");
+}
+function toggleAudio() {
+  audioOn = !audioOn;
+  try { localStorage.setItem("wj_audio", audioOn ? "1" : "0"); } catch (e) {}
+  /* 平滑切换，避免直接改 gain.value 产生爆音 */
+  if (masterGain && AudioCtx) masterGain.gain.setTargetAtTime(audioOn ? MASTER_VOL : 0, AudioCtx.currentTime, 0.03);
+  if (audioOn) { initAudio(); sfxConfirm(); }
+  refreshAudioBtn();
+}
+function toggleMusic() {
+  musicOn = !musicOn;
+  try { localStorage.setItem("wj_music", musicOn ? "1" : "0"); } catch (e) {}
+  if (musicOn) { ensureAudio(); if (AudioCtx) { startMusic(); sfxConfirm(); } }
+  else stopMusic();
+  refreshMusicBtn();
+}
 
-/* 仅初始化音频上下文，保证音效可播放；背景音乐按用户要求已关闭 */
+/* 仅初始化音频上下文，保证音效可播放 */
 function ensureAudio() {
   try { initAudio(); } catch(e) {}
 }
@@ -1825,7 +2158,9 @@ var GAL_FLAVOR = {
   medium: "把呼吸调成同一个频率。",
   high:   "此刻没有旁观者。"
 };
-var galState = { mode: "grid", card: null, flipped: false, autoTimer: null };
+var galState = { mode: "grid", card: null, flipped: false, autoTimer: null, page: 0, slide: 0 };
+/* 网格每页卡数随视高定：高屏 3×4，矮屏 3×3，保证整页一屏装下 */
+function galPageSize() { return window.innerHeight >= 700 ? 12 : 9; }
 
 function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
@@ -3849,7 +4184,7 @@ function cardFaceHTML(c, mini) {
         '<span class="holo-en">' + en + '</span>' +
       '</div>' +
       '<div class="holo-name"><small>『 ' + esc(c.type || "自定义") + ' 』</small><b>' + esc(cardNameOf(c)) + '</b></div>' +
-      '<div class="holo-art">' + cardArtHTML(c, sm, mini) + '</div>' +
+      '<div class="holo-art"><div class="holo-art-deep">' + cardArtHTML(c, sm, mini) + '</div></div>' +
       '<div class="holo-desc">' + esc(c.content || "") + '</div>' +
       '<div class="holo-temp-row">' +
         '<span class="holo-temp">♥ ' + c.temp[0] + '~' + c.temp[1] + '℃</span>' +
@@ -3895,7 +4230,7 @@ function holoFace(c, opts) {
 }
 
 /* ---- 图鉴 ---- */
-function openGallery() { galState.mode = "grid"; stopGalAuto(); renderGallery(); showScreen("gallery"); }
+function openGallery() { galState.mode = "grid"; galState.page = 0; stopGalAuto(); renderGallery(); showScreen("gallery"); }
 function closeGallery() { stopGalAuto(); showScreen("setup"); refreshResume(); }
 
 function renderGallery() {
@@ -3917,23 +4252,35 @@ function renderGallery() {
 }
 
 function renderGalleryGrid(wrap) {
-  var html = "";
+  /* 全量序列（轻→中→高），分页展示：一页一屏，不滚动 */
+  var all = [];
   ["light","medium","high"].forEach(function (sc) {
-    var sm = SCALE_VOL[sc];
-    var cards = [];
-    CARDS.forEach(function (c) { if (c.scale === sc) cards.push(c); });
-    lib.customs.forEach(function (c) { if (c.scale === sc) cards.push(c); });
-    if (!cards.length) return;
-    html += '<div class="lib-section-title lib-' + sc + '" style="margin:10px 0 8px">' + sm.vol + ' · ' + ((SCALE_META[sc]||{}).label||sc) +
-            '<span class="lib-scale-tag">' + cards.length + ' 张</span></div>';
-    html += '<div class="gal-grid">';
-    cards.forEach(function (c) {
-      var rc = resolveCard(c.id) || c;
-      html += '<div class="gal-cell" data-galid="' + rc.id + '">' + holoFace(rc, { mini: true }) + '</div>';
-    });
-    html += '</div>';
+    CARDS.forEach(function (c) { if (c.scale === sc) all.push(c); });
+    lib.customs.forEach(function (c) { if (c.scale === sc) all.push(c); });
   });
-  html += '<div class="gal-count">共 ' + (CARDS.length + lib.customs.length) + ' 张 · 点击卡面进入鉴赏 · 流光跟随指尖</div>';
+  var size = galPageSize();
+  var pages = Math.max(1, Math.ceil(all.length / size));
+  if (galState.page >= pages) galState.page = pages - 1;
+  if (galState.page < 0) galState.page = 0;
+  var slice = all.slice(galState.page * size, galState.page * size + size);
+  /* 页眉：本页涉及的卷名 */
+  var vols = [];
+  slice.forEach(function (c) {
+    var v = (SCALE_VOL[c.scale] || {}).vol || "";
+    if (vols.indexOf(v) === -1) vols.push(v);
+  });
+  var html = '<div class="lib-section-title" style="margin:2px 0 8px;color:var(--text-dim)">' +
+    vols.join(" · ") + '<span class="lib-scale-tag">' + all.length + ' 张</span></div>';
+  html += '<div class="gal-grid">';
+  slice.forEach(function (c) {
+    var rc = resolveCard(c.id) || c;
+    html += '<div class="gal-cell" data-galid="' + rc.id + '">' + holoFace(rc, { mini: true }) + '</div>';
+  });
+  html += '</div>';
+  html += '<div class="pg-row">' +
+    '<button class="pg-btn' + (galState.page <= 0 ? " disabled" : "") + '" data-galpg="-1" aria-label="上一页">‹</button>' +
+    '<span class="pg-info"><b>' + (galState.page + 1) + ' / ' + pages + '</b> · 点卡鉴赏 · 滑动翻页</span>' +
+    '<button class="pg-btn' + (galState.page >= pages - 1 ? " disabled" : "") + '" data-galpg="1" aria-label="下一页">›</button></div>';
   wrap.innerHTML = html;
   var cells = wrap.querySelectorAll(".gal-cell");
   for (var i = 0; i < cells.length; i++) {
@@ -3942,10 +4289,41 @@ function renderGalleryGrid(wrap) {
       cell.addEventListener("click", function () {
         var id = cell.getAttribute("data-galid");
         var c = resolveCard(id) || cardById(id);
+        sfxTap();
         if (c) { galState.card = c; galState.flipped = false; galState.mode = "view"; stopGalAuto(); renderGallery(); }
       });
     })(cells[i]);
   }
+  var pbs = wrap.querySelectorAll("[data-galpg]");
+  for (var j = 0; j < pbs.length; j++) {
+    (function (btn) {
+      btn.addEventListener("click", function () { galGridPage(parseInt(btn.getAttribute("data-galpg"), 10)); });
+    })(pbs[j]);
+  }
+  bindGalGridSwipe(wrap);
+}
+function galGridPage(dir) {
+  var pages = Math.max(1, Math.ceil(galAllCards().length / galPageSize()));
+  var next = galState.page + dir;
+  if (next < 0 || next >= pages) return;
+  galState.page = next;
+  sfxSwipe();
+  renderGallery();
+}
+/* 网格区域横向滑动翻页 */
+function bindGalGridSwipe(wrap) {
+  var sx = 0, sy = 0, tracking = false;
+  function down(x, y) { sx = x; sy = y; tracking = true; }
+  function up(x, y) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = x - sx, dy = y - sy;
+    if (Math.abs(dx) > 46 && Math.abs(dx) > Math.abs(dy) * 1.4) galGridPage(dx < 0 ? 1 : -1);
+  }
+  wrap.addEventListener("touchstart", function (e) { if (e.touches[0]) down(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+  wrap.addEventListener("touchend", function (e) { if (e.changedTouches[0]) up(e.changedTouches[0].clientX, e.changedTouches[0].clientY); });
+  wrap.addEventListener("mousedown", function (e) { down(e.clientX, e.clientY); });
+  wrap.addEventListener("mouseup", function (e) { up(e.clientX, e.clientY); });
 }
 
 function renderGalleryView(wrap, c) {
@@ -4002,6 +4380,7 @@ function galSlide(dir) {
   galState.card = list[idx];
   galState.flipped = false;
   galState.slide = dir;   /* -1 下一张（右滑入），1 上一张（左滑入） */
+  sfxSwipe();
   renderGallery();
   setTimeout(function () { galState.slide = 0; }, 380);
 }
@@ -4023,26 +4402,21 @@ function bindGalSwipe(wrap) {
   stage.addEventListener("mouseup", function (e) { up(e.clientX, e.clientY); });
 }
 
-/* 鉴赏视图按钮委托：host = "gallery" | "admire" */
-function galViewDelegate(ev, host) {
+/* 图鉴鉴赏视图按钮委托 */
+function galViewDelegate(ev) {
   var b = ev.target.closest ? ev.target.closest("button") : null;
   if (!b) {
     /* 点卡面 → 进入全屏展示模式。限定在 .gal-stage 内：
        网格小卡里也含 .holo，且网格卡点击会先重渲染使 target 脱离文档，
        用复合选择器才不会把「点网格卡」误判成「点鉴赏卡面」 */
     var holo = ev.target.closest ? ev.target.closest(".gal-stage .holo") : null;
-    if (holo) {
-      var gc = (host === "gallery") ? galState.card : admireCardRef;
-      if (gc) openGalFull(gc, host);
-    }
+    if (holo && galState.card) openGalFull(galState.card, "gallery");
     return;
   }
   if (b.classList.contains("jsGalFlip")) {
-    if (host === "gallery") { galState.flipped = !galState.flipped; renderGallery(); }
-    else { admireFlipped = !admireFlipped; renderAdmire(); }
+    galState.flipped = !galState.flipped; sfxFlip(); renderGallery();
   } else if (b.classList.contains("jsGalSave")) {
-    var c = (host === "gallery") ? galState.card : admireCardRef;
-    if (c) galSave(c);
+    if (galState.card) galSave(galState.card);
   } else if (b.classList.contains("jsGalGrid")) {
     galState.mode = "grid"; stopGalAuto(); renderGallery();
   } else if (b.classList.contains("jsGalPrev")) {
@@ -4053,18 +4427,43 @@ function galViewDelegate(ev, host) {
 }
 
 /* ================= 全屏卡面展示模式 =================
-   从鉴赏视图点卡面进入。景深三件套：背景虚化(backdrop-filter) + 卡后柔光晕 + 加重投影，
-   外加进入时的 Z 轴推入与指针视差微倾。纯原生，无外部资源。 */
+   游戏内「鉴赏」、称号卡、图鉴大卡面共用的全屏展示层。
+   景深三件套：背景虚化(backdrop-filter) + 卡后柔光晕 + 加重投影，
+   外加进入时的 Z 轴推入与指针视差微倾。纯原生，无外部资源。
+   kind: "card" 任务卡（滑动遍历全牌序列） | "title" 称号卡（滑动遍历 8 个称号档） */
 var galFullOpen = false, galFullHost = "gallery", galFullFlipped = false, galFullCardRef = null;
+var galFullKind = "card", galFullTitleIdx = 0, galFullSeq = 0;
 var galFullBound = false, galFullSwiped = false;
 
 function openGalFull(c, host) {
   var el = $("galFull");
   if (!c || !el) return;
+  galFullKind = "card";
   galFullHost = host || "gallery";
   galFullCardRef = c;
-  galFullFlipped = (galFullHost === "admire") ? !!admireFlipped : !!galState.flipped;
+  galFullFlipped = (galFullHost === "gallery") ? !!galState.flipped : false;
   galFullOpen = true;
+  galFullSeq++;
+  sfxTap();
+  el.classList.remove("hidden", "closing");
+  setGalFullLock(true);
+  renderGalFull(0);
+  bindGalFullOnce();
+}
+
+/* 称号卡入口（游戏屏点温度收藏卡）：从当前称号档开始，可滑动浏览全部称号 */
+function openGalFullTitle() {
+  var el = $("galFull");
+  if (!el) return;
+  galFullKind = "title";
+  galFullHost = "admire";
+  galFullCardRef = null;
+  var temp = state ? state.game.temperature : 0;
+  galFullTitleIdx = Math.max(0, TITLES.indexOf(getTitle(temp)));
+  galFullFlipped = false;
+  galFullOpen = true;
+  galFullSeq++;
+  sfxTap();
   el.classList.remove("hidden", "closing");
   setGalFullLock(true);
   renderGalFull(0);
@@ -4074,35 +4473,68 @@ function openGalFull(c, host) {
 function toggleGalFullFlip() {
   if (!galFullOpen) return;
   galFullFlipped = !galFullFlipped;
+  sfxFlip();
   renderGalFull(0);
 }
 
-/* 全屏内换卡：走全量序列（内置卡 + 站内新增卡），与图鉴翻页同一顺序 */
+/* 全屏内换卡：任务卡走全量序列（内置卡 + 站内新增卡），称号卡走 8 个称号档 */
 function galFullSlide(dir) {
-  if (!galFullOpen || !galFullCardRef) return;
-  var list = galAllCards();
-  if (!list.length) return;
-  var idx = 0;
-  for (var i = 0; i < list.length; i++) if (list[i].id === galFullCardRef.id) { idx = i; break; }
-  idx = (idx + dir + list.length) % list.length;
+  if (!galFullOpen) return;
+  if (galFullKind === "title") {
+    galFullTitleIdx = (galFullTitleIdx + dir + TITLES.length) % TITLES.length;
+  } else {
+    if (!galFullCardRef) return;
+    var list = galAllCards();
+    if (!list.length) return;
+    var idx = 0;
+    for (var i = 0; i < list.length; i++) if (list[i].id === galFullCardRef.id) { idx = i; break; }
+    idx = (idx + dir + list.length) % list.length;
+    galFullCardRef = list[idx];
+    if (galFullHost === "gallery") galState.card = galFullCardRef;
+  }
   galFullFlipped = false;
-  galFullCardRef = list[idx];
-  if (galFullHost === "gallery") galState.card = galFullCardRef;
+  sfxSwipe();
   renderGalFull(dir);
 }
 
 function renderGalFull(slide) {
-  if (!galFullOpen || !galFullCardRef) return;
+  if (!galFullOpen) return;
   var host = $("galFullCard");
   if (!host) return;
-  var c = galFullCardRef, sm = scaleMetaOf(c);
+  var glow = $("galFullGlow"), nm = $("galFullName"), desc = $("galFullDesc"), save = $("galFullSave");
   host.className = "gal-full-card" + (slide > 0 ? " gal-slide-next" : slide < 0 ? " gal-slide-prev" : "");
-  host.style.setProperty("--h-main", sm.main);
-  host.innerHTML = holoFace(c, { flipped: galFullFlipped, autoplay: true });
-  var glow = $("galFullGlow");
-  if (glow) glow.style.setProperty("--h-main", sm.main);
-  var nm = $("galFullName");
-  if (nm) nm.innerHTML = esc(cardNameOf(c)) + '<small>' + esc(cardNoOf(c) + ' · ' + (sm.vol || "") + ' · ' + (galFullFlipped ? "反面" : "正面")) + '</small>';
+  if (galFullKind === "title") {
+    var temp = state ? state.game.temperature : 0;
+    var t = TITLES[galFullTitleIdx];
+    var color = tempColor(temp);
+    host.style.setProperty("--h-main", color);
+    host.innerHTML = titleHolo(t, color, temp, galFullFlipped);
+    if (glow) glow.style.setProperty("--h-main", color);
+    if (nm) nm.innerHTML = esc(t.label) + '<small>' + esc('STAGE ' + pad2(galFullTitleIdx + 1) + ' / ' + pad2(TITLES.length) + ' · 称号典藏 · ' + (galFullFlipped ? "反面" : "正面")) + '</small>';
+    if (desc) {
+      var curIdx = TITLES.indexOf(getTitle(temp));
+      var txt = t.flavor;
+      if (galFullTitleIdx === curIdx) {
+        var next = getNextTitle(temp);
+        txt += next ? ' 距「' + next.label + '」还差 ' + (next.min - temp) + '℃。' : ' 已达最高称号。';
+      } else {
+        txt += (galFullTitleIdx > curIdx) ? ' 达到 ' + t.min + '℃ 解锁。' : ' 已解锁。';
+      }
+      desc.textContent = txt;
+      desc.style.display = "";
+    }
+    if (save) save.style.display = "none";
+  } else {
+    var c = galFullCardRef;
+    if (!c) return;
+    var sm = scaleMetaOf(c);
+    host.style.setProperty("--h-main", sm.main);
+    host.innerHTML = holoFace(c, { flipped: galFullFlipped, autoplay: true });
+    if (glow) glow.style.setProperty("--h-main", sm.main);
+    if (nm) nm.innerHTML = esc(cardNameOf(c)) + '<small>' + esc(cardNoOf(c) + ' · ' + (sm.vol || "") + ' · ' + (galFullFlipped ? "反面" : "正面")) + '</small>';
+    if (desc) desc.style.display = "none";
+    if (save) save.style.display = "";
+  }
   var h = host.querySelector(".holo");
   if (h) bindHolo(h, true);   /* 复用流光：指针驱动的 3D 微倾 + 光泽跟随 */
 }
@@ -4116,23 +4548,20 @@ function setGalFullLock(on) {
 function closeGalFull(skipHostRender) {
   if (!galFullOpen) return;
   galFullOpen = false;
+  sfxBack();
   setGalFullLock(false);
-  /* 把全屏里的翻面/换卡状态同步回宿主视图，关掉后不会对不上 */
-  if (galFullHost === "gallery") {
-    galState.flipped = galFullFlipped;
-  } else {
-    admireFlipped = galFullFlipped;
-    if (galFullCardRef) admireCardRef = galFullCardRef;
-  }
+  /* 把全屏里的翻面状态同步回图鉴宿主视图，关掉后不会对不上（游戏屏入口无需回同步） */
+  if (galFullHost === "gallery") galState.flipped = galFullFlipped;
   var el = $("galFull");
   if (!el) return;
   el.classList.add("closing");
+  var seq = ++galFullSeq;
   setTimeout(function () {
+    if (seq !== galFullSeq) return;   /* 期间被重新打开：放弃本次关闭收尾 */
     el.classList.remove("closing");
     el.classList.add("hidden");
     if (skipHostRender) return;
-    if (galFullHost === "gallery") { if (galState.mode === "view") renderGallery(); }
-    else { renderAdmire(); }
+    if (galFullHost === "gallery" && galState.mode === "view") renderGallery();
   }, 200);
 }
 
@@ -4150,6 +4579,7 @@ function bindGalFullOnce() {
     if (t.closest(".gal-full-close")) { closeGalFull(); return; }
     if (t.closest("#galFullPrev")) { galFullSlide(-1); return; }
     if (t.closest("#galFullNext")) { galFullSlide(1); return; }
+    if (t.closest("#galFullSave")) { if (galFullKind === "card" && galFullCardRef) galSave(galFullCardRef); return; }
     if (t.closest(".holo")) { toggleGalFullFlip(); return; }
     closeGalFull();
   });
@@ -4174,30 +4604,7 @@ function bindGalFullOnce() {
   el.addEventListener("mouseup", function (e) { up(e.clientX, e.clientY); });
 }
 
-/* ---- 游戏内「鉴赏」弹窗：任务卡（card）/ 称号卡（title）两种模式 ---- */
-var admireCardRef = null, admireFlipped = false, admireMode = "card";
-function openAdmire(card) {
-  admireMode = "card";
-  admireCardRef = card;
-  admireFlipped = false;
-  renderAdmire();
-  $("modalAdmire").classList.remove("hidden");
-}
-function openTitleAdmire() {
-  admireMode = "title";
-  admireFlipped = false;
-  renderAdmire();
-  $("modalAdmire").classList.remove("hidden");
-}
-function renderAdmire() {
-  var body = $("admireBody");
-  if (admireMode === "title") { renderTitleAdmire(body); return; }
-  if (!admireCardRef) { body.innerHTML = ""; return; }
-  body.innerHTML = galViewHTML(admireCardRef, admireFlipped, { grid: false });
-  afterGalViewRender(body);
-}
-
-/* 称号鉴赏（竖版称号收藏卡 + 信息栏） */
+/* 称号收藏卡 holo（全屏展示层称号模式用） */
 function titleHolo(t, color, temp, flipped) {
   var inner;
   if (flipped) inner = cardBackHTML();
@@ -4206,33 +4613,12 @@ function titleHolo(t, color, temp, flipped) {
     inner = '<div class="holo-inner">' + ornSvg() +
       '<div class="holo-type-row"><span class="holo-type">称号典藏</span><span class="holo-en">' + t.en + '</span></div>' +
       '<div class="holo-name"><small>STAGE ' + pad2(idx + 1) + '</small><b>' + t.label + '</b></div>' +
-      '<div class="holo-rose">' + titleSvg(t.icon, color, 76) + '</div>' +
+      '<div class="holo-rose"><div class="holo-art-deep">' + titleSvg(t.icon, color, 76) + '</div></div>' +
       '<div class="holo-desc">' + t.desc + '</div>' +
       '<div class="holo-temp-row"><span class="holo-temp">♥ 当前 ' + temp + '℃</span><span class="holo-en">' + t.min + '℃ 封号</span></div>' +
     '</div>';
   }
   return '<div class="holo" style="--h-main:' + color + ';--h-line:' + color + '66;--h-soft:' + color + '33">' + inner + '</div>';
-}
-function renderTitleAdmire(body) {
-  var temp = state ? state.game.temperature : 0;
-  var t = getTitle(temp);
-  var idx = TITLES.indexOf(t);
-  var color = tempColor(temp);
-  var next = getNextTitle(temp);
-  body.innerHTML =
-    '<div class="gal-view" style="--h-main:' + color + '">' +
-      '<div class="gal-stage"><div class="jsGalStage">' + titleHolo(t, color, temp, admireFlipped) + '</div>' +
-        '<div class="gal-back-row"><span class="' + (!admireFlipped ? "on" : "") + '">FRONT</span><span class="' + (admireFlipped ? "on" : "") + '">BACK</span></div>' +
-      '</div>' +
-      '<div class="gal-info">' +
-        '<div class="gal-name">' + t.label + '</div>' +
-        '<div class="gal-cat">◆ 称号典藏 · 阶段 ' + pad2(idx + 1) + ' / 08 · ' + t.en + '</div>' +
-        '<div class="gal-desc">' + t.desc + '</div>' +
-        '<div class="gal-skill"><small>当前温度 · TEMPERATURE</small><b>' + temp + '℃</b><p>' + t.flavor + (next ? ' 距「' + next.label + '」还差 ' + (next.min - temp) + '℃。' : ' 已达最高称号。') + '</p></div>' +
-        '<div class="gal-btns"><button class="btn btn-ghost jsGalFlip">翻看背面</button></div>' +
-      '</div>' +
-    '</div>';
-  afterGalViewRender(body);
 }
 
 function toggleGalAuto() {
@@ -4338,6 +4724,7 @@ function renderTemp(fromVal) {
   var el = $("tempValue");
   var from = (typeof fromVal === "number") ? fromVal : g.temperature;
   var to = g.temperature;
+  if (to > from) sfxTempRise(to - from);   /* 数字滚动伴随上行滑音 */
 
   /* 数字动画 */
   var duration = 600;
@@ -4568,6 +4955,7 @@ function showCardActions(show) {
 
 /* ================= 报告 ================= */
 function showReport() {
+  sfxEnd();   /* 收束和弦落版 */
   var g = state.game;
   var duration = g.startedAt ? Math.round((Date.now() - g.startedAt) / 1000) : 0;
   var mins = Math.floor(duration / 60);
@@ -4669,6 +5057,7 @@ function showStartAnim(onDone) {
   hl.style.strokeDashoffset = len;
   ov.classList.remove("hidden", "ready");
   ov.classList.add("play");
+  sfxStart();   /* 心跳两声 + 暖光泛音 */
   requestAnimationFrame(function(){
     hl.style.transition = "stroke-dashoffset .9s cubic-bezier(.65,0,.35,1)";
     hl.style.strokeDashoffset = 0;
@@ -4739,6 +5128,7 @@ function onResume() {
 }
 
 function enterGame() {
+  if (musicOn) startMusic();   /* 氛围音乐开着的话，进局时恢复（出报告/回首页会停） */
   $("btnSafeWord").innerHTML = ico("shield", 16) + " " + (state.safeWord || "安全词");
   /* 场景徽章 */
   var badge = $("sceneBadge");
@@ -4832,6 +5222,7 @@ function rollDice() {
       f0.textContent = 1 + Math.floor(Math.random() * 6);
       f1.textContent = 1 + Math.floor(Math.random() * 6);
       lastTick = now;
+      sfxDiceTick();   /* 每翻一面一声轻磕，声画同步 */
     }
     requestAnimationFrame(tick);
   }
@@ -4839,13 +5230,14 @@ function rollDice() {
 }
 
 function finishDice(a, b) {
-  sfxSettle();
   if (a === b) {
+    sfxTie();
     $("diceResult").textContent = "平局！再来一次";
     $("btnStartAfterDice").classList.add("hidden");
     rtcHostSync("dice");
     return;
   }
+  sfxSettle();
   var winner = a > b ? 0 : 1;
   var loser = 1 - winner;
   $("diceFace" + winner).classList.add("win");
@@ -4902,7 +5294,7 @@ function onComplete() {
   sfxTemp();
   rtcHostSync();
   if (r.boiling) {
-    setTimeout(function(){ toast("沸腾模式开启，升温翻倍！"); }, 1200);
+    setTimeout(function(){ toast("沸腾模式开启，升温翻倍！"); sfxBoil(); }, 1200);
   }
 }
 
@@ -4942,6 +5334,7 @@ function onSafeWord() {
 function onSafePause() {
   if (rtcJoinAct("pause")) { $("modalSafe").classList.add("hidden"); return; }
   safeAction("pause");
+  sfxConfirm();
   $("modalSafe").classList.add("hidden");
   var old = state.game.temperature;
   renderTemp(old);
@@ -4953,6 +5346,7 @@ function onSafeSkip() {
   if (rtcJoinAct("safeskip")) { $("modalSafe").classList.add("hidden"); return; }
   var hadCard = !!pendingCard;
   safeAction("skip");
+  sfxConfirm();
   $("modalSafe").classList.add("hidden");
   var old = state.game.temperature;
   renderTemp(old);
@@ -5024,6 +5418,7 @@ function rtcNewPC() {
     var st = pc.connectionState;
     if (st === "connected") {
       RTC.connected = true;
+      ensureAudio(); sfxConnect();
       updateRemoteTag();
       rtcStatus("已连接 ✔ " + (RTC.role === "host" ? "现在可以开始游戏了" : "等待房主开始游戏…"), true);
       if (RTC.role === "join") rtcSend({ t: "hello" });
@@ -5137,16 +5532,12 @@ function rtcHostSync(screenName) {
   rtcSend(snap);
 }
 
-/* 加入方：动作转发。返回 true 表示已转发，调用方直接 return */
+/* 加入方：动作转发。返回 true 表示已转发，调用方直接 return。
+   只给一声轻确认；正式音效等房主执行后的快照差分补播，两端时序一致。 */
 function rtcJoinAct(a) {
   if (RTC.role !== "join" || !RTC.connected) return false;
   rtcSend({ t: "act", a: a });
-  try {
-    ensureAudio();
-    if (a === "draw") sfxDraw();
-    else if (a === "complete") sfxTemp();
-    else if (a === "skip" || a === "safeskip") sfxSkip();
-  } catch (e) {}
+  try { ensureAudio(); sfxTap(); } catch (e) {}
   return true;
 }
 
@@ -5177,6 +5568,11 @@ function rtcApplyAct(a) {
 
 /* 加入方：按快照渲染 */
 function rtcApplySnap(m) {
+  /* 先留旧值：后面要按「快照差分」给加入方补过场与音效 */
+  var prevTemp = (state && state.game) ? state.game.temperature : 0;
+  var prevBoil = !!(state && state.game && state.game.boiling);
+  var prevCardId = lastCard ? lastCard.id : null;
+  var prevPending = !!pendingCard;
   try {
     if (m.s) { state = m.s; saveState(state); }
     lastCard = m.lc || null;
@@ -5211,10 +5607,34 @@ function rtcApplySnap(m) {
         badge.classList.toggle("remote", state.sceneMode === "remote");
       }
       renderTurn();
-      renderTemp();
-      renderCard(lastCard);
-      showCardActions(!!lastCard);
-      renderPeek();
+      var tempJump = (state && state.game) ? state.game.temperature - prevTemp : 0;
+      if (lastCard && lastCard.id !== prevCardId && !drawBusy && typeof playDrawFX === "function") {
+        /* 对方抽了新卡：加入方同步播放完整抽卡过场，两端声画一致 */
+        drawBusy = true;
+        $("btnDraw").classList.add("hidden");
+        try {
+          playDrawFX(lastCard, function () {
+            drawBusy = false;
+            showCardActions(!!pendingCard);
+            renderPeek();
+          });
+        } catch (e) {
+          drawBusy = false;
+          renderCard(lastCard);
+          showCardActions(!!pendingCard);
+          renderPeek();
+        }
+      } else {
+        renderCard(lastCard);
+        showCardActions(!!pendingCard);   /* 桌上无待处理卡时不给完成/跳过按钮 */
+        renderPeek();
+      }
+      if (tempJump > 0) { renderTemp(prevTemp); sfxTemp(); }   /* 升温：数字滚动 + 琶音 */
+      else {
+        renderTemp();
+        if (prevPending && !pendingCard) sfxSkip();             /* 卡没了温度没涨 = 被跳过 */
+      }
+      if (!prevBoil && state && state.game && state.game.boiling) sfxBoil();
       showScreen("game");
     } else if (st === "report") {
       $("modalDice").classList.add("hidden");
@@ -5268,6 +5688,7 @@ function rtcCopy(textareaId) {
   var ta = $(textareaId);
   var txt = (ta.value || "").trim();
   if (!txt) { toast("还没有可复制的内容"); return; }
+  sfxTap();
   ta.focus(); ta.select();
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -5402,6 +5823,7 @@ function init() {
   $("btnStartAfterDice").addEventListener("click", onStartAfterDice);
   $("btnCancelDice").addEventListener("click", function(){
     if (RTC.role === "join" && RTC.connected) { toast("远程模式：取消由房主操作"); return; }
+    sfxBack();
     $("modalDice").classList.add("hidden");
     showScreen("setup");
     refreshResume();
@@ -5414,62 +5836,67 @@ function init() {
   $("btnPause").addEventListener("click", onSafePause);
   $("btnSafeSkip").addEventListener("click", onSafeSkip);
   $("btnTerminate").addEventListener("click", onSafeTerminate);
-  $("btnCancelSafe").addEventListener("click", function(){ $("modalSafe").classList.add("hidden"); });
-  $("btnAgain").addEventListener("click", onAgain);
-  $("btnHome").addEventListener("click", onHome);
+  $("btnCancelSafe").addEventListener("click", function(){ sfxBack(); $("modalSafe").classList.add("hidden"); });
+  $("btnAgain").addEventListener("click", function(){ sfxTap(); onAgain(); });
+  $("btnHome").addEventListener("click", function(){ sfxBack(); onHome(); });
   $("btnAudio").addEventListener("click", toggleAudio);
+  $("btnMusic").addEventListener("click", toggleMusic);
+  refreshAudioBtn();
+  refreshMusicBtn();
 
   /* 远程同玩（WebRTC P2P，手动互贴码） */
   $("btnRemote").addEventListener("click", function () {
     if (!window.RTCPeerConnection) { toast("当前浏览器不支持远程同玩"); return; }
+    sfxTap();
     rtcResetUI();
     $("modalRemote").classList.remove("hidden");
   });
   $("btnRtcHost").addEventListener("click", function () {
+    sfxTap();
     $("rtcRoleRow").classList.add("hidden");
     $("rtcJoinBox").classList.add("hidden");
     $("rtcHostBox").classList.remove("hidden");
     rtcHostCreate();
   });
   $("btnRtcJoin").addEventListener("click", function () {
+    sfxTap();
     $("rtcRoleRow").classList.add("hidden");
     $("rtcHostBox").classList.add("hidden");
     $("rtcJoinBox").classList.remove("hidden");
     rtcStatus("把房主的邀请码粘贴到上面");
   });
-  $("btnRtcJoinGen").addEventListener("click", rtcJoinGen);
-  $("btnRtcConnect").addEventListener("click", rtcHostConnect);
+  $("btnRtcJoinGen").addEventListener("click", function(){ sfxTap(); rtcJoinGen(); });
+  $("btnRtcConnect").addEventListener("click", function(){ sfxTap(); rtcHostConnect(); });
   $("btnCopyOffer").addEventListener("click", function () { rtcCopy("rtcOfferOut"); });
   $("btnCopyAnswer").addEventListener("click", function () { rtcCopy("rtcAnswerOut"); });
   $("btnRtcDisconnect").addEventListener("click", function () {
+    sfxBack();
     rtcCleanup(true);
     rtcStatus("已断开");
   });
-  $("btnRtcClose").addEventListener("click", function(){ $("modalRemote").classList.add("hidden"); });
+  $("btnRtcClose").addEventListener("click", function(){ sfxBack(); $("modalRemote").classList.add("hidden"); });
   ["rtcOfferOut", "rtcAnswerOut"].forEach(function (id) {
     $(id).addEventListener("click", function () { this.focus(); this.select(); });
   });
 
   /* 卡片库（站内可编辑） */
-  $("btnLib").addEventListener("click", openLibrary);
-  $("btnLibBack").addEventListener("click", closeLibrary);
+  $("btnLib").addEventListener("click", function(){ sfxTap(); openLibrary(); });
+  $("btnLibBack").addEventListener("click", function(){ sfxBack(); closeLibrary(); });
 
   /* 卡面图鉴 */
-  $("btnGallery").addEventListener("click", openGallery);
-  $("btnGalBack").addEventListener("click", closeGallery);
-  $("btnGalAuto").addEventListener("click", toggleGalAuto);
+  $("btnGallery").addEventListener("click", function(){ sfxTap(); openGallery(); });
+  $("btnGalBack").addEventListener("click", function(){ sfxBack(); closeGallery(); });
+  $("btnGalAuto").addEventListener("click", function(){ sfxTap(); toggleGalAuto(); });
   /* 对局设置（第二步） */
-  $("btnCfg").addEventListener("click", function () { showScreen("cfg"); });
-  $("btnCfgBack").addEventListener("click", function () { showScreen("setup"); refreshResume(); });
-  /* 鉴赏视图按钮委托（图鉴页 + 游戏内弹窗共用） */
-  $("galWrap").addEventListener("click", function (ev) { galViewDelegate(ev, "gallery"); });
-  $("admireBody").addEventListener("click", function (ev) { galViewDelegate(ev, "admire"); });
-  $("btnAdmireClose").addEventListener("click", function () { $("modalAdmire").classList.add("hidden"); });
-  /* 游戏内任务卡右下角「鉴赏」 */
+  $("btnCfg").addEventListener("click", function () { sfxTap(); showScreen("cfg"); });
+  $("btnCfgBack").addEventListener("click", function () { sfxBack(); showScreen("setup"); refreshResume(); });
+  /* 图鉴鉴赏视图按钮委托 */
+  $("galWrap").addEventListener("click", function (ev) { galViewDelegate(ev); });
+  /* 游戏内任务卡右下角「鉴赏」→ 直接进全屏展示 */
   $("cardArea").addEventListener("click", function (ev) {
     var b = ev.target.closest ? ev.target.closest(".admire-btn") : null;
     if (!b || !lastCard) return;
-    openAdmire(resolveCard(lastCard.id) || lastCard);
+    openGalFull(resolveCard(lastCard.id) || lastCard, "admire");
   });
   /* 卡片图鉴 / 展示模式的键盘操作 */
   document.addEventListener("keydown", function (ev) {
@@ -5486,15 +5913,15 @@ function init() {
     else if (ev.key === "ArrowRight") { galSlide(1); }
   });
 
-  /* 温度收藏卡：点击鉴赏当前称号 */
+  /* 温度收藏卡：点击全屏鉴赏称号卡 */
   var tempPanel = $("tempPanel");
   if (tempPanel) {
     bindHolo(tempPanel, false);
-    tempPanel.addEventListener("click", function () { openTitleAdmire(); });
+    tempPanel.addEventListener("click", function () { openGalFullTitle(); });
   }
-  $("btnLibExport").addEventListener("click", exportLib);
-  $("btnLibImport").addEventListener("click", importLib);
-  $("btnLibReset").addEventListener("click", resetLib);
+  $("btnLibExport").addEventListener("click", function(){ sfxTap(); exportLib(); });
+  $("btnLibImport").addEventListener("click", function(){ sfxTap(); importLib(); });
+  $("btnLibReset").addEventListener("click", function(){ sfxTap(); resetLib(); });
   var libWrap = $("libWrap");
   if (libWrap) {
     libWrap.addEventListener("input", onLibInput);
