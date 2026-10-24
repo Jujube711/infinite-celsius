@@ -1059,6 +1059,7 @@ html, body {
         </div>
       </div>
       <div id="rtcStatus" class="rtc-status"></div>
+      <button id="btnRtcForget" class="btn btn-text hidden">删除配对记录（下次改用完整配对）</button>
       <div class="rtc-btnrow">
         <button id="btnRtcDisconnect" class="btn btn-danger"><span data-ico="eject"></span> 断开连接</button>
         <button id="btnRtcClose" class="btn btn-text">关闭</button>
@@ -5565,13 +5566,16 @@ function rtcPackSDP(desc) {
   return btoa(String.fromCharCode.apply(null, out));
 }
 
-/* 统一解码入口：识别 v1 整段 SDP / v2 JSON / v3 二进制 → {type, sdp} */
+/* 统一解码入口：识别 v1 整段 SDP / v2 JSON / v3 完配对二进制 / v4 快速短码 → {type, sdp, meta} */
 function rtcUnpackCode(code) {
-  var bin = atob(String(code).replace(/\s+/g, ""));
+  var s = String(code).replace(/\s+/g, "");
+  while (s.length % 4) s += "=";
+  var bin = atob(s);
   if (bin.charAt(0) === "{") {
     var o = JSON.parse(decodeURIComponent(escape(bin)));
-    if (o.sdp) return { type: o.type, sdp: o.sdp };
-    return rtcSDPFromMeta(rtcMetaFromV2(o));
+    if (o.sdp) return { type: o.type, sdp: o.sdp, meta: null };
+    var m2 = rtcMetaFromV2(o);
+    return { type: m2.t === "o" ? "offer" : "answer", sdp: rtcSDPFromMeta(m2).sdp, meta: m2 };
   }
   var pos = 0;
   function u8() {
@@ -5581,7 +5585,24 @@ function rtcUnpackCode(code) {
   function str() { var n = u8(), s = ""; for (var i = 0; i < n; i++) s += String.fromCharCode(u8()); return s; }
   function u32() { return ((u8() << 24) | (u8() << 16) | (u8() << 8) | u8()) >>> 0; }
   var b0 = u8();
-  if ((b0 >> 4) !== 3) throw new Error("码版本不识别，请双方都更新页面");
+  var ver = b0 >> 4;
+  if (ver === 4) {
+    /* v4 快速短码：只带本次公网候选，凭据/指纹来自已存的配对记录 */
+    if (!rtcPeer || !rtcPeer.fp) throw new Error("本机还没有配对记录，请先用完整配对连接一次");
+    var kind4 = b0 & 15;
+    var n4 = u8(), c4 = [];
+    for (var k4 = 0; k4 < n4; k4++) {
+      var fmt4 = u8(), ip4;
+      if (fmt4 === 0) ip4 = u8() + "." + u8() + "." + u8() + "." + u8();
+      else ip4 = str();
+      var port4 = (u8() << 8) | u8();
+      c4.push({ typ: "srflx", ip: ip4, port: port4, prio: 1677729535 });
+    }
+    if (!c4.length) throw new Error("短码里没有地址信息");
+    var meta4 = { t: kind4 === 0 ? "o" : "a", u: rtcPeer.ufrag, p: rtcPeer.pwd, f: rtcPeer.fp, su: kind4 === 0 ? "actpass" : "active", m: "0", c: c4, quick: true };
+    return { type: meta4.t === "o" ? "offer" : "answer", sdp: rtcSDPFromMeta(meta4).sdp, meta: meta4 };
+  }
+  if (ver !== 3) throw new Error("码版本不识别，请双方都更新页面");
   var kind = b0 & 15;
   var b1 = u8();
   var su = ["actpass", "active", "passive"][b1 >> 3] || "actpass";
@@ -5601,7 +5622,113 @@ function rtcUnpackCode(code) {
     var port = (u8() << 8) | u8();
     c.push({ typ: typ, ip: ip, port: port, prio: u32() });
   }
-  return rtcSDPFromMeta({ t: kind === 0 ? "o" : "a", u: u, p: p, f: fp, su: su, m: mid, c: c });
+  var meta3 = { t: kind === 0 ? "o" : "a", u: u, p: p, f: fp, su: su, m: mid, c: c };
+  return { type: meta3.t === "o" ? "offer" : "answer", sdp: rtcSDPFromMeta(meta3).sdp, meta: meta3 };
+}
+
+/* ================= 配对身份（IndexedDB 持久化） =================
+   完整配对一次后，双方互相记住 DTLS 指纹 + ICE 凭据，日常只需互贴 12 字短码（只传公网地址）。
+   本机用 10 年期证书 + 固定凭据，指纹因此跨会话稳定。安全性换取便利：知道对方历史码的人
+   理论上可重放连接 —— 两人私密使用可接受（M 已确认放宽） */
+var RTC_ID = null;      /* {cert,ufrag,pwd,fp} 本机身份 */
+var rtcPeer = null;     /* {fp,ufrag,pwd} 对方身份 */
+var rtcPeerLoaded = false;
+
+function rtcIdbOpen() {
+  return new Promise(function (res, rej) {
+    var rq = indexedDB.open("wj-pair", 1);
+    rq.onupgradeneeded = function () { if (!rq.result.objectStoreNames.contains("kv")) rq.result.createObjectStore("kv"); };
+    rq.onsuccess = function () { res(rq.result); };
+    rq.onerror = function () { rej(rq.error); };
+  });
+}
+function rtcIdbPut(k, v) {
+  return rtcIdbOpen().then(function (db) {
+    return new Promise(function (res, rej) {
+      var tx = db.transaction("kv", "readwrite");
+      tx.objectStore("kv").put(v, k);
+      tx.oncomplete = function () { res(true); };
+      tx.onerror = function () { rej(tx.error); };
+    });
+  });
+}
+function rtcIdbGet(k) {
+  return rtcIdbOpen().then(function (db) {
+    return new Promise(function (res, rej) {
+      var r = db.transaction("kv", "readonly").objectStore("kv").get(k);
+      r.onsuccess = function () { res(r.result); };
+      r.onerror = function () { rej(r.error); };
+    });
+  });
+}
+function rtcRandChars(n) {
+  var a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var buf = new Uint8Array(n);
+  (window.crypto || window.msCrypto).getRandomValues(buf);
+  var s = "";
+  for (var i = 0; i < n; i++) s += a[buf[i] % a.length];
+  return s;
+}
+function rtcFingerprintOf(cert) {
+  var pc = new RTCPeerConnection({ certificates: [cert] });
+  pc.createDataChannel("fp");
+  return pc.createOffer().then(function (o) {
+    pc.close();
+    var fp = (o.sdp.match(/a=fingerprint:sha-256 (\S+)/) || [])[1];
+    return fp.replace(/:/g, "").toLowerCase();
+  });
+}
+async function rtcEnsureIdentity() {
+  if (RTC_ID && rtcPeerLoaded) return;
+  if (!RTC_ID) {
+    var id = null;
+    try { id = await rtcIdbGet("identity"); } catch (e) {}
+    if (id && id.cert && id.cert.expires && id.cert.expires < Date.now() + 30 * 864e5) id = null; /* 证书临期 → 换新并重新配对 */
+    if (!id) {
+      var cert = await RTCPeerConnection.generateCertificate({ name: "ECDSA", namedCurve: "P-256", expires: Date.now() + 10 * 365 * 864e5 });
+      id = { cert: cert, ufrag: rtcRandChars(4), pwd: rtcRandChars(24) };
+      id.fp = await rtcFingerprintOf(cert);
+      try { await rtcIdbPut("identity", id); } catch (e) {}   /* 隐身模式等存不了 → 仅本局有效 */
+    }
+    RTC_ID = id;
+  }
+  if (!rtcPeerLoaded) {
+    try { rtcPeer = await rtcIdbGet("peer"); } catch (e) { rtcPeer = null; }
+    rtcPeerLoaded = true;
+  }
+  var f = $("btnRtcForget");
+  if (f) f.classList.toggle("hidden", !rtcPeer);
+}
+function rtcSavePeer(meta) {
+  if (!meta || meta.quick || !meta.f || !meta.u || !meta.p) return;
+  rtcPeer = { fp: String(meta.f).toLowerCase(), ufrag: meta.u, pwd: meta.p };
+  rtcPeerLoaded = true;
+  try { rtcIdbPut("peer", rtcPeer); } catch (e) {}
+  var f = $("btnRtcForget");
+  if (f) f.classList.toggle("hidden", !rtcPeer);
+}
+function rtcMunge(sdp) {
+  if (!RTC_ID) return sdp;
+  return sdp.replace(/a=ice-ufrag:\S+/g, "a=ice-ufrag:" + RTC_ID.ufrag)
+            .replace(/a=ice-pwd:\S+/g, "a=ice-pwd:" + RTC_ID.pwd);
+}
+/* v4 快速码打包：只取 srflx IPv4 候选（异地主路径；无公网 v4 时抛错回退完整配对） */
+function rtcPackQuick(desc, kind) {
+  var sdp = desc.sdp;
+  var out = [0x40 | kind, 0];
+  var n = 0;
+  sdp.replace(/\r/g, "").split("\n").forEach(function (line) {
+    var m = line.match(/^a=candidate:\S+ \d+ udp \d+ (\S+) (\d+) typ srflx/);
+    if (!m || n >= 1) return;
+    if (!/^\d{1,3}(\.\d{1,3}){3}$/.test(m[1])) return;
+    out.push(0);
+    m[1].split(".").forEach(function (oct) { out.push(+oct); });
+    out.push(((+m[2]) >> 8) & 255, (+m[2]) & 255);
+    n++;
+  });
+  out[1] = n;
+  if (!n) throw new Error("没拿到公网地址（纯 IPv6 网络等），请改用完整配对");
+  return btoa(String.fromCharCode.apply(null, out)).replace(/=+$/, "");
 }
 
 function rtcStatus(msg, ok) {
@@ -5610,7 +5737,10 @@ function rtcStatus(msg, ok) {
 }
 
 function rtcNewPC() {
-  var pc = new RTCPeerConnection(RTC_ICE);
+  /* 已配对身份 → 使用持久化证书，DTLS 指纹跨会话稳定 */
+  var cfg = RTC_ICE;
+  if (RTC_ID && RTC_ID.cert) cfg = Object.assign({}, RTC_ICE, { certificates: [RTC_ID.cert] });
+  var pc = new RTCPeerConnection(cfg);
   pc.onconnectionstatechange = function () {
     var st = pc.connectionState;
     if (st === "connected") {
@@ -5650,33 +5780,41 @@ async function rtcHostCreate() {
   try {
     rtcCleanup(false);
     RTC.role = "host";
+    await rtcEnsureIdentity();
     RTC.pc = rtcNewPC();
     RTC.dc = RTC.pc.createDataChannel("game", { ordered: true });
     rtcWireChannel(RTC.dc);
     var offer = await RTC.pc.createOffer();
-    await RTC.pc.setLocalDescription(offer);
+    await RTC.pc.setLocalDescription({ type: "offer", sdp: rtcMunge(offer.sdp) });
     var desc = await rtcWaitIce(RTC.pc);
-    $("rtcOfferOut").value = rtcPackSDP(desc);
-    rtcStatus("邀请码已生成，发给对方后等回执");
+    $("rtcOfferOut").value = rtcPeer ? rtcPackQuick(desc, 0) : rtcPackSDP(desc);
+    rtcStatus(rtcPeer ? "连接码已生成（12 字短码），发给对方" : "邀请码已生成，发给对方后等回执");
   } catch (e) { rtcStatus("创建失败：" + (e && e.message ? e.message : e)); }
 }
 
 async function rtcJoinGen() {
   try {
     var code = $("rtcOfferIn").value;
-    if (!code.trim()) { rtcStatus("请先粘贴房主的邀请码"); return; }
-    var desc = rtcUnpackCode(code);   /* v1/v2/v3 三代码统一解码，坏码会抛错进下方 catch */
-    if (desc.type !== "offer") { rtcStatus("这不是邀请码，请粘贴房主发来的邀请码"); return; }
+    if (!code.trim()) { rtcStatus("请先粘贴房主的连接码"); return; }
+    await rtcEnsureIdentity();   /* 必须先加载配对记录：短码解码依赖它 */
+    var unp = rtcUnpackCode(code);
+    if (unp.type !== "offer") { rtcStatus("这不是连接码，请粘贴房主发来的连接码"); return; }
     rtcCleanup(false);
     RTC.role = "join";
+    /* 只有「之前配对过、且来码的正是同一个对方」时才回短码；
+       首次配对必须回完整码，因为房主此刻还不认识我们 */
+    var wasPaired = !!(rtcPeer && rtcPeer.fp && unp.meta && unp.meta.f &&
+      String(unp.meta.f).toLowerCase() === rtcPeer.fp && unp.meta.u === rtcPeer.ufrag);
+    rtcSavePeer(unp.meta);   /* 记住房主身份（短码 meta 来自本机记录，内部会跳过） */
     RTC.pc = rtcNewPC();
     RTC.pc.ondatachannel = function (ev) { RTC.dc = ev.channel; rtcWireChannel(RTC.dc); };
-    await RTC.pc.setRemoteDescription(desc);
+    await RTC.pc.setRemoteDescription({ type: "offer", sdp: unp.sdp });
     var answer = await RTC.pc.createAnswer();
-    await RTC.pc.setLocalDescription(answer);
+    await RTC.pc.setLocalDescription({ type: "answer", sdp: rtcMunge(answer.sdp) });
     var desc = await rtcWaitIce(RTC.pc);
-    $("rtcAnswerOut").value = rtcPackSDP(desc);
-    rtcStatus("回执码已生成，发给房主并等对方「接通」");
+    $("rtcAnswerOut").value = wasPaired ? rtcPackQuick(desc, 1) : rtcPackSDP(desc);
+    rtcStatus(wasPaired ? "回执码已生成（12 字短码），发给房主"
+                        : "回执码已生成，发给房主并等对方「接通」——首次配对后以后就能用短码了");
   } catch (e) { rtcStatus("加入失败：" + (e && e.message ? e.message : e)); }
 }
 
@@ -5685,9 +5823,11 @@ async function rtcHostConnect() {
     if (!RTC.pc || RTC.role !== "host") { rtcStatus("请先点「我是房主」生成邀请码"); return; }
     var code = $("rtcAnswerIn").value;
     if (!code.trim()) { rtcStatus("请先粘贴对方的回执码"); return; }
-    var desc = rtcUnpackCode(code);
-    if (desc.type !== "answer") { rtcStatus("这不是回执码，请粘贴对方的回执码"); return; }
-    await RTC.pc.setRemoteDescription(desc);
+    await rtcEnsureIdentity();   /* 短码解码依赖配对记录，先加载 */
+    var unp = rtcUnpackCode(code);
+    if (unp.type !== "answer") { rtcStatus("这不是回执码，请粘贴对方的回执码"); return; }
+    rtcSavePeer(unp.meta);   /* 完整配对收尾：记住加入方身份，之后可用短码 */
+    await RTC.pc.setRemoteDescription({ type: unp.type, sdp: unp.sdp });
     rtcStatus("正在接通…");
   } catch (e) { rtcStatus("接通失败：" + (e && e.message ? e.message : e)); }
 }
@@ -6076,6 +6216,14 @@ function init() {
     rtcStatus("已断开");
   });
   $("btnRtcClose").addEventListener("click", function(){ sfxBack(); $("modalRemote").classList.add("hidden"); });
+  $("btnRtcForget").addEventListener("click", function () {
+    uiConfirm("将删除本机记住的对方配对信息，下次连接需要重新互贴一次完整邀请码。", function () {
+      rtcPeer = null;
+      try { rtcIdbPut("peer", null); } catch (e) {}
+      $("btnRtcForget").classList.add("hidden");
+      toast("已删除配对记录");
+    }, { title: "删除配对记录", okText: "删除", danger: true, icon: "reset" });
+  });
   ["rtcOfferOut", "rtcAnswerOut"].forEach(function (id) {
     $(id).addEventListener("click", function () { this.focus(); this.select(); });
   });
