@@ -177,6 +177,9 @@ html, body {
 .modal-box { width: 100%; max-width: 360px; margin: auto; max-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); max-height: calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 32px); overflow-y: auto; -webkit-overflow-scrolling: touch; background: var(--bg-2); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 22px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-soft); }
 .modal-title { margin: 0; font-size: 19px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
 .modal-sub { margin: 0 0 6px; font-size: 13px; color: var(--text-dim); text-align: center; line-height: 1.5; }
+/* 应用内确认弹窗（替代原生 confirm） */
+.confirm-actions { display: flex; gap: 10px; margin-top: 4px; }
+.confirm-actions .btn { flex: 1; padding: 12px 14px; }
 
 /* 轻提示 */
 .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); transform: translateX(-50%) translateY(20px); background: rgba(20,14,28,.95); border: 1px solid var(--panel-border); color: var(--text); padding: 12px 20px; border-radius: 999px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 100; }
@@ -1010,6 +1013,18 @@ html, body {
     </div>
   </div>
 
+  <!-- ============ 应用内确认弹窗（替代原生 confirm，双端风格统一） ============ -->
+  <div id="modalConfirm" class="modal hidden">
+    <div class="modal-box">
+      <h3 class="modal-title"><span id="confirmIco" data-ico="shield"></span> <span id="confirmTitle">请确认</span></h3>
+      <p class="modal-sub" id="confirmMsg"></p>
+      <div class="confirm-actions">
+        <button id="btnConfirmCancel" class="btn btn-ghost">取消</button>
+        <button id="btnConfirmOk" class="btn btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ 远程同玩弹窗（WebRTC P2P 手动信令，无服务器） ============ -->
   <div id="modalRemote" class="modal hidden">
     <div class="modal-box">
@@ -1488,9 +1503,10 @@ function importLib() {
   inp.click();
 }
 function resetLib() {
-  if (!window.confirm("确定把站内卡片库恢复为出厂默认？（你的编辑、删除、新增都会清空）")) return;
-  lib = { edits: {}, customs: [] };
-  saveLib(); renderLibrary(); toast("已重置为默认");
+  uiConfirm("站内卡片库将恢复为出厂 60 张，你的编辑、删除、新增都会清空。", function () {
+    lib = { edits: {}, customs: [] };
+    saveLib(); renderLibrary(); toast("已重置为默认");
+  }, { title: "重置卡片库", okText: "重置", danger: true, icon: "reset" });
 }
 
 function newGame(cfg) {
@@ -1598,6 +1614,32 @@ function toast(msg) {
   /* 连续提示时先清掉上一条的隐藏计时，避免后一条被提前隐藏 */
   clearTimeout(toast._t);
   toast._t = setTimeout(function(){ t.classList.remove("show"); }, 2200);
+}
+
+/* ================= 应用内确认弹窗（替代原生 confirm） =================
+   uiConfirm(msg, onOk, opts) —— opts: title / okText / cancelText / icon / danger
+   确认走 onOk 回调（弹窗是异步的，调用方不能依赖同步返回值） */
+var _confirmOk = null;
+function uiConfirm(msg, onOk, opts) {
+  opts = opts || {};
+  $("confirmTitle").textContent = opts.title || "请确认";
+  $("confirmMsg").textContent = msg;
+  $("confirmIco").setAttribute("data-ico", opts.icon || "shield");
+  renderIcons();
+  var ok = $("btnConfirmOk");
+  ok.textContent = opts.okText || "确定";
+  ok.className = "btn " + (opts.danger ? "btn-danger" : "btn-primary");
+  $("btnConfirmCancel").textContent = opts.cancelText || "取消";
+  _confirmOk = onOk || null;
+  $("modalConfirm").classList.remove("hidden");
+}
+function closeConfirm(ok) {
+  var m = $("modalConfirm");
+  if (m.classList.contains("hidden")) return;
+  m.classList.add("hidden");
+  var cb = _confirmOk;
+  _confirmOk = null;
+  if (ok && cb) cb();
 }
 
 function showScreen(name) {
@@ -5103,8 +5145,13 @@ function onStart() {
     return;
   }
   if (state && state.game && state.game.active) {
-    if (!confirm("已有进行中的对局，确定放弃并重开一局？")) return;
+    uiConfirm("已有进行中的对局，重开会放弃当前进度。", function () { doStartGame(cfg); }, { title: "放弃并重开一局？", okText: "放弃并重开", danger: true, icon: "reset" });
+    return;
   }
+  doStartGame(cfg);
+}
+
+function doStartGame(cfg) {
   state = newGame(cfg);
   saveState(state);
   lastCard = null;
@@ -5311,7 +5358,11 @@ function onSkip() {
 }
 
 function onEnd(skipConfirm) {
-  if (!skipConfirm && !confirm("确定结束本局并生成升温报告？")) return;
+  if (skipConfirm) { doEnd(); return; }
+  uiConfirm("确定结束本局并生成升温报告？", doEnd, { title: "结束本局", okText: "结束并看报告" });
+}
+
+function doEnd() {
   if (rtcJoinAct("end")) return;
   state.game.active = false;
   saveState(state);
@@ -5407,6 +5458,73 @@ var RTC_ICE = { iceServers: [
 function rtcEnc(o) { return btoa(unescape(encodeURIComponent(JSON.stringify(o)))); }
 function rtcDec(s) { return JSON.parse(decodeURIComponent(escape(atob(String(s).replace(/\s+/g, ""))))); }
 
+/* —— 紧凑信令编码：SDP 的结构两端完全一致，只传变量（ufrag/密码/指纹/候选/ SETUP/MID），
+   收到后按模板重建完整 SDP。邀请码/回执码从 ~1060 字符压到 ~250 字符。
+   解码端仍兼容旧版「整段 SDP」码（o.sdp 存在则直接用），旧版无法解新码，需双方同步更新页面 —— */
+function rtcPackSDP(desc) {
+  var sdp = desc.sdp;
+  function grab(re) { var m = sdp.match(re); return m ? m[1] : ""; }
+  var fpHex = grab(/a=fingerprint:sha-256 (\S+)/).replace(/:/g, "");
+  var fpB64 = "";
+  if (fpHex.length === 64) {
+    var bin = "";
+    for (var i = 0; i < 64; i += 2) bin += String.fromCharCode(parseInt(fpHex.substr(i, 2), 16));
+    fpB64 = btoa(bin);
+  }
+  var typShort = { host: "h", srflx: "s", prflx: "p", relay: "r" };
+  var cands = [];
+  sdp.replace(/\r/g, "").split("\n").forEach(function (line) {
+    var m = line.match(/^a=candidate:\S+ \d+ (\S+) (\d+) (\S+) (\d+) typ (\S+)/);
+    if (m && m[1] === "udp" && typShort[m[5]]) cands.push(typShort[m[5]] + "|" + m[3] + "|" + m[4] + "|" + m[2]);
+  });
+  return btoa(JSON.stringify({
+    t: desc.type === "offer" ? "o" : "a",
+    u: grab(/a=ice-ufrag:(\S+)/),
+    p: grab(/a=ice-pwd:(\S+)/),
+    f: fpB64,
+    su: grab(/a=setup:(\S+)/),
+    m: grab(/a=mid:(\S+)/),
+    c: cands
+  }));
+}
+
+function rtcUnpackSDP(o) {
+  if (o.sdp) return { type: o.type, sdp: o.sdp };   /* 旧版整段 SDP 码 */
+  if (!o.u || !o.p || !o.f) throw new Error("码内容不完整");
+  var hex = "";
+  atob(o.f).split("").forEach(function (ch) {
+    hex += ("0" + ch.charCodeAt(0).toString(16)).slice(-2).toUpperCase();
+  });
+  var typName = { h: "host", s: "srflx", p: "prflx", r: "relay" };
+  var lines = [
+    "v=0",
+    "o=- " + (Date.now() % 4294967296) + " 2 IN IP4 127.0.0.1",
+    "s=-",
+    "t=0 0",
+    "a=group:BUNDLE " + (o.m || "0"),
+    "a=msid-semantic: WMS",
+    "m=application 9 UDP/DTLS/SCTP webrtc-datachannel",
+    "c=IN IP4 0.0.0.0"
+  ];
+  (o.c || []).forEach(function (c, i) {
+    var f = c.split("|");
+    if (!typName[f[0]]) return;
+    lines.push("a=candidate:" + (i + 1) + " 1 udp " + f[3] + " " + f[1] + " " + f[2] + " typ " + typName[f[0]] + " generation 0");
+  });
+  if (o.c && o.c.length) lines.push("a=end-of-candidates");
+  lines.push(
+    "a=ice-ufrag:" + o.u,
+    "a=ice-pwd:" + o.p,
+    "a=ice-options:trickle",
+    "a=fingerprint:sha-256 " + hex.match(/../g).join(":"),
+    "a=setup:" + (o.su || (o.t === "o" ? "actpass" : "active")),
+    "a=mid:" + (o.m || "0"),
+    "a=sctp-port:5000",
+    "a=max-message-size:262144"
+  );
+  return { type: o.t === "o" ? "offer" : "answer", sdp: lines.join("\r\n") + "\r\n" };
+}
+
 function rtcStatus(msg, ok) {
   var el = $("rtcStatus");
   if (el) { el.textContent = msg || ""; el.classList.toggle("ok", !!ok); }
@@ -5459,7 +5577,7 @@ async function rtcHostCreate() {
     var offer = await RTC.pc.createOffer();
     await RTC.pc.setLocalDescription(offer);
     var desc = await rtcWaitIce(RTC.pc);
-    $("rtcOfferOut").value = rtcEnc({ t: "o", type: desc.type, sdp: desc.sdp });
+    $("rtcOfferOut").value = rtcPackSDP(desc);
     rtcStatus("邀请码已生成，发给对方后等回执");
   } catch (e) { rtcStatus("创建失败：" + (e && e.message ? e.message : e)); }
 }
@@ -5469,16 +5587,16 @@ async function rtcJoinGen() {
     var code = $("rtcOfferIn").value;
     if (!code.trim()) { rtcStatus("请先粘贴房主的邀请码"); return; }
     var o = rtcDec(code);
-    if (o.t !== "o") { rtcStatus("邀请码无效，请检查是否完整粘贴"); return; }
+    if (!o || o.t !== "o" || (!o.sdp && !o.u)) { rtcStatus("邀请码无效，请检查是否完整粘贴"); return; }
     rtcCleanup(false);
     RTC.role = "join";
     RTC.pc = rtcNewPC();
     RTC.pc.ondatachannel = function (ev) { RTC.dc = ev.channel; rtcWireChannel(RTC.dc); };
-    await RTC.pc.setRemoteDescription({ type: o.type, sdp: o.sdp });
+    await RTC.pc.setRemoteDescription(rtcUnpackSDP(o));
     var answer = await RTC.pc.createAnswer();
     await RTC.pc.setLocalDescription(answer);
     var desc = await rtcWaitIce(RTC.pc);
-    $("rtcAnswerOut").value = rtcEnc({ t: "a", type: desc.type, sdp: desc.sdp });
+    $("rtcAnswerOut").value = rtcPackSDP(desc);
     rtcStatus("回执码已生成，发给房主并等对方「接通」");
   } catch (e) { rtcStatus("加入失败：" + (e && e.message ? e.message : e)); }
 }
@@ -5489,8 +5607,8 @@ async function rtcHostConnect() {
     var code = $("rtcAnswerIn").value;
     if (!code.trim()) { rtcStatus("请先粘贴对方的回执码"); return; }
     var a = rtcDec(code);
-    if (a.t !== "a") { rtcStatus("回执码无效，请检查是否完整粘贴"); return; }
-    await RTC.pc.setRemoteDescription({ type: a.type, sdp: a.sdp });
+    if (!a || a.t !== "a" || (!a.sdp && !a.u)) { rtcStatus("回执码无效，请检查是否完整粘贴"); return; }
+    await RTC.pc.setRemoteDescription(rtcUnpackSDP(a));
     rtcStatus("正在接通…");
   } catch (e) { rtcStatus("接通失败：" + (e && e.message ? e.message : e)); }
 }
@@ -5608,24 +5726,26 @@ function rtcApplySnap(m) {
       }
       renderTurn();
       var tempJump = (state && state.game) ? state.game.temperature - prevTemp : 0;
-      if (lastCard && lastCard.id !== prevCardId && !drawBusy && typeof playDrawFX === "function") {
+      /* 桌面显示以 pendingCard（待处理卡）为准：lastCard 只是防重复抽卡的记忆，
+         结算后仍保留旧卡 id，若按它渲染，加入方会一直显示已结算的卡 */
+      if (pendingCard && pendingCard.id !== prevCardId && !drawBusy && typeof playDrawFX === "function") {
         /* 对方抽了新卡：加入方同步播放完整抽卡过场，两端声画一致 */
         drawBusy = true;
         $("btnDraw").classList.add("hidden");
         try {
-          playDrawFX(lastCard, function () {
+          playDrawFX(pendingCard, function () {
             drawBusy = false;
             showCardActions(!!pendingCard);
             renderPeek();
           });
         } catch (e) {
           drawBusy = false;
-          renderCard(lastCard);
+          renderCard(pendingCard);
           showCardActions(!!pendingCard);
           renderPeek();
         }
       } else {
-        renderCard(lastCard);
+        renderCard(pendingCard || null);
         showCardActions(!!pendingCard);   /* 桌上无待处理卡时不给完成/跳过按钮 */
         renderPeek();
       }
@@ -5837,6 +5957,8 @@ function init() {
   $("btnSafeSkip").addEventListener("click", onSafeSkip);
   $("btnTerminate").addEventListener("click", onSafeTerminate);
   $("btnCancelSafe").addEventListener("click", function(){ sfxBack(); $("modalSafe").classList.add("hidden"); });
+  $("btnConfirmOk").addEventListener("click", function(){ sfxConfirm(); closeConfirm(true); });
+  $("btnConfirmCancel").addEventListener("click", function(){ sfxBack(); closeConfirm(false); });
   $("btnAgain").addEventListener("click", function(){ sfxTap(); onAgain(); });
   $("btnHome").addEventListener("click", function(){ sfxBack(); onHome(); });
   $("btnAudio").addEventListener("click", toggleAudio);
@@ -5900,6 +6022,12 @@ function init() {
   });
   /* 卡片图鉴 / 展示模式的键盘操作 */
   document.addEventListener("keydown", function (ev) {
+    /* 应用内确认弹窗优先：Esc=取消、Enter=确认 */
+    if (!$("modalConfirm").classList.contains("hidden")) {
+      if (ev.key === "Escape") { closeConfirm(false); }
+      else if (ev.key === "Enter") { closeConfirm(true); ev.preventDefault(); }
+      return;
+    }
     /* 全屏展示模式优先：Esc 关闭、方向键换卡、空格或回车翻面 */
     if (galFullOpen) {
       if (ev.key === "Escape") { closeGalFull(); }
