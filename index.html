@@ -73,6 +73,66 @@ html, body {
 .btn-draw { font-size: 18px; padding: 16px; }
 .btn-safe { background: rgba(227,93,117,.12); border: 1px solid rgba(227,93,117,.4); color: #ee8aa0; }
 
+/* ================= 双风格模式卡 + 灵魂共鸣换肤 ================= */
+.mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mode-card {
+  position: relative; border-radius: 14px; padding: 12px; cursor: pointer;
+  border: 1px solid var(--panel-border); background: rgba(255,255,255,.03);
+  display: flex; flex-direction: column; gap: 3px; min-height: 96px;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.mode-card .mc-ico { width: 30px; height: 30px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 4px; }
+.mode-card .mc-name { font-size: 14px; font-weight: 800; letter-spacing: .04em; }
+.mode-card .mc-desc { font-size: 10.5px; color: var(--text-dim); line-height: 1.5; }
+.mode-card .mc-new { position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 700; padding: 1px 6px; border-radius: 999px; border: 1px solid var(--accent-3); color: var(--accent-3); }
+#modeHot .mc-ico { background: rgba(227,164,189,.15); color: var(--accent-2); }
+#modeSoul .mc-ico { background: rgba(157,184,217,.14); color: #9db8d9; }
+.mode-card.sel-hot { border-color: var(--accent); background: rgba(227,164,189,.08); box-shadow: 0 6px 20px rgba(227,164,189,.16); }
+.mode-card.sel-soul { border-color: #9db8d9; background: rgba(157,184,217,.08); box-shadow: 0 6px 20px rgba(157,184,217,.16); }
+
+/* 灵魂共鸣主题：墨蓝夜色（变量整体换肤 + 关键硬编码色覆盖） */
+body.soul-theme {
+  --bg: #11161f; --bg-2: #1a2432;
+  --panel: rgba(200,220,255,.045); --panel-border: rgba(157,184,217,.22);
+  --text: #e8edf4; --text-dim: #93a0b5;
+  --accent: #9db8d9; --accent-2: #7f9fc4; --accent-3: #8aa6c8;
+  --danger: #d38ea2;
+  --shadow: 0 10px 34px rgba(3,7,13,.6);
+  --shadow-soft: 0 2px 8px rgba(3,7,13,.22), 0 18px 44px rgba(3,7,13,.42);
+}
+body.soul-theme .brand { text-shadow: 0 2px 22px rgba(143,169,201,.28); }
+body.soul-theme .btn-primary {
+  background: linear-gradient(135deg, #b9cce3 0%, #8fa9c9 60%, #7290b4 100%);
+  color: #0f1724; box-shadow: 0 8px 22px rgba(143,169,201,.25);
+}
+body.soul-theme .btn-primary:hover { box-shadow: 0 10px 28px rgba(143,169,201,.32); }
+body.soul-theme .temp-panel { background: linear-gradient(150deg, rgba(200,220,255,.07) 0%, rgba(200,220,255,.02) 48%, rgba(157,184,217,.06) 100%); }
+body.soul-theme .temp-panel::before { background: radial-gradient(circle at var(--mx) var(--my), rgba(220,235,255,.14) 0%, rgba(220,235,255,.04) 26%, transparent 55%); }
+body.soul-theme .field input[type="text"], body.soul-theme .field select { background: rgba(255,255,255,.05); }
+body.soul-theme .mode-card.sel-hot { border-color: var(--panel-border); background: rgba(255,255,255,.04); box-shadow: none; }
+body.soul-theme .mode-card.sel-soul { border-color: var(--accent); background: rgba(157,184,217,.1); box-shadow: 0 6px 20px rgba(157,184,217,.2); }
+/* 灵魂共鸣卡面（议事录风格） */
+.sc-card {
+  --sc-line: rgba(157,184,217,.5); --sc-dim: rgba(157,184,217,.28);
+  width: 100%; aspect-ratio: 63 / 88; border-radius: 14px;
+  background: linear-gradient(160deg, #1b2534 0%, #141c29 60%, #101724 100%);
+  border: 1px solid rgba(157,184,217,.35);
+  box-shadow: inset 0 0 0 1px rgba(232,237,244,.04), 0 14px 34px rgba(3,7,13,.5);
+  position: relative; display: flex; flex-direction: column; padding: 16px 15px 13px; color: #e8edf4;
+  text-align: center; overflow: hidden;
+}
+.sc-card::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--sc-dim); border-radius: 9px; pointer-events: none; }
+.sc-card::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 60% at 50% -10%, rgba(157,184,217,.10) 0%, transparent 60%); }
+.sc-head { display: flex; align-items: center; justify-content: space-between; font-size: 10px; color: var(--sc-line); position: relative; z-index: 1; }
+.sc-emblem { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--sc-line); display: inline-flex; align-items: center; justify-content: center; color: var(--accent); }
+.sc-name { font-family: var(--font-display); font-size: 26px; letter-spacing: .18em; margin: 18px 0 4px; color: #eef3f9; position: relative; z-index: 1; text-shadow: 0 1px 0 rgba(0,0,0,.4); }
+.sc-en { font-size: 9px; letter-spacing: .3em; color: var(--sc-line); margin-bottom: 12px; position: relative; z-index: 1; }
+.sc-body { flex: 1; display: flex; align-items: center; font-size: 15.5px; line-height: 1.8; color: #dfe7f1; position: relative; z-index: 1; padding: 4px 2px; }
+.sc-foot { display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; color: var(--sc-line); border-top: 1px solid var(--sc-dim); padding-top: 9px; position: relative; z-index: 1; }
+.sc-foot .sc-temp { font-weight: 700; color: var(--accent); }
+
 /* 设置屏 */
 .setup-card { background: var(--panel); border: 1px solid var(--panel-border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
 .brand { text-align: center; font-size: 34px; font-weight: 700; letter-spacing: 4px; margin: 0; font-family: var(--font-display); text-shadow: 0 2px 22px rgba(210,115,157,.3); }
@@ -180,6 +240,14 @@ html, body {
 /* 应用内确认弹窗（替代原生 confirm） */
 .confirm-actions { display: flex; gap: 10px; margin-top: 4px; }
 .confirm-actions .btn { flex: 1; padding: 12px 14px; }
+/* 我们的约定 */
+.pacts-list { display: flex; flex-direction: column; gap: 8px; max-height: 50dvh; overflow-y: auto; text-align: left; }
+.pact-item { border: 1px solid var(--panel-border); border-radius: 10px; padding: 9px 11px; }
+.pact-date { font-size: 11px; color: var(--text-dim); margin-bottom: 3px; }
+.pact-text { font-size: 13px; line-height: 1.65; }
+.pacts-empty { color: var(--text-dim); font-size: 13px; text-align: center; line-height: 1.8; padding: 8px 0; }
+#reportPacts b { color: var(--accent); }
+#reportPacts .pact-item { margin-top: 6px; }
 
 /* 轻提示 */
 .toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 24px); transform: translateX(-50%) translateY(20px); background: rgba(20,14,28,.95); border: 1px solid var(--panel-border); color: var(--text); padding: 12px 20px; border-radius: 999px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 100; }
@@ -792,9 +860,25 @@ html, body {
 
   <!-- ============ 首页（一屏式：安全词 + 开始 + 入口） ============ -->
   <section id="screen-setup" class="screen">
-    <h1 class="brand">∞<span>℃</span> 无界升温</h1>
-    <p class="brand-sub">温度无上限 · 安全词是唯一刹车</p>
+    <h1 class="brand" id="brandTitle">∞<span>℃</span> 无界升温</h1>
+    <p class="brand-sub" id="brandTag">温度无上限 · 安全词是唯一刹车</p>
     <div class="setup-card">
+      <div class="field">
+        <label><span data-ico="heart"></span> 选择今晚的靠近方式</label>
+        <div class="mode-cards">
+          <div class="mode-card" id="modeHot" role="button">
+            <span class="mc-ico"><span data-ico="flame"></span></span>
+            <span class="mc-name">体温共振</span>
+            <span class="mc-desc">亲密任务 · 真心话<br>让身体先靠近</span>
+          </div>
+          <div class="mode-card" id="modeSoul" role="button">
+            <span class="mc-new">新</span>
+            <span class="mc-ico"><span data-ico="book"></span></span>
+            <span class="mc-name">灵魂共鸣</span>
+            <span class="mc-desc">议题 · 共识<br>一起做决定的夜晚</span>
+          </div>
+        </div>
+      </div>
       <div class="field">
         <label><span data-ico="shield"></span> 安全词（必填）— 任何一方说出立即停止</label>
         <input id="inpSafeWord" type="text" maxlength="20" placeholder="例如：菠萝、红灯、月亮…" />
@@ -861,6 +945,7 @@ html, body {
           <label class="check-pill"><input type="checkbox" id="chkHigh" /> 高度</label>
         </div>
       </div>
+      <button id="btnViewPacts" class="btn btn-ghost btn-block"><span data-ico="book"></span> 我们的约定（灵魂共鸣留档）</button>
       <button id="btnRemote" class="btn btn-ghost btn-block"><span data-ico="phone"></span> 远程同玩（两地玩同一局）</button>
       <button id="btnCfgBack" class="btn btn-primary btn-block">完成，返回首页</button>
     </div>
@@ -895,6 +980,7 @@ html, body {
       <div id="cardActions" class="card-actions hidden">
         <button id="btnComplete" class="btn btn-primary">完成 +升温</button>
         <button id="btnSkip" class="btn btn-ghost">跳过</button>
+        <button id="btnPact" class="btn btn-ghost hidden">✍ 记入约定</button>
       </div>
     </div>
     <div id="nextPreview" class="next-preview">
@@ -923,6 +1009,7 @@ html, body {
       <div class="report-meta" id="reportMeta"></div>
       <div class="report-meta" id="reportPlayers"></div>
       <div class="report-meta" id="reportFailPts"></div>
+      <div class="report-meta" id="reportPacts"></div>
       <div id="reportInsight" class="report-insight hidden"></div>
       <div class="report-note" id="reportNote"></div>
       <div class="report-btns">
@@ -1025,6 +1112,16 @@ html, body {
     </div>
   </div>
 
+  <!-- ============ 我们的约定（灵魂共鸣产出） ============ -->
+  <div id="modalPacts" class="modal hidden">
+    <div class="modal-box">
+      <h3 class="modal-title"><span data-ico="book"></span> 我们的约定</h3>
+      <p class="modal-sub">灵魂共鸣模式里，每张议题卡聊完都能落一条共识——这里存放两个人共同签下的小公约。</p>
+      <div id="pactsList" class="pacts-list"></div>
+      <button id="btnPactsClose" class="btn btn-primary btn-block">关闭</button>
+    </div>
+  </div>
+
   <!-- ============ 远程同玩弹窗（WebRTC P2P 手动信令，无服务器） ============ -->
   <div id="modalRemote" class="modal hidden">
     <div class="modal-box">
@@ -1100,7 +1197,8 @@ var TYPE_META = {
   "挑逗卡":     { icon: "smiley" },
   "褪衣卡":     { icon: "dress" },
   "指令卡":     { icon: "clipboard" },
-  "同步刺激卡": { icon: "bolt" }
+  "同步刺激卡": { icon: "bolt" },
+  "灵魂共鸣":   { icon: "book" }
 };
 
 var SCALE_META = {
@@ -1175,7 +1273,74 @@ var CARDS = [
   { id:"H17", type:"角色扮演卡", scale:"high", scene:"remote", content:"扮演「陌生人社交软件匹配」，用陌生身份互相撩对方，谁先破功谁输。", temp:[55,90] },
   { id:"H18", type:"亲密任务", scale:"high", scene:"both", content:"把对方轻轻推到墙边/床边，看着眼睛三秒，然后做你想做的。", temp:[55,95] },
   { id:"H19", type:"想象卡", scale:"high", scene:"both", content:"如果你们有整整24小时不被打扰，你会怎么安排？按时间线描述。", temp:[50,85] },
-  { id:"H20", type:"未来约定", scale:"high", scene:"both", content:"约定一个「冒险清单」：写三件你们都想尝试的亲密新体验，折起来抽签执行。", temp:[50,85] }
+  { id:"H20", type:"未来约定", scale:"high", scene:"both", content:"约定一个「冒险清单」：写三件你们都想尝试的亲密新体验，折起来抽签执行。", temp:[50,85] },
+
+  /* ---- 体温共振 · 新增任务卡（轻度） ---- */
+  { id:"L21", type:"亲密任务", scale:"light", scene:"both", content:"心跳广播：把耳朵贴在对方胸口 30 秒数心跳，然后交换位置再听一次。", temp:[10,30] },
+  { id:"L22", type:"默契问答", scale:"light", scene:"both", content:"凭记忆画出对方常用的手机解锁图案（或说出锁屏壁纸），看谁更了解对方。", temp:[10,30] },
+  { id:"L23", type:"未来约定", scale:"light", scene:"both", content:"约定一份「如果哪天我们被困在同一地方一整天」清单：写下三件最想一起做的事。", temp:[15,35] },
+  { id:"L24", type:"真心话", scale:"light", scene:"both", content:"背后的夸奖：假装对方听不见，用第三人称夸对方三句话，然后让对方猜你说了什么。", temp:[10,30] },
+  { id:"L25", type:"亲密任务", scale:"light", scene:"both", content:"影子游戏：面对面站着，一人随乐起舞、另一人当影子模仿 30 秒，然后交换——像不像我们平时的相处？", temp:[10,30] },
+  { id:"L26", type:"默契问答", scale:"light", scene:"both", content:"一辈子的四道菜：如果你只能给对方做四道菜，写出菜单并说明理由，对方给这桌菜打分。", temp:[10,30] },
+  { id:"L27", type:"回忆杀", scale:"light", scene:"both", content:"说出一个你们之间「当时没意识到、现在想起来很心动」的普通瞬间。", temp:[15,35] },
+  /* ---- 体温共振 · 新增任务卡（轻度 · 异地专属） ---- */
+  { id:"L28", type:"同步卡", scale:"light", scene:"remote", content:"同步日落：约好同一时刻看窗外（或月亮/天空），各自拍下发给对方，配一句话。", temp:[10,30] },
+  { id:"L29", type:"同步卡", scale:"light", scene:"remote", content:"云端击掌：约好同一分钟接通视频说「嘿」，然后把镜头同时转向各自的窗外，合成我们此刻共同的背景。", temp:[10,30] },
+  { id:"L30", type:"声音卡", scale:"light", scene:"remote", content:"晚安电台：睡前发一段 60 秒电台——一条「新闻」（今天想你 X 次）、一段歌、一句为你播报的天气。", temp:[15,35] },
+  { id:"L31", type:"视觉卡", scale:"light", scene:"remote", content:"半张合照：各自拍下「此刻身边最近的一样东西」，两张拼在一起，就是今晚我们共同的家。", temp:[10,30] },
+
+  /* ---- 体温共振 · 新增任务卡（中度） ---- */
+  { id:"M21", type:"亲密任务", scale:"medium", scene:"both", content:"体温地图：闭上眼，只用手依次摸对方的手背、耳廓、锁骨，对方给每个部位打 1-10 的「温度分」。", temp:[30,60] },
+  { id:"M22", type:"真心话", scale:"medium", scene:"both", content:"心动的错位：说出一次你确定对方心动了、但对方自己都没察觉的瞬间，越具体越好。", temp:[30,60] },
+  { id:"M23", type:"想象卡", scale:"medium", scene:"both", content:"平行世界：描述一个你们没有在一起的世界里，你会在哪条街、因为什么想起对方。", temp:[30,60] },
+  { id:"M24", type:"挑逗卡", scale:"medium", scene:"both", content:"一寸距离：隔着衣料用指尖从手腕慢慢画到肩，最后停在任何一方说「停」的地方。", temp:[35,65] },
+  { id:"M25", type:"真心话", scale:"medium", scene:"both", content:"没说出口的抱歉：说一件你一直觉得亏欠对方的小事（对方可能早忘了），现场和解。", temp:[30,55] },
+  { id:"M26", type:"亲密任务", scale:"medium", scene:"both", content:"掌心留言：牵着对方的手，在对方掌心写一句最想让 TA 记住的话，让 TA 猜。", temp:[30,55] },
+  /* ---- 体温共振 · 新增任务卡（中度 · 异地专属） ---- */
+  { id:"M27", type:"同步卡", scale:"medium", scene:"remote", content:"呼吸同步：视频里互相看着对方，跟着对方的呼吸节奏呼吸 60 秒，谁先笑场谁明天先说早安。", temp:[30,55] },
+  { id:"M28", type:"想象卡", scale:"medium", scene:"remote", content:"同居预演：视频连线各自做自己的事 20 分钟（不专门找话题），假装我们已经住在一起，结束后交换感受。", temp:[30,55] },
+  { id:"M29", type:"声音卡", scale:"medium", scene:"remote", content:"心跳快递：把手机贴在胸口录 15 秒心跳发给对方：「今晚的心跳，分你一半。」", temp:[30,55] },
+  { id:"M30", type:"声音卡", scale:"medium", scene:"remote", content:"声音领地：发一条 10 秒语音，只能用呼吸和气声，不许说完整的话，让对方猜你在想什么。", temp:[30,60] },
+
+  /* ---- 体温共振 · 新增任务卡（高度） ---- */
+  { id:"H21", type:"指令卡", scale:"high", scene:"both", content:"换我来：这张卡由对方指挥——让 TA 指挥你做一件 TA 今晚想做却一直没说的事。", temp:[55,90] },
+  { id:"H22", type:"欲望卡", scale:"high", scene:"both", content:"天气预报：用天气预报的格式播报你今晚对对方的欲望（例：「今夜对你的想念，局部有暴风雨」）。", temp:[50,85] },
+  { id:"H23", type:"角色扮演卡", scale:"high", scene:"both", content:"初次重逢：扮演分开一年后重逢的恋人，用一句「好久不见」开场，重新把对方追一遍。", temp:[55,90] },
+  { id:"H24", type:"想象卡", scale:"high", scene:"both", content:"十年后的深夜：描述十年后一个普通的夜晚——我们家的灯光、气味、各自在做什么，越细越好。", temp:[50,85] },
+  { id:"H25", type:"亲密任务", scale:"high", scene:"both", content:"慢镜头之吻：用 0.5 倍速完成一个吻——靠近、停顿、落下，全程至少 15 秒，谁先笑场谁重来。", temp:[55,90] },
+  /* ---- 体温共振 · 新增任务卡（高度 · 异地专属） ---- */
+  { id:"H26", type:"同步刺激卡", scale:"high", scene:"remote", content:"隔屏私语：视频里各自关灯只留屏幕光，用只有对方看得懂的口型和手势说一句悄悄话，谁先破功，谁欠一个「见面愿望」。", temp:[50,85] },
+  { id:"H27", type:"视觉卡", scale:"high", scene:"remote", content:"明日预告：拍一张「如果你现在推门进来会看到的我」，配一句「你想先做什么」。", temp:[55,85] },
+
+  /* ---- 灵魂共鸣 · 夜话卷（轻度） ---- */
+  { id:"L32", type:"灵魂共鸣", scale:"light", scene:"both", content:"以后住在一起，做饭、洗碗、拖地这些事你希望怎么分？有没有哪件是你打死都不想碰的？你希望我主动认领，还是分工前先问你？", temp:[10,30], pact:"家务分工：按今晚认领的执行，一个月后可以重谈。" },
+  { id:"L33", type:"灵魂共鸣", scale:"light", scene:"both", content:"花钱这件事上，你更像囤粮的松鼠，还是看枫叶的旅人？如果我们一个爱存一个爱花，你打算怎么商量着来？", temp:[10,30], pact:"金钱公约：先定共同攒钱的目标，大额消费互相知会。" },
+  { id:"L34", type:"灵魂共鸣", scale:"light", scene:"both", content:"如果一个是夜猫子一个是早起鸟，你希望我怎么照顾这个差别？睡前和醒来的问候，你最想要哪一种？", temp:[10,30], pact:"作息公约：睡前与醒来的问候方式，按今晚选定的执行。" },
+  { id:"L35", type:"灵魂共鸣", scale:"light", scene:"both", content:"如果被窝里有一场看不见的战争——抢被子、打呼噜、起床气——你最想先签「停战协议」的是哪一条？", temp:[10,30], pact:"睡眠停战协议：按今晚签下的条款执行。" },
+  { id:"L36", type:"灵魂共鸣", scale:"light", scene:"both", content:"「今天吃什么」这道世纪难题，你希望我们怎么破——轮流定、猜拳定，还是各自负责一天的饭？顺便交代一个你最不能接受的食材。", temp:[10,30], pact:"吃饭规则：按今晚选定的方式决定，雷区互相报备。" },
+  { id:"L37", type:"灵魂共鸣", scale:"light", scene:"both", content:"旅行时你是「攻略排到分钟」的人，还是「走到哪算哪」的人？如果我们一半行程排满、一半发呆，你觉得谁会先受不了谁？", temp:[10,30], pact:"旅行规则：一半行程、一半随缘，互相让一半。" },
+
+  /* ---- 灵魂共鸣 · 夜话卷（中度） ---- */
+  { id:"M31", type:"灵魂共鸣", scale:"medium", scene:"both", content:"吵架之后，你其实是在等什么——一句道歉、一个拥抱，还是一点安静？我们提前定一个「和好暗号」好不好？", temp:[25,50], pact:"和好暗号：按今晚定下的执行；吵架不过夜。" },
+  { id:"M32", type:"灵魂共鸣", scale:"medium", scene:"both", content:"有了自己的小家之后，双方父母和亲戚的事你希望怎么管？有没有哪些事，必须我们俩先商量好、再统一回应外面？", temp:[25,50], pact:"边界约定：今晚列出的「必须先商量」事项，双方遵守。" },
+  { id:"M33", type:"灵魂共鸣", scale:"medium", scene:"both", content:"恋人之间，手机该不该给对方看？如果各留一点小空间，你想要的是「偶尔的小秘密」，还是「不打扰的尊重」？", temp:[25,50], pact:"隐私约定：按今晚商定的空间边界执行，不查岗。" },
+  { id:"M34", type:"灵魂共鸣", scale:"medium", scene:"both", content:"一周七天，你想怎么分给「自己的朋友」、「两个人的约会」和「宅家休息」？如果约会总被朋友局挤掉，你希望我怎么办？", temp:[25,50], pact:"时间约定：每周为「我们」留出固定的约会时间。" },
+  { id:"M35", type:"灵魂共鸣", scale:"medium", scene:"both", content:"两个人窝在一起不说话的时候，你心里是舒服还是发慌？怎么让我一眼看出，你的沉默是「别理我」还是「有你在就好」？", temp:[25,50], pact:"沉默信号：按今晚定义的信号执行。" },
+  { id:"M36", type:"灵魂共鸣", scale:"medium", scene:"both", content:"我带着一肚子怨气回家时，你想我怎么表现——把来龙去脉讲给你听，还是先自己待十分钟？换你心情差的那天，你想要哪种对待？", temp:[25,50], pact:"情绪暗号：「我想吐槽」/「我想静静」，按约定响应。" },
+  { id:"M37", type:"灵魂共鸣", scale:"medium", scene:"both", content:"心情不好的时候，你想被追问「怎么了」，还是想自己先待一会儿？如果我需要独处，你能不把它当成「你讨厌我」吗？", temp:[25,50], pact:"独处约定：「我需要静静」= 需要缓冲，不是拒绝。" },
+  { id:"M38", type:"灵魂共鸣", scale:"medium", scene:"both", content:"纪念日和生日对你有多重——忘了会伤心，还是无所谓？如果我真忘了，你希望我当场怎么补救？你最不能被忘掉的一个日子是哪个？", temp:[25,50], pact:"纪念日约定：重要日子设提醒；忘了按今晚说的方式补救。" },
+  { id:"M39", type:"灵魂共鸣", scale:"medium", scene:"both", content:"我和异性朋友的距离画在哪里，你会安心？反过来，你希望我给你的空间到哪里？我们把这条线画出来，而不是靠吃醋去试探。", temp:[25,50], pact:"距离约定：按今晚画出的边界执行，不靠试探。" },
+  { id:"M40", type:"灵魂共鸣", scale:"medium", scene:"both", content:"买贵的东西报个低价、和朋友玩说「在加班」——这种善意的四舍五入，你觉得是体贴还是地雷？哪些事必须实话实说，哪些可以打折？", temp:[25,50], pact:"诚实约定：钱与大事不打折，小事可以四舍五入。" },
+  { id:"M41", type:"灵魂共鸣", scale:"medium", scene:"both", content:"你喜欢的东西我完全不感兴趣——这样的时刻怎么陪彼此？是假装有兴趣陪一次，还是各自快乐、但互相展示战利品？", temp:[25,50], pact:"兴趣约定：不强求同好，做彼此的观众。" },
+
+  /* ---- 灵魂共鸣 · 夜话卷（高度） ---- */
+  { id:"H28", type:"灵魂共鸣", scale:"high", scene:"both", content:"我身上有没有一个你忍了很久、想让我改的习惯？也允许你说「这个我改不了」——我们把各自的底线拿出来看看。", temp:[30,55], pact:"底线清单：今晚交换的底线，互相尊重。" },
+  { id:"H29", type:"灵魂共鸣", scale:"high", scene:"both", content:"如果有一天，换城市或换工作只能成全一个人，你会怎么开口跟我说？你希望我第一句话怎么回你？", temp:[30,55], pact:"重大决定流程：先谈感受、再摆利弊、共同拍板。" },
+  { id:"H30", type:"灵魂共鸣", scale:"high", scene:"both", content:"十年后的我们，会不会变成「最熟悉的陌生人」？你觉得靠什么才能一直有话说？从现在起，你想要什么样的「定期心动」？", temp:[30,55], pact:"保温条款：惊喜轮值，按今晚排的班执行。" },
+  { id:"H31", type:"灵魂共鸣", scale:"high", scene:"both", content:"结婚、孩子、买房……这些大事，你心里的时间表走到哪一格了？如果我们步伐不一样，想怎么把两张时间表摊开对一对？", temp:[30,55], pact:"对表约定：每半年把两张时间表摊开对一次。" },
+  { id:"H32", type:"灵魂共鸣", scale:"high", scene:"both", content:"「对不起」的下半句，你最想听「我错了」还是「我懂你为什么难过」？道歉时你希望对方做什么——复盘、拥抱，还是直接翻篇？", temp:[30,55], pact:"道歉格式：按今晚定制的「对不起」执行。" },
+  { id:"H33", type:"灵魂共鸣", scale:"high", scene:"both", content:"有些贴身的需求，我们都藏着不好意思说——你希望用什么方式开口？写在纸条、发条语音，还是关灯后耳语？节奏对不上时，怎么说才不伤人？", temp:[30,55], pact:"亲密沟通通道：按今晚选定的方式开口，不指责。" },
+  { id:"H34", type:"灵魂共鸣", scale:"high", scene:"both", content:"如果以后有一个小朋友，你最想教 TA 的一件事是什么？你小时候最不想被父母做的一件事是什么——我们把它写进「未来说明书」，不让它重演。", temp:[30,55], pact:"育儿说明书写下第一条：不重演今晚说的那件事。" }
 ];
 
 /* ================= 存储 ================= */
@@ -1996,8 +2161,83 @@ function musicScheduleStep(step, t) {
   }
   if (sIn === 7 && Math.random() < 0.12) musicBell(midiToFreq(MUSIC_PENT[4]), t, 0.018);
 }
+/* ---------- 雨声引擎（灵魂共鸣模式 BGM）----------
+   颗粒纹理 + 连续雨幕：中频雨幕为主角，高频空气感、低频空间感做陪衬，
+   微粒层每 100ms 落 4~7 粒、刻意极轻，融进雨幕不单独可闻。零采样零外部文件。 */
+var RAIN_DROP_BUF = null;
+function rainDropBuf() {
+  if (RAIN_DROP_BUF) return RAIN_DROP_BUF;
+  var len = Math.floor(AudioCtx.sampleRate * 0.03);
+  RAIN_DROP_BUF = AudioCtx.createBuffer(1, len, AudioCtx.sampleRate);
+  var d = RAIN_DROP_BUF.getChannelData(0);
+  for (var i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 1.5);
+  return RAIN_DROP_BUF;
+}
+function rainLayerM(st, filterType, freq, q, vol, rate, pan) {
+  var src = AudioCtx.createBufferSource();
+  var len = Math.floor(AudioCtx.sampleRate * 5);
+  var b = AudioCtx.createBuffer(2, len, AudioCtx.sampleRate);
+  for (var ch = 0; ch < 2; ch++) {
+    var d = b.getChannelData(ch), last = 0;
+    for (var i = 0; i < len; i++) { var w = Math.random() * 2 - 1; last = last * 0.86 + w * 0.14; d[i] = last; }
+  }
+  src.buffer = b; src.loop = true; src.playbackRate.value = rate;
+  var f = AudioCtx.createBiquadFilter(); f.type = filterType; f.frequency.value = freq; f.Q.value = q;
+  var g = AudioCtx.createGain(); g.gain.value = vol;
+  src.connect(f); f.connect(g);
+  if (AudioCtx.createStereoPanner) {
+    var p = AudioCtx.createStereoPanner(); p.pan.value = pan;
+    g.connect(p); p.connect(musicBus);
+  } else g.connect(musicBus);
+  src.start(); musicNodes.push(src);
+  return g;
+}
+function rainMicro(st, t) {
+  var f = 1800 + Math.random() * 4200;
+  var src = AudioCtx.createBufferSource();
+  src.buffer = rainDropBuf();
+  src.playbackRate.value = 0.9 + Math.random() * 0.35;
+  var bp = AudioCtx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = f; bp.Q.value = 1.2;
+  var g = AudioCtx.createGain();
+  g.gain.setValueAtTime(0.007 + Math.random() * 0.014, t);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.02 + Math.random() * 0.03);
+  src.connect(bp); bp.connect(g);
+  if (AudioCtx.createStereoPanner) {
+    var p = AudioCtx.createStereoPanner(); p.pan.value = Math.random() * 1.6 - 0.8;
+    g.connect(p); p.connect(musicBus);
+  } else g.connect(musicBus);
+  src.start(t); src.stop(t + 0.06);
+}
+function startRainMusic() {
+  musicBus = AudioCtx.createGain(); musicBus.gain.value = 0.0001; musicBus.connect(musicGain);
+  var st = { nodes: musicNodes };
+  /* 雨幕主角 + 空气感 + 低鸣 */
+  var body = rainLayerM(st, "bandpass", 1100, 0.4, 0.38, 1.0, 0);
+  var air = rainLayerM(st, "bandpass", 3800, 0.5, 0.14, 1.02, 0.2);
+  rainLayerM(st, "lowpass", 250, 0.7, 0.17, 0.98, -0.2);
+  /* 呼吸 */
+  var lfo1 = AudioCtx.createOscillator(); lfo1.frequency.value = 0.06;
+  var lg1 = AudioCtx.createGain(); lg1.gain.value = 0.04;
+  lfo1.connect(lg1); lg1.connect(body.gain); lfo1.start();
+  var lfo2 = AudioCtx.createOscillator(); lfo2.frequency.value = 0.021;
+  var lg2 = AudioCtx.createGain(); lg2.gain.value = 0.018;
+  lfo2.connect(lg2); lg2.connect(air.gain); lfo2.start();
+  musicNodes.push(lfo1, lfo2);
+  /* 微粒纹理 + 雨势调度 */
+  musicTimer = setInterval(function () {
+    if (!AudioCtx) return;
+    var base = AudioCtx.currentTime + 0.05;
+    var k = 4 + Math.floor(Math.random() * 4);
+    for (var i = 0; i < k; i++) rainMicro(st, base + Math.random() * 0.1);
+  }, 100);
+  var now = AudioCtx.currentTime;
+  musicBus.gain.setValueAtTime(0.0001, now);
+  musicBus.gain.linearRampToValueAtTime(2.1, now + 2.0);   /* 雨慢慢落下来（补偿 musicGain 压低） */
+}
+
 function startMusic() {
   if (!AudioCtx || !audioOn || !musicOn || musicTimer) return;
+  if (GAME_MODE === "soul") { startRainMusic(); return; }
   if (!musicBus) {
     musicBus = AudioCtx.createGain(); musicBus.gain.value = 0.0001; musicBus.connect(musicGain);
     /* 生成式混响（1.9s 指数衰减噪声脉冲响应） */
@@ -2093,6 +2333,33 @@ var lastCard = null;
 var nextPeek = null;   /* 预留的下一张卡（用于「下一张预告」，保证预告准确） */
 var pendingCard = null; /* 桌上待处理的卡（完成/跳过后清空，防无卡时错误记账） */
 
+/* ================= 双风格模式（体温共振 / 灵魂共鸣） ================= */
+var GAME_MODE = "hot";
+try { if (localStorage.getItem("wj_mode") === "soul") GAME_MODE = "soul"; } catch (e) {}
+
+function applyModeTheme() {
+  var soul = GAME_MODE === "soul";
+  document.body.classList.toggle("soul-theme", soul);
+  var mh = document.getElementById("modeHot"), ms = document.getElementById("modeSoul");
+  if (mh) { mh.classList.toggle("sel-hot", !soul); mh.classList.remove("sel-soul"); }
+  if (ms) { ms.classList.toggle("sel-soul", soul); ms.classList.remove("sel-hot"); }
+  var bt = document.getElementById("brandTitle");
+  if (bt) bt.innerHTML = soul ? "∞<span>·</span> 灵魂共鸣" : "∞<span>℃</span> 无界升温";
+  var tg = document.getElementById("brandTag");
+  if (tg) tg.textContent = soul ? "把要紧的事，认真聊出结果 · 安全词仍是刹车" : "温度无上限 · 安全词是唯一刹车";
+  var sb = document.getElementById("btnStart");
+  if (sb) sb.textContent = soul ? "开始夜话 · 灵魂共鸣" : "开始游戏";
+}
+function setGameMode(m) {
+  if (GAME_MODE === m) { applyModeTheme(); return; }
+  GAME_MODE = m;
+  try { localStorage.setItem("wj_mode", m); } catch (e) {}
+  applyModeTheme();
+  try { ensureAudio(); sfxTap(); } catch (e) {}
+  /* 若音乐正在播，停掉旧模式的 BGM；新 BGM 由进局逻辑按当前模式启动 */
+  if (musicOn && musicBus) stopMusic();
+}
+
 function buildDeck() {
   if (!state) { deck = []; return; }
   var pref = state.scalePref || ["light","medium","high"];
@@ -2101,6 +2368,9 @@ function buildDeck() {
   function pass(c) {
     if (pref.indexOf(c.scale) === -1) return false;
     if (scene === "together" && c.scene === "remote") return false;
+    /* 双风格：夜话模式只抽灵魂共鸣，体温模式只抽任务卡 */
+    if (GAME_MODE === "soul" && c.type !== "灵魂共鸣") return false;
+    if (GAME_MODE !== "soul" && c.type === "灵魂共鸣") return false;
     return true;
   }
   function applyEdit(card, e) {
@@ -2288,13 +2558,26 @@ var CARD_NAMES = {
   H01:"梦里是你", H02:"直白渴望", H03:"外衣与真心", H04:"闭眼惊喜", H05:"锁骨到耳后",
   H06:"同频愉悦", H07:"私密加班", H08:"完美之夜", H09:"气息私语", H10:"你的视角",
   H11:"吻你所指", H12:"最大幻想", H13:"三个形容", H14:"画圈不止", H15:"同频心跳",
-  H16:"危险边缘", H17:"陌生撩拨", H18:"近墙三秒", H19:"廿四小时", H20:"冒险清单"
+  H16:"危险边缘", H17:"陌生撩拨", H18:"近墙三秒", H19:"廿四小时", H20:"冒险清单",
+  L21:"心跳广播", L22:"锁屏之谜", L23:"被困之日", L24:"第三人称", L25:"影随人行",
+  L26:"一生的菜", L27:"迟来心动", L28:"共享黄昏", L29:"云端击掌", L30:"晚安电台",
+  L31:"半张合照",
+  M21:"体温地图", M22:"错位心动", M23:"平行街道", M24:"一寸止步", M25:"迟到抱歉",
+  M26:"掌心密语", M27:"同频呼吸", M28:"同居彩排", M29:"心跳快递", M30:"气声领地",
+  H21:"听你指挥", H22:"欲望预报", H23:"好久不见", H24:"十年深夜", H25:"慢镜之吻",
+  H26:"隔屏唇语", H27:"推门所见",
+  L32:"家务分工", L33:"两只松鼠", L34:"两个时区", L35:"被窝战争", L36:"世纪难题", L37:"两种旅人",
+  M31:"雨停之后", M32:"我们的小家", M33:"上锁的抽屉", M34:"三个摊位", M35:"两种安静",
+  M36:"加班后的脸", M37:"独处房间", M38:"日历红圈", M39:"安全距离", M40:"善意的舍入", M41:"不同的频道",
+  H28:"不改之处", H29:"迁徙的候鸟", H30:"壁炉之火", H31:"地图的折角", H32:"道歉格式",
+  H33:"贴身悄悄话", H34:"未来说明书"
 };
 var TYPE_EN = {
   "默契问答":"RAPPORT", "回忆杀":"FLASHBACK", "真心话":"TRUTH", "亲密任务":"INTIMACY",
   "未来约定":"PROMISE", "声音卡":"VOICE", "视觉卡":"VISION", "想象卡":"IMAGINE",
   "同步卡":"SYNC", "角色扮演卡":"ROLEPLAY", "欲望卡":"DESIRE", "挑逗卡":"TEASE",
-  "褪衣卡":"UNDRESS", "指令卡":"COMMAND", "同步刺激卡":"SURGE", "自定义":"ORIGINAL"
+  "褪衣卡":"UNDRESS", "指令卡":"COMMAND", "同步刺激卡":"SURGE", "自定义":"ORIGINAL",
+  "灵魂共鸣":"AGORA"
 };
 var SCALE_VOL = {
   light:  { vol:"玫瑰之卷", main:"#e3a4bd", line:"rgba(227,164,189,.45)", soft:"rgba(227,164,189,.22)" },
@@ -4929,7 +5212,26 @@ function renderTemp(fromVal) {
 }
 
 /* 卡面 HTML（纯函数）——正式渲染与抽卡过场共用，保证两处结构逐字一致 */
+/* 灵魂共鸣卡面：议事录风格（墨蓝 · 双线框 · 衬线卡名 · 圆桌徽记） */
+function soulCardHTML(card) {
+  var owner = (typeof state.turn === "number") ? state.turn : 0;
+  var ownerLine = '<div class="card-owner">' + ico("target", 14) + ' 这张属于 ' + playerLabel(owner) + '</div>';
+  var no = cardNoOf(card);
+  return '<div class="sc-card' + (card.scale === "high" ? " hi" : "") + '">' +
+      '<div class="sc-head">' +
+        '<span class="sc-emblem">' + ico("book", 13) + '</span>' +
+        '<span>灵魂共鸣</span>' +
+        '<span>' + no + ' · 夜话卷</span>' +
+      '</div>' +
+      '<div class="sc-name">' + esc(cardNameOf(card)) + '</div>' +
+      '<div class="sc-en">SOUL RESONANCE</div>' +
+      '<div class="sc-body">' + esc(card.content) + '</div>' +
+      '<div class="sc-foot"><span class="sc-temp">谈成可升温 ' + card.temp[0] + '~' + card.temp[1] + '℃</span><span>AGORA</span></div>' +
+    '</div>' + ownerLine;
+}
+
 function cardHTML(card) {
+  if (GAME_MODE === "soul") return soulCardHTML(card);
   var meta = TYPE_META[card.type] || { icon: "bolt" };
   var scaleLabel = (SCALE_META[card.scale] || {}).label || "";
   var sm = scaleMetaOf(card);
@@ -5099,6 +5401,41 @@ function playDrawFX(card, onReveal) {
 function showCardActions(show) {
   $("cardActions").classList.toggle("hidden", !show);
   $("btnDraw").classList.toggle("hidden", show);
+  /* 灵魂共鸣：桌上是议题卡时给「记入约定」；记过的这张不再显示 */
+  var bp = $("btnPact");
+  if (bp) {
+    var can = show && GAME_MODE === "soul" && pendingCard && pendingCard.type === "灵魂共鸣" && lastPactCard !== pendingCard.id;
+    bp.classList.toggle("hidden", !can);
+  }
+}
+
+/* ================= 我们的约定（灵魂共鸣产出） ================= */
+var PACTS_KEY = "wj_pacts";
+var lastPactCard = null;
+function loadPacts() {
+  try { var r = localStorage.getItem(PACTS_KEY); return r ? JSON.parse(r) : []; } catch (e) { return []; }
+}
+function savePacts(list) { try { localStorage.setItem(PACTS_KEY, JSON.stringify(list)); } catch (e) {} }
+function addPact(card) {
+  var list = loadPacts();
+  list.push({ d: new Date().toISOString().slice(0, 10), n: cardNameOf(card), x: card.pact || "" });
+  savePacts(list);
+  lastPactCard = card.id;
+  var bp = $("btnPact");
+  if (bp) bp.classList.add("hidden");
+  toast("已记入我们的约定 📜");
+  sfxConfirm();
+}
+function renderPactModal() {
+  var list = loadPacts().slice().reverse();
+  var box = $("pactsList");
+  if (!box) return;
+  if (!list.length) { box.innerHTML = '<p class="pacts-empty">还没有约定。在灵魂共鸣模式里完成一张议题卡，点「✍ 记入约定」，它就会出现在这里。</p>'; return; }
+  var html = "";
+  list.forEach(function (p) {
+    html += '<div class="pact-item"><div class="pact-date">' + esc(p.d) + ' · ' + esc(p.n) + '</div><div class="pact-text">' + esc(p.x) + '</div></div>';
+  });
+  box.innerHTML = html;
 }
 
 /* ================= 报告 ================= */
@@ -5137,6 +5474,24 @@ function showReport() {
     $("reportFailPts").innerHTML = ico("chartDown", 14) + " 失败积分（跨局累计）· " + playerLabel(0) + " " + f0 + " 分 · " + playerLabel(1) + " " + f1 + " 分" + tail;
   } else {
     $("reportFailPts").textContent = "";
+  }
+
+  /* 今夜的约定：灵魂共鸣模式里记入的共识（只显示今天的） */
+  var rp = $("reportPacts");
+  if (rp) {
+    var today = new Date().toISOString().slice(0, 10);
+    var todays = loadPacts().filter(function (p) { return p.d === today; });
+    if (todays.length) {
+      var ph = "<b>📜 今夜的约定</b>";
+      todays.forEach(function (p) {
+        ph += '<div class="pact-item"><div class="pact-date">' + esc(p.n) + '</div><div class="pact-text">' + esc(p.x) + '</div></div>';
+      });
+      rp.innerHTML = ph;
+      rp.classList.remove("hidden");
+    } else {
+      rp.classList.add("hidden");
+      rp.innerHTML = "";
+    }
   }
 
   /* 牌库洞察：跨局累计最常被跳过的卡 */
@@ -6202,6 +6557,7 @@ function init() {
   loadLib();
   buildStages();
   renderIcons();
+  applyModeTheme();   /* 恢复上次选择的风格（换肤 + 文案） */
 
   /* 兼容旧存档：补齐新字段 */
   if (state && state.game) {
@@ -6261,6 +6617,11 @@ function init() {
 
   /* 绑定事件 */
   $("btnStart").addEventListener("click", onStart);
+  $("modeHot").addEventListener("click", function () { setGameMode("hot"); });
+  $("modeSoul").addEventListener("click", function () { setGameMode("soul"); });
+  $("btnPact").addEventListener("click", function () { if (pendingCard) addPact(pendingCard); });
+  $("btnViewPacts").addEventListener("click", function () { sfxTap(); renderPactModal(); $("modalPacts").classList.remove("hidden"); });
+  $("btnPactsClose").addEventListener("click", function () { sfxBack(); $("modalPacts").classList.add("hidden"); });
   $("btnResume").addEventListener("click", onResume);
   $("btnNew").addEventListener("click", onStart);
   $("btnRollDice").addEventListener("click", rollDice);
